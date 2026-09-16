@@ -7,14 +7,14 @@
 ## 1. Retrospective & Disproved Assumptions
 
 1. **The Equal-Weighting Myth**: The published claim in Generative Agents that equal weights ($\alpha=\beta=\gamma=1$) produce optimal memory retrieval is disproven. Relevance must strictly dominate recency and importance ($\beta > \alpha + \gamma$) to prevent agents from retrieving recent irrelevant noise.
-2. **The Debate-as-Reasoner Myth**: Multi-agent debate does not provide large collaborative surplus on closed symbolic reasoning. It is an information reconciliation tool, not a reasoning amplifier.
-3. **The Neural Orchestrator Trap**: Complex learned meta-orchestrators are unnecessary when multi-feature heuristic rules achieve sufficient quality and token reduction with zero latency overhead.
+2. **The Debate-as-Universal-Reasoner Fallacy**: Multi-agent debate does not demonstrate robust superiority or equivalence on closed symbolic reasoning. Collaborative surplus is strictly localized to partitioned information, and even there required statistical thresholds were narrowly missed ($p = 0.0192 > 0.01$).
+3. **The Heuristic-Sufficiency Boundary**: Multi-feature heuristic rules achieved sufficient performance to halt escalation on tested workloads, but this stopping-rule success does not imply that learned orchestrators are inferior for untested complex domains.
 
 ---
 
-## 2. Cumulative Operational Negative Constraints Master Register (NC-01 through NC-46)
+## 2. Cumulative Operational Negative Constraints Master Register (NC-01 through NC-51)
 
-All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly consume and enforce these forty-six binding negative forward constraints:
+All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly consume and enforce these fifty-one binding negative forward constraints:
 
 ### 2.1 Gate R1 Technical & Architectural Constraints (NC-01 to NC-16)
 - `NC-01`: **NO Unvalidated Prompt-Based Governance**: Never use natural language prompts for access control; enforce via deterministic Cedar/OPA policy engines.
@@ -64,10 +64,15 @@ All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly 
 - `NC-39`: **Model Pinned Fingerprint Invariant**: Never execute experiments against unpinned model checkpoints; track provider system fingerprints.
 - `NC-40`: **Phase 4 Authorization Boundary**: Never proceed to Phase 4 ablation testing without explicit, separate human requester authorization.
 
-### 2.5 Gate R3 Post-Reconciliation Constraints (NC-41 to NC-46)
+### 2.5 Gate R3 Post-Reconciliation Statistical Integrity Constraints (NC-41 to NC-51)
 - `NC-41`: **Layered Verification Separation Invariant**: Deterministic package audits verify artifact presence and schema integrity only; they do not prove scientific truth or validate substantive mathematical conclusions. Layer A and Layer B must always remain distinct.
 - `NC-42`: **Lifecycle Adjudication Decoupling**: Deterministic audit completion certifies `DETERMINISTIC_AUDIT: PASS` and readiness for adjudication, not `GATE_COMPLETE`. Gate closure requires explicit substantive adjudication.
 - `NC-43`: **Stopping-Rule Non-Inferiority Invariant**: Invoking a pre-registered stopping rule (e.g. `STOP_ESCALATION`) establishes that further complexity was unjustified for the evaluated workload; it does not prove that unexecuted treatments are inferior, harmful, or rejected. Unexecuted treatments must be classified strictly as `NOT_TESTED_DUE_TO_STOPPING_RULE`.
 - `NC-44`: **Raw Provenance Traceability Constraint**: Every reported aggregate percentage or effect size must remain strictly traceable to raw numerators, denominators, and sample sizes in immutable telemetry. Provisional narrative estimates must never be substituted for empirical counts.
 - `NC-45`: **Rigorous Equivalence Specification**: Claims of equivalence must specify explicit pre-registered equivalence bounds ($\delta$) and report both one-sided tests (TOST), confidence intervals, and power.
 - `NC-46`: **Mandatory External Validity Delimitation**: Every architecture-relevant finding must be accompanied by explicit negative boundaries stating what the result does *not* support and where generalization is forbidden.
+- `NC-47`: **Statistical Significance Threshold Integrity**: Never declare a result statistically significant if the empirical p-value exceeds the pre-registered significance threshold ($p > \alpha$). Large effect sizes that fail the pre-registered alpha must be classified as `PROMISING_BUT_NOT_SIGNIFICANT` or `INSUFFICIENT_EVIDENCE`.
+- `NC-48`: **Equivalence Test Discipline (Anti-TOST-Inversion)**: Never interpret a failed equivalence test ($p_{TOST} \ge \alpha$) as evidence of equivalence. Furthermore, absence of established equivalence is not evidence of difference or superiority; classify strictly as `EQUIVALENCE_NOT_ESTABLISHED`.
+- `NC-49`: **Prohibition on Post-Hoc Threshold Adjustment**: Evaluators and researchers must never lower alpha, expand equivalence margins ($\delta$), or alter stopping criteria after observing experimental data. Pre-registered thresholds outrank attractive results.
+- `NC-50`: **Grounded Stopping-Rule Documentation**: Stopping-rule invocations (e.g. `STOP_ESCALATION`) must cite the exact pre-registered cost, quality, and overhead thresholds and verify that quality-loss tolerances were strictly respected.
+- `NC-51`: **Statistical-First Narrative Alignment**: Narrative conclusions, executive summaries, and walkthroughs must derive directly and conservatively from canonical statistical test outcomes, never inflating tentative or sub-threshold empirical findings into ungrounded claims of victory.

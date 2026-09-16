@@ -1,7 +1,7 @@
 """
 Curo SimLab Phase 3 Deterministic Verification Audit Suite
 Audits all Phase 3 deliverables (PX-00 to PX-16), sub-artifact hierarchy,
-authority boundaries, forward constraints (NC-01 through NC-46), and budget compliance.
+authority boundaries, forward constraints (NC-01 through NC-51), and budget compliance.
 """
 
 import os
@@ -103,15 +103,15 @@ def test_authority_and_governance_invariants():
     print()
 
 def test_forward_constraints_continuity():
-    print("TEST SUITE 3: Cumulative Forward Constraints Audit (NC-01 through NC-46)")
+    print("TEST SUITE 3: Cumulative Forward Constraints Audit (NC-01 through NC-51)")
     px14_path = os.path.join(PX_DIR, "PX-14_LESSONS_LEARNED_FORWARD_CONSTRAINTS.md")
     with open(px14_path, "r", encoding="utf-8") as f:
         content = f.read()
         
-    for i in range(1, 47):
+    for i in range(1, 52):
         tag = f"NC-{i:02d}"
         assert tag in content, f"Missing forward constraint {tag} in PX-14"
-    print("  [PASS] All 46 forward constraints (NC-01 through NC-46) verified present in PX-14")
+    print("  [PASS] All 51 forward constraints (NC-01 through NC-51) verified present in PX-14")
     print()
 
 def test_telemetry_and_budget_compliance():

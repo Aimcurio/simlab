@@ -1,33 +1,32 @@
 # PX-05: RP-04 Analysis & Hypothesis Testing
 **Experiment ID**: `EXP-RP04-DYNAMIC-ORCHESTRATION-V1`  
 **Analyst**: Statistical & Metrics Specialist / Sol  
-**Evaluation Verdict**: **HYPOTHESIS SUPPORTED ($H_1$) — ESCALATION HALTED AT HEURISTIC TIER**  
+**Evaluation Verdict**: **HYPOTHESIS SUPPORTED ($H_1$) — STOP_ESCALATION_VALID**  
 
 ---
 
-## 1. Statistical Discipline & Preregistered Fallback Execution
+## 1. Preregistered Stopping Rule & Quality Tolerance Audit
 
-### Normality Audit
-- Shapiro-Wilk test on token distributions across routing tiers returned $p < 10^{-4}$ (Right-skewed token distribution).
-- As mandated by Phase 3 Section 16, **the preregistered non-parametric fallback was automatically invoked**:
-  - **Kruskal-Wallis Omnibus Test**: $H = 55.98, p = 4.28 \times 10^{-12}$ (Statistically significant difference in token consumption across routing tiers).
-  - **Pairwise Mann-Whitney U Test** (Heuristic vs Static): $U = 3000.0$, $p = 1.0313 \times 10^{-6}$ (Significant token reduction).
+- **Preregistered Thresholds in RD-08 / RD-09**:
+  - Token Savings: $\ge 25\%$ reduction vs Static Full Topology ($p < 0.01$).
+  - Quality Loss Tolerance: Accuracy degradation **$\le 3.0\%$** compared to Static Full Topology.
+  - Overhead Constraint: Orchestrator latency $< 0.05$s, token overhead $< 8\%$.
+- **Observed Empirical Results for HEURISTIC_ROUTING**:
+  - Token Savings: **$27.80\%$** ($247,451$ vs $342,707$ tokens; $p = 1.03 \times 10^{-6} < 0.01$). $\to$ **MET**.
+  - Accuracy Degradation: **$-2.0\%$** ($90/100$ vs $92/100$). Degradation is $\le 3.0\%$. $\to$ **MET**.
+  - Overhead: $0.001$s latency, $0$ router tokens ($0.0\%$). $\to$ **MET**.
+
+### Stopping-Rule Adjudication:
+- **Decision**: **`STOP_ESCALATION_VALID`**.
+- The heuristic routing tier completely satisfied all pre-registered criteria without violating the quality-loss tolerance.
 
 ---
 
-## 2. Progressive Complexity Rule & Bounded Stopping-Rule Interpretation
+## 2. Strict Bounding of Unexecuted Routing Tiers
 
-1. **Failure of Deterministic Tier**:
-   - `DETERMINISTIC_ROUTING` relied on simplistic query length rules, leading to an unacceptable **10.0% under-activation rate** on complex, concise tasks. Accuracy dropped to 86.0%, violating the $\le 3\%$ margin. Escalation to Heuristic tier was required.
-2. **Success of Heuristic Tier**:
-   - `HEURISTIC_ROUTING` achieved **90.0% accuracy** (within 2.0% of Static Topology: $90/100$ vs $92/100$) while achieving **27.80% token savings** ($247,451$ vs $342,707$ tokens, $p < 10^{-6}$).
-   - Under-activation rate was contained to 1.0%.
-3. **Application of the Complexity Burden Rule**:
-   - The pre-registered protocol mandates: *"If heuristic routing is sufficient: STOP_ESCALATION. Do not deploy LLM or learned routing unnecessarily."*
-   - Because `HEURISTIC_ROUTING` satisfied the pre-registered success criteria ($\ge 25\%$ token savings, $\le 3\%$ accuracy drop), the project invoked **`STOP_ESCALATION`**.
-
-### Explicit Boundaries on Routing Conclusions:
 - **WHAT WAS TESTED**: `STATIC_ROUTING`, `DETERMINISTIC_ROUTING`, `HEURISTIC_ROUTING` (and exploratory `LLM_ROUTER`).
-- **WHAT WAS NOT NECESSARY TO EXECUTE**: `LEARNED_PUPPETEER_ROUTING` (and deploying LLM routers in production).
-- **Classification**: `LEARNED_PUPPETEER_ROUTING` is formally classified as **`NOT_TESTED_DUE_TO_STOPPING_RULE`**, not `REJECTED`, `HARMFUL`, or `INFERIOR`.
-- **Grounded Conclusion**: "Under the tested workload and preregistered thresholds, heuristic routing achieved sufficient quality while reducing resource use, so escalation to more complex routing mechanisms was not scientifically or economically justified."
+- **WHAT WAS NOT NECESSARY TO EXECUTE**: `LEARNED_PUPPETEER_ROUTING` (and production deployment of LLM routers).
+- **Canonical Classification**: `LEARNED_PUPPETEER_ROUTING` is classified strictly as **`NOT_TESTED_DUE_TO_STOPPING_RULE`**.
+- **Prohibited Claims**: It is strictly forbidden to claim that learned Puppeteer routing is "inferior", "rejected", or "harmful."
+- **Grounded Scientific Conclusion**:
+  > *"Under the tested workload and preregistered thresholds, heuristic routing achieved sufficient quality while reducing resource use, so escalation to more complex routing mechanisms was not scientifically or economically justified."*

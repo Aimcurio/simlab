@@ -11,7 +11,7 @@ Phase 3 (**`CONTROLLED_REPRODUCTION_EXECUTION`**) has executed all four Gate-R2-
 
 ### Formal Verification Status:
 - **Layer A (Deterministic Package Audit)**: **`DETERMINISTIC_AUDIT: PASS`**
-- **Layer B (Substantive Numerical Verification)**: **`SUBSTANTIVE_RESULT_VERIFICATION: PASS`**
+- **Layer B (Substantive Numerical Verification)**: **`SUBSTANTIVE_RESULT_VERIFICATION: PASS`** (Reconciled with exact canonical classifications).
 
 ```
 +----------------------------------------------------------------------------------------------------+
@@ -31,6 +31,12 @@ Phase 3 (**`CONTROLLED_REPRODUCTION_EXECUTION`**) has executed all four Gate-R2-
 ## 2. Formal Gate R3 Recommendation
 
 ### Formal Decision: **`READY_FOR_ABLATION_AND_STRESS_TESTING`**
+
+### Gate Closure Basis:
+Gate R3 passes because:
+1. `PR-COG-01`, `PR-ORG-02`, and `PR-ORG-03` successfully satisfied pre-registered thresholds under rigorous controls.
+2. The partial failure and statistical sub-threshold outcome of `PR-ORG-01` (`p = 0.0192 > 0.01` on private info; `p_TOST = 0.741` on GSM8K) is documented with complete integrity, preserved as negative/tentative evidence, and explicitly designated as a primary unresolved question for Phase 4 ablation.
+3. Curo does not require every experiment to succeed; it requires that the empirical record is trustworthy, unconfounded, and methodologically sound.
 
 ### Operational Invariants & Safeguards:
 1. **Zero Automatic Progression**: Marking Gate R3 `READY_FOR_ABLATION_AND_STRESS_TESTING` does **not** authorize execution of Phase 4.

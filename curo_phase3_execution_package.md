@@ -26,7 +26,7 @@ TABLE OF CONTENTS
 12. PX-11: Primitive Evidence Updates
 13. PX-12: Independent Substantive Review
 14. PX-13: Red-Team Challenge Memo
-15. PX-14: Lessons Learned / Operational Forward Constraints (NC-01 to NC-46)
+15. PX-14: Lessons Learned / Operational Forward Constraints (NC-01 to NC-51)
 16. PX-15: Reproduction Synthesis (Answers to 10 Canonical Questions)
 17. PX-16: Gate R3 Package & Formal Decision
 ================================================================================
@@ -379,43 +379,68 @@ I conducted an independent audit of the raw telemetry, code implementation, and 
 # PX-03: RP-02 Analysis & Hypothesis Testing
 **Experiment ID**: `EXP-RP02-COMPUTE-MATCHED-V1`  
 **Analyst**: Statistical & Metrics Specialist / Sol  
-**Evaluation Verdict**: **HYPOTHESIS SUPPORTED ($H_1$) — TASK-DEPENDENT ADVANTAGE CONFIRMED (RECONCILED)**  
+**Evaluation Verdict**: **PREREGISTERED THRESHOLD NOT MET — INCONCLUSIVE / PROMISING_BUT_NOT_SIGNIFICANT**  
 
 ---
 
-## 1. Preregistered Hypothesis Evaluation
+## 1. Preregistered Hypothesis Evaluation & Audit Against Alpha = 0.01
 
-- **Preregistered Hypothesis ($H_1$)**: On tasks with private/partitioned information or asymmetric tool specializations, a 3-agent debate architecture will outperform compute-matched single-agent $B1-SC$ by $\ge +12\%$ accuracy ($p < 0.01$). Conversely, on closed-domain symbolic reasoning (GSM8K), compute-matched $B1-SC$ will perform comparably to multi-agent debate within a $\pm 3\%$ equivalence margin.
-- **Null Hypothesis ($H_0$)**: Compute-matched single-agent $B1-SC$ equals or outperforms multi-agent debate across all task categories.
-
-### Quantitative Findings by Domain (Recomputed Directly from Raw Telemetry)
-1. **Closed Symbolic Reasoning (GSM8K, N=500)**:
-   - `B3-DEBATE` Accuracy: **89.2%** ($446/500$) vs `B1-SC-TOKENS`: **84.8%** ($424/500$).
-   - Net Difference: **+4.4%** ($95\%\text{ CI}: [+0.16\%, +8.64\%]$).
-   - Compute Matching: $B3$ token spend ($4,237,318$) matched $B1-SC-TOKENS$ ($4,146,997$) within $+2.18\%$ (well within $\pm 10\%$).
-   - Two One-Sided Tests (TOST) Analysis ($\delta = \pm 0.03$): Lower bound test $t_1 = 3.417, p_1 = 0.00034$; Upper bound test $t_2 = 0.646, p_2 = 0.7408$. TOST $p = 0.7408$. Because the observed difference ($+4.4\%$) slightly exceeded the pre-registered equivalence bound ($+3.0\%$), strict equivalence at $\delta = \pm 0.03$ is not formally established, but debate demonstrates only a marginal gain ($+4.4\%$) on closed reasoning compared to partitioned tasks.
-   - False Consensus Rate: In $8.2\%$ ($41/500$) of problems, an initially correct agent was persuaded to adopt an incorrect peer consensus.
-2. **Private Information Reconciliation (N=100)**:
-   - `B3-DEBATE` Accuracy: **87.0%** ($87/100$) vs `B1-SC-TOKENS`: **73.0%** ($73/100$).
-   - Net Difference: **+14.0%** (exceeds pre-registered $\ge +12\%$ success threshold).
-   - Paired Discordant Pairs: 27 Debate wins vs 13 SC wins. McNemar exact binomial $p = 0.0192$.
-   - Note on Reconciliation: An earlier provisional text draft cited preliminary figures ($88.5\%$ vs $71.0\%$, $+17.5\%$). Immutable raw telemetry confirms exact counts of $87/100$ vs $73/100$ ($+14.0\%$), which satisfies the $\ge +12\%$ threshold.
-3. **Asymmetric Tool Specialization (N=100)**:
-   - `B3-DEBATE` Accuracy: **89.0%** ($89/100$) vs `B1-SC-TOKENS`: **75.0%** ($75/100$).
-   - Net Difference: **+14.0%** (exceeds pre-registered $\ge +12\%$ success threshold, McNemar $p = 0.0125$).
-4. **Distributed State Tracking (N=100)**:
-   - `B3-DEBATE` Accuracy: **84.0%** ($84/100$) vs `B1-SC-TOKENS`: **66.0%** ($66/100$).
-   - Net Difference: **+18.0%** (McNemar $p = 0.0051$).
+- **Preregistered Hypothesis ($H_1$)**: On tasks with private/partitioned information or asymmetric tool specializations, a 3-agent debate architecture will outperform compute-matched single-agent $B1-SC$ by $\ge +10\%$ accuracy with statistical significance at pre-registered **$\alpha = 0.01$**. Conversely, on closed-domain symbolic reasoning (GSM8K), compute-matched $B1-SC$ will equal multi-agent debate within an equivalence margin of $\delta = \pm 0.03$ ($p_{TOST} < 0.05$).
+- **Null Hypothesis ($H_0$)**: Compute-matched single-agent $B1-SC$ equals or outperforms multi-agent debate across all task categories ($H_0: p_{\text{debate}} \le p_{B1-SC}$), or difference is sub-threshold.
 
 ---
 
-## 2. Scientific & Architectural Implications for SimLab
+## 2. Rigorous Statistical Reconciliation by Domain
 
-1. **Resolution of the Debate Disputation**:
-   - Multi-agent debate is NOT a general reasoning booster. On closed, self-contained reasoning problems (math, logic), debate yields small returns ($+4.4\%$) subject to false consensus risk ($8.2\%$).
-   - However, where knowledge is partitioned (private information) or tool capability is specialized, multi-agent debate provides genuine emergent collaborative surplus ($+14.0\%$ to $+18.0\%$) that parallel single-agent sampling cannot replicate.
-2. **Architectural Boundary**:
-   - Multi-agent debate must be restricted strictly to tasks with partitioned information, asymmetric tools, or distributed observation states.
+### 1. Private Information Tasks ($N=100$)
+- **Empirical Counts**: Multi-Agent Debate: $87/100$ ($87.0\%$) vs $B1-SC\text{-tokens}$: $73/100$ ($73.0\%$).
+- **Observed Difference**: $+14.0\%$ ($95\%\text{ CI}: [+4.2\%, +23.8\%]$).
+- **Statistical Test**: McNemar's exact binomial test on discordant pairs ($b=27$ debate wins, $c=13$ SC wins).
+- **Empirical p-value**: **$p = 0.0192$**.
+- **Audit Against Preregistered Alpha**:
+  - Preregistered Alpha: **$\alpha = 0.01$**.
+  - Result: **$p = 0.0192 > 0.01$**.
+  - **Verdict**: While the observed effect size ($+14.0\%$) exceeds the $\ge +10\%$ threshold, the result **FAILS** the pre-registered significance threshold ($\alpha = 0.01$).
+  - **Permitted Classification**: **`PROMISING_BUT_NOT_SIGNIFICANT`**.
+  - **Permitted Conclusion**: The data demonstrates a promising empirical trend toward multi-agent coordination on private-information tasks ($+14.0\%$), but does not achieve the pre-registered standard of statistical proof at $\alpha = 0.01$.
+  - **Prohibited Conclusion**: Claiming that multi-agent debate is "proven statistically superior" or "statistically significant at $\alpha = 0.01$".
+
+### 2. Closed Symbolic Reasoning (GSM8K, $N=500$)
+- **Empirical Counts**: Multi-Agent Debate: $446/500$ ($89.2\%$) vs $B1-SC\text{-tokens}$: $424/500$ ($84.8\%$).
+- **Observed Difference**: $+4.40\%$ ($90\%\text{ CI}: [+0.84\%, +7.96\%]$; $95\%\text{ CI}: [+0.16\%, +8.64\%]$).
+- **Equivalence Specification**: Equivalence margin $\delta = \pm 0.03$ ($[-3.0\%, +3.0\%]$).
+- **Two One-Sided Tests (TOST)**:
+  - Lower Bound Test ($H_{01}: \Delta \le -0.03$): $t_1 = 3.417, p_1 = 0.00034$.
+  - Upper Bound Test ($H_{02}: \Delta \ge +0.03$): $t_2 = 0.646, p_2 = 0.7408$.
+  - **TOST p-value**: **$p_{TOST} = \max(p_1, p_2) = 0.7408$**.
+- **Audit Against Preregistered Alpha**:
+  - Preregistered Alpha: $\alpha = 0.05$.
+  - Result: **$p_{TOST} = 0.7408 \ge 0.05$**.
+  - **Verdict**: The equivalence null cannot be rejected. Strict equivalence within $\pm 3.0\%$ was **NOT ESTABLISHED**.
+  - **Permitted Classification**: **`EQUIVALENCE_NOT_ESTABLISHED`**.
+  - **Core Rule**: A failed TOST must never be interpreted as evidence of equivalence, nor does it establish definitive superiority.
+  - **Permitted Conclusion**: Equivalence within $\pm 3\%$ was not established; multi-agent debate showed a modest $+4.4\%$ nominal difference on this sample, but whether debate and single-agent compute-matched baselines are equivalent or divergent remains statistically unresolved.
+
+### 3. Asymmetric Tools ($N=100$)
+- Debate $89/100$ vs $B1-SC$ $75/100$ ($+14.0\%$, McNemar $p = 0.0125$). Also misses $\alpha = 0.01$ ($0.0125 > 0.01$). Classified as `PROMISING_BUT_NOT_SIGNIFICANT`.
+
+### 4. Distributed State Tracking ($N=100$)
+- Debate $84/100$ vs $B1-SC$ $66/100$ ($+18.0\%$, McNemar $p = 0.0051$). Satisfies $\alpha = 0.01$ ($0.0051 < 0.01$).
+
+---
+
+## 3. Synthesis of Supported, Prohibited, and Unresolved Claims
+
+- **WHAT IS SUPPORTED**:
+  - Multi-agent debate achieves compute parity ($+2.18\%$ to $+2.82\%$ token spend, well within $\pm 10\%$).
+  - Distributed state tracking exhibits a statistically significant gain ($+18.0\%, p = 0.0051 < 0.01$).
+  - Sycophancy / False Consensus is an observed risk in debate ($8.2\%$ rate on GSM8K).
+- **WHAT IS NOT SUPPORTED**:
+  - Multi-agent debate is NOT proven statistically superior on private information at the pre-registered $\alpha = 0.01$ level ($p = 0.0192$).
+  - Equivalence between Debate and $B1-SC$ on GSM8K within $\pm 3\%$ is NOT established ($p_{TOST} = 0.741$).
+- **WHAT REMAINS UNRESOLVED (FORWARD TO PHASE 4)**:
+  - Does private-information advantage replicate and achieve $p < 0.01$ with higher power ($N \ge 250$)?
+  - What is the true difference between debate and compute-matched $B1-SC$ on closed reasoning?
 
 
 ================================================================================
@@ -582,36 +607,35 @@ I conducted an independent audit of the 150 condition-runs in `EXP-RP03-PHASE-BO
 # PX-05: RP-04 Analysis & Hypothesis Testing
 **Experiment ID**: `EXP-RP04-DYNAMIC-ORCHESTRATION-V1`  
 **Analyst**: Statistical & Metrics Specialist / Sol  
-**Evaluation Verdict**: **HYPOTHESIS SUPPORTED ($H_1$) — ESCALATION HALTED AT HEURISTIC TIER**  
+**Evaluation Verdict**: **HYPOTHESIS SUPPORTED ($H_1$) — STOP_ESCALATION_VALID**  
 
 ---
 
-## 1. Statistical Discipline & Preregistered Fallback Execution
+## 1. Preregistered Stopping Rule & Quality Tolerance Audit
 
-### Normality Audit
-- Shapiro-Wilk test on token distributions across routing tiers returned $p < 10^{-4}$ (Right-skewed token distribution).
-- As mandated by Phase 3 Section 16, **the preregistered non-parametric fallback was automatically invoked**:
-  - **Kruskal-Wallis Omnibus Test**: $H = 55.98, p = 4.28 \times 10^{-12}$ (Statistically significant difference in token consumption across routing tiers).
-  - **Pairwise Mann-Whitney U Test** (Heuristic vs Static): $U = 3000.0$, $p = 1.0313 \times 10^{-6}$ (Significant token reduction).
+- **Preregistered Thresholds in RD-08 / RD-09**:
+  - Token Savings: $\ge 25\%$ reduction vs Static Full Topology ($p < 0.01$).
+  - Quality Loss Tolerance: Accuracy degradation **$\le 3.0\%$** compared to Static Full Topology.
+  - Overhead Constraint: Orchestrator latency $< 0.05$s, token overhead $< 8\%$.
+- **Observed Empirical Results for HEURISTIC_ROUTING**:
+  - Token Savings: **$27.80\%$** ($247,451$ vs $342,707$ tokens; $p = 1.03 \times 10^{-6} < 0.01$). $\to$ **MET**.
+  - Accuracy Degradation: **$-2.0\%$** ($90/100$ vs $92/100$). Degradation is $\le 3.0\%$. $\to$ **MET**.
+  - Overhead: $0.001$s latency, $0$ router tokens ($0.0\%$). $\to$ **MET**.
+
+### Stopping-Rule Adjudication:
+- **Decision**: **`STOP_ESCALATION_VALID`**.
+- The heuristic routing tier completely satisfied all pre-registered criteria without violating the quality-loss tolerance.
 
 ---
 
-## 2. Progressive Complexity Rule & Bounded Stopping-Rule Interpretation
+## 2. Strict Bounding of Unexecuted Routing Tiers
 
-1. **Failure of Deterministic Tier**:
-   - `DETERMINISTIC_ROUTING` relied on simplistic query length rules, leading to an unacceptable **10.0% under-activation rate** on complex, concise tasks. Accuracy dropped to 86.0%, violating the $\le 3\%$ margin. Escalation to Heuristic tier was required.
-2. **Success of Heuristic Tier**:
-   - `HEURISTIC_ROUTING` achieved **90.0% accuracy** (within 2.0% of Static Topology: $90/100$ vs $92/100$) while achieving **27.80% token savings** ($247,451$ vs $342,707$ tokens, $p < 10^{-6}$).
-   - Under-activation rate was contained to 1.0%.
-3. **Application of the Complexity Burden Rule**:
-   - The pre-registered protocol mandates: *"If heuristic routing is sufficient: STOP_ESCALATION. Do not deploy LLM or learned routing unnecessarily."*
-   - Because `HEURISTIC_ROUTING` satisfied the pre-registered success criteria ($\ge 25\%$ token savings, $\le 3\%$ accuracy drop), the project invoked **`STOP_ESCALATION`**.
-
-### Explicit Boundaries on Routing Conclusions:
 - **WHAT WAS TESTED**: `STATIC_ROUTING`, `DETERMINISTIC_ROUTING`, `HEURISTIC_ROUTING` (and exploratory `LLM_ROUTER`).
-- **WHAT WAS NOT NECESSARY TO EXECUTE**: `LEARNED_PUPPETEER_ROUTING` (and deploying LLM routers in production).
-- **Classification**: `LEARNED_PUPPETEER_ROUTING` is formally classified as **`NOT_TESTED_DUE_TO_STOPPING_RULE`**, not `REJECTED`, `HARMFUL`, or `INFERIOR`.
-- **Grounded Conclusion**: "Under the tested workload and preregistered thresholds, heuristic routing achieved sufficient quality while reducing resource use, so escalation to more complex routing mechanisms was not scientifically or economically justified."
+- **WHAT WAS NOT NECESSARY TO EXECUTE**: `LEARNED_PUPPETEER_ROUTING` (and production deployment of LLM routers).
+- **Canonical Classification**: `LEARNED_PUPPETEER_ROUTING` is classified strictly as **`NOT_TESTED_DUE_TO_STOPPING_RULE`**.
+- **Prohibited Claims**: It is strictly forbidden to claim that learned Puppeteer routing is "inferior", "rejected", or "harmful."
+- **Grounded Scientific Conclusion**:
+  > *"Under the tested workload and preregistered thresholds, heuristic routing achieved sufficient quality while reducing resource use, so escalation to more complex routing mechanisms was not scientifically or economically justified."*
 
 
 ================================================================================
@@ -736,26 +760,27 @@ All raw evidence files have been verified against git commit `8d7d8465b07c3b1c12
 
 ---
 
-## 1. Master Statistical Matrix (Recomputed from Immutable Telemetry)
+## 1. Master Statistical Reconciliation Matrix (All 4 Candidates vs Preregistered Contracts)
 
-| Experiment | Primary Comparison | Preregistered Statistical Test | Distributional Assumption Check | Test Statistic | p-value | Recomputed Effect Size (Raw Numerator/Denominator) | Formal Outcome |
-|---|---|---|---|---|---|---|---|
-| **RP-01** | Corrected Recency vs Inverted Rank | Paired Wilcoxon Signed-Rank Test | Continuous paired differences; non-normal | $W = 1735.0$ | $p = 6.59 \times 10^{-3}$ | Inversion: $74.5\% \to 41.0\%$ ($74.5/100 \to 41.0/100$); $\Delta \text{MRR} = +0.0446$ | `PARTIALLY_SUPPORTED` (Equal weights sub-threshold) |
-| **RP-01 (Alt)**| Tuned Weights vs Inverted Rank | Paired Wilcoxon Signed-Rank Test | Continuous paired differences; non-normal | $W = 1463.0$ | $p = 2.60 \times 10^{-4}$ | $\Delta \text{MRR} = +0.1685$ ($0.2403$ vs $0.0718$); $d = 0.88$ | `SUPPORTED` (Exceeds $+0.15$ threshold) |
-| **RP-03** | Phase SOPs vs Unrestricted Chat (Tokens) | Paired Wilcoxon Test | Right-skewed token spend; paired tasks | $W = 0.0$ | $p = 1.78 \times 10^{-15}$ | $49.17\%$ token reduction ($557,068 / 1,133,027$) | `SUPPORTED` (Exceeds $\ge 30\%$ savings) |
-| **RP-03 (Pass)**| Phase SOPs vs Unrestricted Chat (Pass Rate) | Paired Wilcoxon Test | Paired continuous score $[0, 1]$ | $W = 189.0$ | $p = 3.89 \times 10^{-2}$ | $+6.15\%$ pass rate ($86.87\%$ vs $80.72\%$) | `SUPPORTED` |
-| **RP-02** | Debate vs Token-Matched B1-SC (GSM8K)| TOST Equivalence Test ($\delta = \pm 0.03$) | Clustered binomial binary success | $t_1 = 3.42, t_2 = 0.65$ | $p_{TOST} = 0.741$ | $+4.40\%$ difference ($446/500$ vs $424/500$, $95\%\text{ CI}: [+0.16\%, +8.64\%]$) | `VERIFIED_WITH_CORRECTION` (Diff exceeds $+3\%$ margin) |
-| **RP-02 (Priv)**| Debate vs B1-SC (Private Info) | Binomial McNemar Exact Test | Paired binary deduction success | $b=27, c=13$ | $p = 1.92 \times 10^{-2}$ | $+14.0\%$ accuracy gain ($87/100$ vs $73/100$) | `SUPPORTED` (Exceeds $+12\%$ threshold) |
-| **RP-04** | Heuristic Router vs Static Topology | **Preregistered Fallback**: Kruskal-Wallis + Mann-Whitney U | Shapiro-Wilk $p < 10^{-4}$ (Violated ANOVA normality) | $U = 3000.0$ | $p = 1.03 \times 10^{-6}$ | $27.80\%$ token savings ($95,256 / 342,707$); Acc: $90/100$ vs $92/100$ ($-2.0\%$) | `SUPPORTED` (STOP_ESCALATION invoked) |
+| Experiment | Primary Hypothesis | Primary Metric | Observed Effect (Raw Counts) | Statistical Test | p-value / CI | Preregistered Alpha ($\alpha$) | Preregistered Success Threshold | Threshold Met? | Final Canonical Status |
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+| **RP-01** | Corrected Recency eliminates inversion bug; tuned weights outperform rank | Inversion Rate & MRR Delta | Inversion: $74.5\% \to 41.0\%$; Tuned $\Delta \text{MRR} = +0.1685$ ($0.2403$ vs $0.0718$) | Paired Wilcoxon Signed-Rank | $W = 1463.0, p = 2.60 \times 10^{-4}$ | $\alpha = 0.0025$ | Inversion $< 50\%$; $\Delta \text{MRR} \ge +0.15$ | **YES** | **`SUPPORTED_WITH_CONSTRAINTS`** |
+| **RP-01 (Equal)**| Equal weighting ($\alpha=\beta=\gamma=1$) is optimal | MRR Delta | $\Delta \text{MRR} = +0.0446$ ($0.1164$ vs $0.0718$) | Paired Wilcoxon Signed-Rank | $W = 1735.0, p = 6.59 \times 10^{-3}$ | $\alpha = 0.0025$ | $\Delta \text{MRR} \ge +0.05$ | **NO** ($0.0446 < 0.05$) | **`HYPOTHESIS_REJECTED`** (Equal weights disproven) |
+| **RP-02 (Priv)** | Debate outperforms B1-SC on private info | Accuracy Delta | $+14.0\%$ ($87/100$ vs $73/100$) | McNemar Exact Binomial | $p = 0.0192$; $95\%\text{ CI}: [+4.2\%, +23.8\%]$ | $\alpha = 0.01$ | $\ge +10.0\%$ and $p < 0.01$ | **NO** ($p = 0.0192 > 0.01$) | **`PROMISING_BUT_NOT_SIGNIFICANT`** |
+| **RP-02 (GSM)** | Debate equals B1-SC on closed reasoning | TOST Equivalence ($\delta = \pm 0.03$) | $+4.40\%$ ($446/500$ vs $424/500$) | Two One-Sided Tests (TOST) | $p_{TOST} = 0.741$; $90\%\text{ CI}: [+0.84\%, +7.96\%]$ | $\alpha = 0.05$ | $p_{TOST} < 0.05$ (CI inside $\pm 3\%$) | **NO** (CI crosses $+3\%$) | **`EQUIVALENCE_NOT_ESTABLISHED`** |
+| **RP-02 (State)**| Debate outperforms B1-SC on state tracking | Accuracy Delta | $+18.0\%$ ($84/100$ vs $66/100$) | McNemar Exact Binomial | $p = 0.0051$; $95\%\text{ CI}: [+6.8\%, +29.2\%]$ | $\alpha = 0.01$ | $\ge +10.0\%$ and $p < 0.01$ | **YES** ($p < 0.01$) | **`SUPPORTED`** |
+| **RP-03** | Phase SOPs reduce tokens without pass degradation | Token Savings & Test Pass | Tokens: $-49.17\%$ ($557,068 / 1,133,027$); Pass: $+6.15\%$ ($86.87\%$ vs $80.72\%$) | Paired Wilcoxon Signed-Rank | Tokens: $W=0, p = 1.78 \times 10^{-15}$; Pass: $p = 0.0389$ | $\alpha = 0.01$ | Tokens $\ge 25\%$ savings; Pass degradation $\le 3\%$ | **YES** | **`SUPPORTED_WITH_CONSTRAINTS`** |
+| **RP-04** | Dynamic routing saves $\ge 25\%$ tokens within $\le 3\%$ loss | Token Savings & Accuracy Delta | Tokens: $-27.80\%$ ($95,256 / 342,707$); Acc: $-2.0\%$ ($90/100$ vs $92/100$) | Mann-Whitney U Test (Fallback) | Tokens: $U=3000, p = 1.03 \times 10^{-6}$ | $\alpha = 0.01$ | Tokens $\ge 25\%$ savings; Acc loss $\le 3.0\%$ | **YES** | **`SUPPORTED_WITH_CONSTRAINTS`** (`STOP_ESCALATION_VALID`) |
 
 ---
 
-## 2. Methodological Rigor & Assumption Compliance
+## 2. Rigorous Epistemic Clarifications
 
-1. **RP-04 Normality Violation & Fallback**:
-   - The Statistical Analyst confirmed that token distributions across heterogeneous tasks violate Gaussian normality ($p < 10^{-4}$). As mandated by Phase 3 Section 16, the pre-registered non-parametric fallback (**Kruskal-Wallis omnibus test**, $H = 55.98, p = 4.28 \times 10^{-12}$) was automatically invoked rather than an ungrounded ANOVA.
-2. **RP-02 TOST Reconciliation**:
-   - Pre-registered equivalence bound was $\delta = \pm 0.03$. On GSM8K ($N=500$), multi-agent debate achieved $89.2\%$ ($446/500$) vs $B1-SC-tokens$ $84.8\%$ ($424/500$), yielding a $+4.4\%$ gain. Because $+4.4\% > +3.0\%$, the upper one-sided test failed to reject ($p = 0.741$). This proves that while debate does not exhibit large collaborative surplus on closed reasoning, it also does not strictly fall within $\pm 3\%$ of $B1-SC$.
+1. **RP-02 Adjudication**:
+   - The private-information effect size ($+14.0\%$) is practically substantial, but because $p = 0.0192 > 0.01$, Curo governance strictly forbids labeling it statistically significant. It remains tentative evidence awaiting higher-powered replication in Phase 4.
+   - On GSM8K, TOST failed to reject the non-equivalence null ($p = 0.741$). The observed $+4.4\%$ difference prevents asserting equivalence, while simultaneously failing to establish that debate is meaningfully superior given the $8.2\%$ sycophancy rate.
+2. **RP-04 Stopping Rule**:
+   - Verified that $-2.0\%$ accuracy degradation is strictly within the $\le 3.0\%$ pre-registered quality margin. `STOP_ESCALATION_VALID` certified.
 
 
 ================================================================================
@@ -821,14 +846,14 @@ Total Invalid Runs: **0**. Zero episodes required invalidation or re-testing. Ze
 
 ---
 
-## 1. Primitive Adjudication Ledger
+## 1. Primitive Adjudication Ledger (Reconciled Against Preregistered Thresholds)
 
-| Primitive ID | Primitive Name | Gate R1 Status | Phase 3 Evidence Class | Phase 3 Adjudicated Status | Formal Architectural Justification |
+| Primitive ID | Primitive Name | Gate R1 Status | Phase 3 Evidence Class | Phase 3 Reconciled Status | Formal Architectural Justification |
 |---|---|---|---|---|---|
-| **PR-COG-01** | Tri-Factor Memory Recency Decay | `REPRODUCTION_CANDIDATE` | `BENCHMARK_VERIFIED` | **`SUPPORTED_WITH_CONSTRAINTS`** | Corrected exponential decay ($s=\gamma^{\Delta t}$) eliminates Smallville code inversion defect ($74.5\% \to 41.0\%$), but requires dominant relevance weighting ($\beta > \alpha$). Equal weighting is rejected. |
-| **PR-ORG-01** | Multi-Agent Iterative Debate | `REPRODUCTION_CANDIDATE` | `BENCHMARK_VERIFIED` | **`CONTEXT_DEPENDENT`** | Outperforms compute-matched $B1-SC$ by $+14.0\%$ on private-information tasks ($87/100$ vs $73/100$) and $+14.0\%$ on asymmetric tools. Marginal $+4.4\%$ gain on closed reasoning (GSM8K) is subject to $8.2\%$ false consensus risk. |
-| **PR-ORG-02** | Phased Assembly-Line SOP State Machine | `REPRODUCTION_CANDIDATE` | `BENCHMARK_VERIFIED` | **`SUPPORTED_WITH_CONSTRAINTS`** | Achieves $49.17\%$ token reduction ($557,068 / 1,133,027$) and suppresses cross-role violations ($1.80 \to 0.00$) on structured software tasks. Bounded strictly to task workflows; prohibited for open-ended social simulation. |
-| **PR-ORG-03** | Dynamic Agent Orchestration | `REPRODUCTION_CANDIDATE` | `BENCHMARK_VERIFIED` | **`SUPPORTED_WITH_CONSTRAINTS`** | Multi-feature Heuristic Routing achieves $27.80\%$ token savings with $\le 2.0\%$ accuracy delta. Escalation halted; neural routing classified as `NOT_TESTED_DUE_TO_STOPPING_RULE`. |
+| **PR-COG-01** | Tri-Factor Memory Recency Decay | `REPRODUCTION_CANDIDATE` | `BENCHMARK_VERIFIED` | **`SUPPORTED_WITH_CONSTRAINTS`** | Corrected exponential decay ($s=\gamma^{\Delta t}$) eliminates Smallville code inversion defect ($74.5\% \to 41.0\%$), but requires dominant relevance weighting ($\beta > \alpha$). Equal weighting is disproven and rejected. |
+| **PR-ORG-01** | Multi-Agent Iterative Debate | `REPRODUCTION_CANDIDATE` | `BENCHMARK_VERIFIED` | **`INSUFFICIENT_EVIDENCE` / `PROMISING_BUT_NOT_SIGNIFICANT`** | Private-info gain ($+14.0\%$) missed pre-registered $\alpha = 0.01$ ($p = 0.0192$). GSM8K equivalence was not established ($p_{TOST} = 0.741$). Carried forward as primary ablation question in Phase 4. |
+| **PR-ORG-02** | Phased Assembly-Line SOP State Machine | `REPRODUCTION_CANDIDATE` | `BENCHMARK_VERIFIED` | **`SUPPORTED_WITH_CONSTRAINTS`** | Achieves $49.17\%$ token reduction ($557,068 / 1,133,027$) and suppresses cross-role violations ($1.80 \to 0.00$) on structured software tasks ($p < 10^{-14}$). Bounded strictly to task workflows; prohibited for open-ended social simulation. |
+| **PR-ORG-03** | Dynamic Agent Orchestration | `REPRODUCTION_CANDIDATE` | `BENCHMARK_VERIFIED` | **`SUPPORTED_WITH_CONSTRAINTS`** | Multi-feature Heuristic Routing achieves $27.80\%$ token savings with $\le 2.0\%$ accuracy drop. Escalation halted (`STOP_ESCALATION_VALID`); neural routing classified as `NOT_TESTED_DUE_TO_STOPPING_RULE`. |
 
 
 ================================================================================
@@ -842,21 +867,23 @@ Total Invalid Runs: **0**. Zero episodes required invalidation or re-testing. Ze
 
 ---
 
-## 1. Substantive Review Findings
+## 1. Substantive Statistical Audit Findings
 
-I have conducted an independent, adversarial audit of the raw telemetry, code implementations, statistical analyses, and conclusions across all four Phase 3 reproduction experiments.
+I have conducted a rigorous audit of the statistical claims against the pre-registered Phase 2 contracts (`RD-05` to `RD-09`).
 
 ### Evaluative Findings:
 1. **RP-01 (Smallville Memory Recency)**:
-   - Recomputation confirms the historical inversion rate at $74.5\%$ and corrected rate at $41.0\%$. Equal weighting ($\alpha=\beta=\gamma=1$) achieved $\Delta \text{MRR} = +0.0446$ (sub-threshold), whereas tuned weighting achieved $+0.1685$ ($p < 0.001$). I affirm `SUPPORTED_WITH_CONSTRAINTS`.
+   - Inversion rate drop ($74.5\% \to 41.0\%$) is verified. Equal weighting fails ($\Delta = +0.0446 < 0.05$). Tuned weighting succeeds ($\Delta = +0.1685 \ge 0.15, p = 0.00026 < 0.0025$). I affirm `SUPPORTED_WITH_CONSTRAINTS`.
 2. **RP-02 (Compute-Matched Debate)**:
-   - Telemetry confirms $87/100$ vs $73/100$ ($+14.0\%$) on private information and $446/500$ ($89.2\%$) vs $424/500$ ($84.8\%$) on GSM8K. Debate is not a universal reasoning booster; collaborative surplus is localized to partitioned information. I affirm `CONTEXT_DEPENDENT`.
+   - On Private Information, $p = 0.0192 > 0.01$. Under Curo discipline, **this must not be called statistically significant**. It is properly classified as `PROMISING_BUT_NOT_SIGNIFICANT`.
+   - On GSM8K, $p_{TOST} = 0.741$. Equivalence was not established. It is properly classified as `EQUIVALENCE_NOT_ESTABLISHED`.
+   - I affirm that RP-02 provides tentative, context-dependent evidence that requires targeted ablation in Phase 4.
 3. **RP-03 (ChatDev SOPs)**:
-   - Telemetry recomputation confirms an aggregate token reduction of $49.17\%$ ($557,068 / 1,133,027$) and zero cross-role violations. I affirm `SUPPORTED_WITH_CONSTRAINTS`.
+   - $49.17\%$ token savings ($p < 10^{-14}$) and zero role violations strictly meet all pre-registered thresholds. I affirm `SUPPORTED_WITH_CONSTRAINTS`.
 4. **RP-04 (Dynamic Orchestration)**:
-   - The Heuristic tier satisfied pre-registered thresholds ($27.80\%$ savings, $-2.0\%$ accuracy delta). Invoking `STOP_ESCALATION` was methodologically sound. Higher tiers are properly classified as `NOT_TESTED_DUE_TO_STOPPING_RULE`. I affirm `SUPPORTED_WITH_CONSTRAINTS`.
+   - Heuristic routing achieved $27.80\%$ savings with $-2.0\%$ accuracy delta, strictly satisfying the $\le 3.0\%$ loss tolerance. `STOP_ESCALATION_VALID` is certified. Unexecuted tiers are properly classified as `NOT_TESTED_DUE_TO_STOPPING_RULE`.
 
-**Substantive Verification Verdict**: **`SUBSTANTIVE_RESULT_VERIFICATION: PASS`**
+**Substantive Review Recommendation**: **`SUBSTANTIVE_RESULT_VERIFICATION: PASS` (With Reconciled Classifications)**.
 
 
 ================================================================================
@@ -877,11 +904,14 @@ This memo challenges the primary conclusions of Phase 3 to establish strict exte
 - **Red Team Finding**: **NO.** RP-01 evaluated isolated vector ranking on 500 static records. In a continuous 25-agent simulation, memory stores grow to tens of thousands of records, and agents continuously reflect. Recency decay does not solve memory bloat or reflection hallucination.
 - **Bounding Constraint**: RP-01 validates only the mathematical scoring formula. It does not validate long-horizon social simulation coherence.
 
-### Challenge 2: Could prompt tuning in single-agent models erase the multi-agent gain in private-information tasks?
-- **Red Team Finding**: If a single model is given all private information simultaneously, it performs well. However, in persistent simulations, agents have physically or socially partitioned observations. Where information is inherently distributed across separate agents, multi-agent communication is unavoidable.
+### Challenge 2: Can SimLab rely on multi-agent debate based on RP-02?
+- **Red Team Finding**: **ABSOLUTELY NOT.** The private-information advantage failed to reach statistical significance at $\alpha = 0.01$ ($p = 0.0192$), and GSM8K equivalence failed ($p_{TOST} = 0.741$). Debate carries an $8.2\%$ false consensus risk and token costs. It must not be incorporated into SimLab architecture without Phase 4 resolution.
 
 ### Challenge 3: Does RP-03 justify assembly-line SOPs for Smallville-style towns?
 - **Red Team Finding**: **ABSOLUTELY NOT.** Forcing townspeople in Smallville into a sequential "Design -> Code -> Review" assembly line would destroy emergent social dialogue. RP-03 is strictly valid for goal-directed task production workflows.
+
+### Challenge 4: Does RP-04 prove that learned routing is useless?
+- **Red Team Finding**: **NO.** RP-04 only proved that heuristic routing met the stopping threshold on `HeteroBench-100`. On tasks with unknown distributions or complex multimodal actions, learned routing may be needed. It was not tested due to the stopping rule.
 
 
 ================================================================================
@@ -897,14 +927,14 @@ This memo challenges the primary conclusions of Phase 3 to establish strict exte
 ## 1. Retrospective & Disproved Assumptions
 
 1. **The Equal-Weighting Myth**: The published claim in Generative Agents that equal weights ($\alpha=\beta=\gamma=1$) produce optimal memory retrieval is disproven. Relevance must strictly dominate recency and importance ($\beta > \alpha + \gamma$) to prevent agents from retrieving recent irrelevant noise.
-2. **The Debate-as-Reasoner Myth**: Multi-agent debate does not provide large collaborative surplus on closed symbolic reasoning. It is an information reconciliation tool, not a reasoning amplifier.
-3. **The Neural Orchestrator Trap**: Complex learned meta-orchestrators are unnecessary when multi-feature heuristic rules achieve sufficient quality and token reduction with zero latency overhead.
+2. **The Debate-as-Universal-Reasoner Fallacy**: Multi-agent debate does not demonstrate robust superiority or equivalence on closed symbolic reasoning. Collaborative surplus is strictly localized to partitioned information, and even there required statistical thresholds were narrowly missed ($p = 0.0192 > 0.01$).
+3. **The Heuristic-Sufficiency Boundary**: Multi-feature heuristic rules achieved sufficient performance to halt escalation on tested workloads, but this stopping-rule success does not imply that learned orchestrators are inferior for untested complex domains.
 
 ---
 
-## 2. Cumulative Operational Negative Constraints Master Register (NC-01 through NC-46)
+## 2. Cumulative Operational Negative Constraints Master Register (NC-01 through NC-51)
 
-All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly consume and enforce these forty-six binding negative forward constraints:
+All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly consume and enforce these fifty-one binding negative forward constraints:
 
 ### 2.1 Gate R1 Technical & Architectural Constraints (NC-01 to NC-16)
 - `NC-01`: **NO Unvalidated Prompt-Based Governance**: Never use natural language prompts for access control; enforce via deterministic Cedar/OPA policy engines.
@@ -954,13 +984,18 @@ All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly 
 - `NC-39`: **Model Pinned Fingerprint Invariant**: Never execute experiments against unpinned model checkpoints; track provider system fingerprints.
 - `NC-40`: **Phase 4 Authorization Boundary**: Never proceed to Phase 4 ablation testing without explicit, separate human requester authorization.
 
-### 2.5 Gate R3 Post-Reconciliation Constraints (NC-41 to NC-46)
+### 2.5 Gate R3 Post-Reconciliation Statistical Integrity Constraints (NC-41 to NC-51)
 - `NC-41`: **Layered Verification Separation Invariant**: Deterministic package audits verify artifact presence and schema integrity only; they do not prove scientific truth or validate substantive mathematical conclusions. Layer A and Layer B must always remain distinct.
 - `NC-42`: **Lifecycle Adjudication Decoupling**: Deterministic audit completion certifies `DETERMINISTIC_AUDIT: PASS` and readiness for adjudication, not `GATE_COMPLETE`. Gate closure requires explicit substantive adjudication.
 - `NC-43`: **Stopping-Rule Non-Inferiority Invariant**: Invoking a pre-registered stopping rule (e.g. `STOP_ESCALATION`) establishes that further complexity was unjustified for the evaluated workload; it does not prove that unexecuted treatments are inferior, harmful, or rejected. Unexecuted treatments must be classified strictly as `NOT_TESTED_DUE_TO_STOPPING_RULE`.
 - `NC-44`: **Raw Provenance Traceability Constraint**: Every reported aggregate percentage or effect size must remain strictly traceable to raw numerators, denominators, and sample sizes in immutable telemetry. Provisional narrative estimates must never be substituted for empirical counts.
 - `NC-45`: **Rigorous Equivalence Specification**: Claims of equivalence must specify explicit pre-registered equivalence bounds ($\delta$) and report both one-sided tests (TOST), confidence intervals, and power.
 - `NC-46`: **Mandatory External Validity Delimitation**: Every architecture-relevant finding must be accompanied by explicit negative boundaries stating what the result does *not* support and where generalization is forbidden.
+- `NC-47`: **Statistical Significance Threshold Integrity**: Never declare a result statistically significant if the empirical p-value exceeds the pre-registered significance threshold ($p > \alpha$). Large effect sizes that fail the pre-registered alpha must be classified as `PROMISING_BUT_NOT_SIGNIFICANT` or `INSUFFICIENT_EVIDENCE`.
+- `NC-48`: **Equivalence Test Discipline (Anti-TOST-Inversion)**: Never interpret a failed equivalence test ($p_{TOST} \ge \alpha$) as evidence of equivalence. Furthermore, absence of established equivalence is not evidence of difference or superiority; classify strictly as `EQUIVALENCE_NOT_ESTABLISHED`.
+- `NC-49`: **Prohibition on Post-Hoc Threshold Adjustment**: Evaluators and researchers must never lower alpha, expand equivalence margins ($\delta$), or alter stopping criteria after observing experimental data. Pre-registered thresholds outrank attractive results.
+- `NC-50`: **Grounded Stopping-Rule Documentation**: Stopping-rule invocations (e.g. `STOP_ESCALATION`) must cite the exact pre-registered cost, quality, and overhead thresholds and verify that quality-loss tolerances were strictly respected.
+- `NC-51`: **Statistical-First Narrative Alignment**: Narrative conclusions, executive summaries, and walkthroughs must derive directly and conservatively from canonical statistical test outcomes, never inflating tentative or sub-threshold empirical findings into ungrounded claims of victory.
 
 
 ================================================================================
@@ -976,17 +1011,18 @@ All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly 
 ## 1. Answers to the 10 Canonical Gate R3 Questions
 
 1. **Which primitives reproduced?**
-   - `PR-COG-01` (Memory Recency Decay), `PR-ORG-02` (Phase-Bounded SOPs), and `PR-ORG-03` (Dynamic Orchestration) successfully reproduced under controlled conditions.
+   - `PR-COG-01` (Memory Recency Decay with Tuned Weights), `PR-ORG-02` (Phase-Bounded SOPs), and `PR-ORG-03` (Dynamic Orchestration via Heuristics) successfully reproduced under controlled conditions.
 2. **Which failed?**
-   - Published equal-weighted retrieval ($\alpha=\beta=\gamma=1$) in `PR-COG-01` failed the success threshold ($\Delta \text{MRR} < 0.05$), proving the necessity of dominant relevance weighting.
+   - Published equal-weighted retrieval ($\alpha=\beta=\gamma=1$) in `PR-COG-01` failed the success threshold ($\Delta \text{MRR} = +0.0446 < 0.05$), proving the necessity of dominant relevance weighting.
    - `DETERMINISTIC_ROUTING` in `PR-ORG-03` failed due to an unacceptable $10\%$ under-activation rate on complex tasks.
-3. **Which were context-dependent?**
-   - `PR-ORG-01` (Multi-Agent Debate) is strictly context-dependent: highly beneficial ($+14.0\%$ to $+18.0\%$) on private information and asymmetric tools, but offers marginal benefit ($+4.4\%$) on closed reasoning.
+3. **Which were inconclusive or sub-threshold?**
+   - `PR-ORG-01` (Multi-Agent Debate) is inconclusive on closed reasoning (`EQUIVALENCE_NOT_ESTABLISHED`, $p_{TOST} = 0.741$) and sub-threshold on private information ($+14.0\%$ gain, but $p = 0.0192 > 0.01$, classified as `PROMISING_BUT_NOT_SIGNIFICANT`).
 4. **Which runs were invalid?**
    - Exactly zero runs were invalid. All 1,750 experimental episodes executed cleanly without API rate limits or data corruption.
 5. **Which improvements survived compute normalization?**
-   - Multi-agent debate on private information survived token-matched control ($+14.0\%$ over $B1-SC-tokens$ within $+2.48\%$ token budget).
    - Phase-bounded SOPs survived compute normalization, achieving $49.17\%$ token savings with $+6.15\%$ higher test pass rates.
+   - Dynamic heuristic routing survived compute matching with $27.80\%$ token savings.
+   - Multi-agent debate showed compute-matched trends, but failed statistical significance at $\alpha = 0.01$.
 6. **Which mechanisms justify their added complexity?**
    - Elapsed-time exponential memory decay (replaces flawed inverted index with zero overhead).
    - Phase-bounded SOP state machines for task production workflows.
@@ -995,12 +1031,14 @@ All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly 
    - False consensus in multi-agent debate on closed reasoning ($8.2\%$ sycophancy rate).
    - Context accumulation blowout in unrestricted multi-agent conversation.
 8. **Which architecture unknowns remain unresolved?**
+   - True statistical surplus and scaling behavior of multi-agent debate (`U-02`).
    - Optimal reflection generation frequency under long-horizon simulation (`U-05`).
    - Information diffusion fidelity across 25+ agent social graphs (`U-06`).
 9. **Which primitives deserve ablation in Phase 4?**
    - `PR-COG-01`: Ablation of decay rates ($\lambda$) and weight sensitivity ratios.
-   - `PR-ORG-01`: Ablation of debate rounds (1 round vs 2 rounds vs 3 rounds) on private information.
-   - `PR-ORG-02`: Component ablation (roles-only vs phases-only vs roles+phases).
+   - `PR-ORG-01`: High-powered ablation of debate across information asymmetry gradients.
+   - `PR-ORG-02`: Factorial decomposition (roles vs phases).
+   - `PR-ORG-03`: Feature importance pruning on heuristic routing.
 10. **Which candidates should be rejected or deferred?**
     - `REJECT`: Unrestricted multi-agent chat for task workflows; equal-weighted memory retrieval.
     - `CLASSIFY AS NOT_TESTED_DUE_TO_STOPPING_RULE`: Learned neural routing / Puppeteer (stopping rule satisfied at Heuristic tier).
@@ -1024,7 +1062,7 @@ Phase 3 (**`CONTROLLED_REPRODUCTION_EXECUTION`**) has executed all four Gate-R2-
 
 ### Formal Verification Status:
 - **Layer A (Deterministic Package Audit)**: **`DETERMINISTIC_AUDIT: PASS`**
-- **Layer B (Substantive Numerical Verification)**: **`SUBSTANTIVE_RESULT_VERIFICATION: PASS`**
+- **Layer B (Substantive Numerical Verification)**: **`SUBSTANTIVE_RESULT_VERIFICATION: PASS`** (Reconciled with exact canonical classifications).
 
 ```
 +----------------------------------------------------------------------------------------------------+
@@ -1044,6 +1082,12 @@ Phase 3 (**`CONTROLLED_REPRODUCTION_EXECUTION`**) has executed all four Gate-R2-
 ## 2. Formal Gate R3 Recommendation
 
 ### Formal Decision: **`READY_FOR_ABLATION_AND_STRESS_TESTING`**
+
+### Gate Closure Basis:
+Gate R3 passes because:
+1. `PR-COG-01`, `PR-ORG-02`, and `PR-ORG-03` successfully satisfied pre-registered thresholds under rigorous controls.
+2. The partial failure and statistical sub-threshold outcome of `PR-ORG-01` (`p = 0.0192 > 0.01` on private info; `p_TOST = 0.741` on GSM8K) is documented with complete integrity, preserved as negative/tentative evidence, and explicitly designated as a primary unresolved question for Phase 4 ablation.
+3. Curo does not require every experiment to succeed; it requires that the empirical record is trustworthy, unconfounded, and methodologically sound.
 
 ### Operational Invariants & Safeguards:
 1. **Zero Automatic Progression**: Marking Gate R3 `READY_FOR_ABLATION_AND_STRESS_TESTING` does **not** authorize execution of Phase 4.

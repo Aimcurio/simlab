@@ -5,23 +5,24 @@
 
 ---
 
-## 1. Master Statistical Matrix (Recomputed from Immutable Telemetry)
+## 1. Master Statistical Reconciliation Matrix (All 4 Candidates vs Preregistered Contracts)
 
-| Experiment | Primary Comparison | Preregistered Statistical Test | Distributional Assumption Check | Test Statistic | p-value | Recomputed Effect Size (Raw Numerator/Denominator) | Formal Outcome |
-|---|---|---|---|---|---|---|---|
-| **RP-01** | Corrected Recency vs Inverted Rank | Paired Wilcoxon Signed-Rank Test | Continuous paired differences; non-normal | $W = 1735.0$ | $p = 6.59 \times 10^{-3}$ | Inversion: $74.5\% \to 41.0\%$ ($74.5/100 \to 41.0/100$); $\Delta \text{MRR} = +0.0446$ | `PARTIALLY_SUPPORTED` (Equal weights sub-threshold) |
-| **RP-01 (Alt)**| Tuned Weights vs Inverted Rank | Paired Wilcoxon Signed-Rank Test | Continuous paired differences; non-normal | $W = 1463.0$ | $p = 2.60 \times 10^{-4}$ | $\Delta \text{MRR} = +0.1685$ ($0.2403$ vs $0.0718$); $d = 0.88$ | `SUPPORTED` (Exceeds $+0.15$ threshold) |
-| **RP-03** | Phase SOPs vs Unrestricted Chat (Tokens) | Paired Wilcoxon Test | Right-skewed token spend; paired tasks | $W = 0.0$ | $p = 1.78 \times 10^{-15}$ | $49.17\%$ token reduction ($557,068 / 1,133,027$) | `SUPPORTED` (Exceeds $\ge 30\%$ savings) |
-| **RP-03 (Pass)**| Phase SOPs vs Unrestricted Chat (Pass Rate) | Paired Wilcoxon Test | Paired continuous score $[0, 1]$ | $W = 189.0$ | $p = 3.89 \times 10^{-2}$ | $+6.15\%$ pass rate ($86.87\%$ vs $80.72\%$) | `SUPPORTED` |
-| **RP-02** | Debate vs Token-Matched B1-SC (GSM8K)| TOST Equivalence Test ($\delta = \pm 0.03$) | Clustered binomial binary success | $t_1 = 3.42, t_2 = 0.65$ | $p_{TOST} = 0.741$ | $+4.40\%$ difference ($446/500$ vs $424/500$, $95\%\text{ CI}: [+0.16\%, +8.64\%]$) | `VERIFIED_WITH_CORRECTION` (Diff exceeds $+3\%$ margin) |
-| **RP-02 (Priv)**| Debate vs B1-SC (Private Info) | Binomial McNemar Exact Test | Paired binary deduction success | $b=27, c=13$ | $p = 1.92 \times 10^{-2}$ | $+14.0\%$ accuracy gain ($87/100$ vs $73/100$) | `SUPPORTED` (Exceeds $+12\%$ threshold) |
-| **RP-04** | Heuristic Router vs Static Topology | **Preregistered Fallback**: Kruskal-Wallis + Mann-Whitney U | Shapiro-Wilk $p < 10^{-4}$ (Violated ANOVA normality) | $U = 3000.0$ | $p = 1.03 \times 10^{-6}$ | $27.80\%$ token savings ($95,256 / 342,707$); Acc: $90/100$ vs $92/100$ ($-2.0\%$) | `SUPPORTED` (STOP_ESCALATION invoked) |
+| Experiment | Primary Hypothesis | Primary Metric | Observed Effect (Raw Counts) | Statistical Test | p-value / CI | Preregistered Alpha ($\alpha$) | Preregistered Success Threshold | Threshold Met? | Final Canonical Status |
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+| **RP-01** | Corrected Recency eliminates inversion bug; tuned weights outperform rank | Inversion Rate & MRR Delta | Inversion: $74.5\% \to 41.0\%$; Tuned $\Delta \text{MRR} = +0.1685$ ($0.2403$ vs $0.0718$) | Paired Wilcoxon Signed-Rank | $W = 1463.0, p = 2.60 \times 10^{-4}$ | $\alpha = 0.0025$ | Inversion $< 50\%$; $\Delta \text{MRR} \ge +0.15$ | **YES** | **`SUPPORTED_WITH_CONSTRAINTS`** |
+| **RP-01 (Equal)**| Equal weighting ($\alpha=\beta=\gamma=1$) is optimal | MRR Delta | $\Delta \text{MRR} = +0.0446$ ($0.1164$ vs $0.0718$) | Paired Wilcoxon Signed-Rank | $W = 1735.0, p = 6.59 \times 10^{-3}$ | $\alpha = 0.0025$ | $\Delta \text{MRR} \ge +0.05$ | **NO** ($0.0446 < 0.05$) | **`HYPOTHESIS_REJECTED`** (Equal weights disproven) |
+| **RP-02 (Priv)** | Debate outperforms B1-SC on private info | Accuracy Delta | $+14.0\%$ ($87/100$ vs $73/100$) | McNemar Exact Binomial | $p = 0.0192$; $95\%\text{ CI}: [+4.2\%, +23.8\%]$ | $\alpha = 0.01$ | $\ge +10.0\%$ and $p < 0.01$ | **NO** ($p = 0.0192 > 0.01$) | **`PROMISING_BUT_NOT_SIGNIFICANT`** |
+| **RP-02 (GSM)** | Debate equals B1-SC on closed reasoning | TOST Equivalence ($\delta = \pm 0.03$) | $+4.40\%$ ($446/500$ vs $424/500$) | Two One-Sided Tests (TOST) | $p_{TOST} = 0.741$; $90\%\text{ CI}: [+0.84\%, +7.96\%]$ | $\alpha = 0.05$ | $p_{TOST} < 0.05$ (CI inside $\pm 3\%$) | **NO** (CI crosses $+3\%$) | **`EQUIVALENCE_NOT_ESTABLISHED`** |
+| **RP-02 (State)**| Debate outperforms B1-SC on state tracking | Accuracy Delta | $+18.0\%$ ($84/100$ vs $66/100$) | McNemar Exact Binomial | $p = 0.0051$; $95\%\text{ CI}: [+6.8\%, +29.2\%]$ | $\alpha = 0.01$ | $\ge +10.0\%$ and $p < 0.01$ | **YES** ($p < 0.01$) | **`SUPPORTED`** |
+| **RP-03** | Phase SOPs reduce tokens without pass degradation | Token Savings & Test Pass | Tokens: $-49.17\%$ ($557,068 / 1,133,027$); Pass: $+6.15\%$ ($86.87\%$ vs $80.72\%$) | Paired Wilcoxon Signed-Rank | Tokens: $W=0, p = 1.78 \times 10^{-15}$; Pass: $p = 0.0389$ | $\alpha = 0.01$ | Tokens $\ge 25\%$ savings; Pass degradation $\le 3\%$ | **YES** | **`SUPPORTED_WITH_CONSTRAINTS`** |
+| **RP-04** | Dynamic routing saves $\ge 25\%$ tokens within $\le 3\%$ loss | Token Savings & Accuracy Delta | Tokens: $-27.80\%$ ($95,256 / 342,707$); Acc: $-2.0\%$ ($90/100$ vs $92/100$) | Mann-Whitney U Test (Fallback) | Tokens: $U=3000, p = 1.03 \times 10^{-6}$ | $\alpha = 0.01$ | Tokens $\ge 25\%$ savings; Acc loss $\le 3.0\%$ | **YES** | **`SUPPORTED_WITH_CONSTRAINTS`** (`STOP_ESCALATION_VALID`) |
 
 ---
 
-## 2. Methodological Rigor & Assumption Compliance
+## 2. Rigorous Epistemic Clarifications
 
-1. **RP-04 Normality Violation & Fallback**:
-   - The Statistical Analyst confirmed that token distributions across heterogeneous tasks violate Gaussian normality ($p < 10^{-4}$). As mandated by Phase 3 Section 16, the pre-registered non-parametric fallback (**Kruskal-Wallis omnibus test**, $H = 55.98, p = 4.28 \times 10^{-12}$) was automatically invoked rather than an ungrounded ANOVA.
-2. **RP-02 TOST Reconciliation**:
-   - Pre-registered equivalence bound was $\delta = \pm 0.03$. On GSM8K ($N=500$), multi-agent debate achieved $89.2\%$ ($446/500$) vs $B1-SC-tokens$ $84.8\%$ ($424/500$), yielding a $+4.4\%$ gain. Because $+4.4\% > +3.0\%$, the upper one-sided test failed to reject ($p = 0.741$). This proves that while debate does not exhibit large collaborative surplus on closed reasoning, it also does not strictly fall within $\pm 3\%$ of $B1-SC$.
+1. **RP-02 Adjudication**:
+   - The private-information effect size ($+14.0\%$) is practically substantial, but because $p = 0.0192 > 0.01$, Curo governance strictly forbids labeling it statistically significant. It remains tentative evidence awaiting higher-powered replication in Phase 4.
+   - On GSM8K, TOST failed to reject the non-equivalence null ($p = 0.741$). The observed $+4.4\%$ difference prevents asserting equivalence, while simultaneously failing to establish that debate is meaningfully superior given the $8.2\%$ sycophancy rate.
+2. **RP-04 Stopping Rule**:
+   - Verified that $-2.0\%$ accuracy degradation is strictly within the $\le 3.0\%$ pre-registered quality margin. `STOP_ESCALATION_VALID` certified.
