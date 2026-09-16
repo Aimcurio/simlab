@@ -1,0 +1,55 @@
+# Progress Log — Phase 2 Remediation Worker 1
+
+- Last visited: 2026-09-16T09:53:00Z
+- Current status: READY_FOR_HANDOFF
+- Working directory: `E:\projects\simlab\.agents\phase2_worker_1`
+
+## Completed Steps
+- [x] Received dispatch and reviewed authoritative request (`ORIGINAL_REQUEST.md`) and dispatch (`DISPATCH.md`).
+- [x] Analyzed Reviewer 1, Challenger 1, and Challenger 2 handoff reports.
+- [x] Initialized `DISPATCH.md` with UTC timestamp header.
+- [x] Initialized and maintained `BRIEFING.md` and `progress.md`.
+- [x] Remediated `RD-04_baseline_compute_matching.md`:
+  - Resolved token parity vs call parity contradiction.
+  - Implemented Dual-Control Protocol ($B_{1-SC-calls}$ at $K=7$ and $B_{1-SC-tokens}$ at $K=10$).
+  - Added deterministic tie-breaking rules (plurality -> sequence logprob -> sample index).
+  - Updated baseline matrix with Dual-Control and $B_{1-SC}$ in RP-04.
+- [x] Remediated `RD-06_rp02_experiment_design.md`:
+  - Maintained all 35 schema fields without placeholders.
+  - Added Dual-Control Protocol ($K=7$ call-matched, $K=10$ token-matched).
+  - Expanded GSM8K sample size to $N=500$ (total $N=800$) to guarantee $>80\%$ power under TOST ($\delta = 0.03$).
+  - Replaced Two-Way ANOVA with Binomial GLMM with logit link for binary repeated measures.
+  - Formally pre-registered `INCONCLUSIVE_SUB_THRESHOLD` outcome state defaulting to simpler baseline.
+- [x] Remediated `RD-05_rp01_experiment_design.md`:
+  - Maintained all 35 schema fields without placeholders.
+  - Clarified timescale in simulation hours ($s_{rec} = 0.995^{\Delta t_{hours}}$, half-life $138.28$ hours) and exact translation to 10s ticks ($1/360$ hr, $\gamma_{tick} \approx 0.9999861$).
+  - Evaluated both calibrated code weights ($\alpha=0.5, \beta=3.0, \gamma=2.0$) and published equal weights.
+  - Standardized on Paired Wilcoxon signed-rank test.
+  - Formally pre-registered `INCONCLUSIVE_SUB_THRESHOLD` outcome state defaulting to simpler baseline.
+- [x] Remediated `RD-07_rp03_experiment_design.md`:
+  - Maintained all 35 schema fields without placeholders.
+  - Expanded sample size from $N=50$ to $N=150$ tasks for $>80\%$ power under McNemar's test ($\alpha=0.01$).
+  - Integrated 75 SWE-bench Lite mini multi-file tasks for genuine 4-role construct validity.
+  - Split timeout categories into conversational deadlock (16 turns) vs sandbox CPU limits (10s).
+  - Formally pre-registered `INCONCLUSIVE_SUB_THRESHOLD` outcome state defaulting to simpler baseline.
+- [x] Remediated `RD-08_rp04_experiment_design.md`:
+  - Maintained all 35 schema fields without placeholders.
+  - Expanded sample size from $N=100$ to $N=300$ tasks for $>80\%$ power.
+  - Added compute-matched single-agent control `B1-SC` alongside fixed waterfall `B3`.
+  - Added strict 70/30 train/test split (210 train/tuning, 90 held-out test).
+  - Replaced Pearson Chi-square with Cochran's Q test for matched binary blocks.
+  - Formally pre-registered `INCONCLUSIVE_SUB_THRESHOLD` outcome state defaulting to simpler baseline.
+- [x] Remediated `RD-01_reproduction_priority_matrix.md`:
+  - Updated Section 3 rationale for RP-01 to RP-04 with Dual-Control, sample sizes, and construct validity.
+- [x] Remediated `RD-03_experimental_hypothesis_register.md`:
+  - Harmonized hypotheses, success/failure thresholds, and `INCONCLUSIVE_SUB_THRESHOLD` states across RP-01 to RP-04.
+- [x] Remediated `RD-09_metrics_evaluation_contract.md`:
+  - Updated Table 2 and Section 3 standards to incorporate GLMM, Cochran's Q, TOST, and inconclusive default rules.
+- [x] Remediated `RD-10_reproducibility_telemetry_contract.md`:
+  - Added telemetry fields for vote distribution, tie-breaking methods, timeout types, and Zero Data Retention mandate.
+- [x] Remediated `RD-12_cost_token_latency_budget.md`:
+  - Corrected cost arithmetic to $63.50 USD ($43.20 RP-02, $13.50 RP-03, $6.65 RP-04, $0.15 RP-01).
+  - Documented staged expansion protocol under the $100.00 ceiling and $75.00 abort trigger.
+- [x] Executed independent verification scripts confirming 35/35 fields across all 4 design records, 0 placeholders, and verified statistical power and cost formulas.
+- [ ] Generate self-contained handoff report at `E:\projects\simlab\.agents\phase2_worker_1\handoff.md`.
+- [ ] Send coordination message to parent.
