@@ -352,12 +352,12 @@ I conducted an independent audit of the raw telemetry, code implementation, and 
 
 ## 1. Multi-Domain Compute-Matched Performance Matrix
 
-| Task Domain | Problem Count (N) | Single Agent (B1) | Call-Matched B1-SC (K=7) | Token-Matched B1-SC (K=10) | Multi-Agent Debate (B3) | Net Accuracy Advantage (B3 vs B1-SC-Tok) | McNemar p-value |
-|---|---|---|---|---|---|---|---|
-| **CLOSED_REASONING_GSM8K** | 500 | 77.8% | 83.2% | 84.8% | **89.2%** | **+4.4%** | 5.2748e-02 |
-| **PRIVATE_INFORMATION** | 100 | 57.0% | 61.0% | 73.0% | **87.0%** | **+14.0%** | 3.8477e-02 |
-| **ASYMMETRIC_TOOLS** | 100 | 56.0% | 69.0% | 75.0% | **89.0%** | **+14.0%** | 1.2541e-02 |
-| **DISTRIBUTED_STATE** | 100 | 68.0% | 77.0% | 66.0% | **84.0%** | **+18.0%** | 5.0976e-03 |
+| Task Domain | Problem Count ($N$) | Single Agent ($B1$) | Call-Matched $B1-SC$ ($K=7$) | Token-Matched $B1-SC$ ($K=10$) | Multi-Agent Debate ($B3$) | Net Accuracy Advantage ($B3$ vs $B1-SC$-Tok) | Statistical Test & p-value | Preregistered $\alpha$ | Reconciled Status |
+|---|---|---|---|---|---|---|---|---|---|
+| **CLOSED_REASONING_GSM8K** | 500 | 77.8% | 83.2% | 84.8% | **89.2%** | **+4.4%** | TOST: $p_{TOST} = 0.7408$ | $\alpha = 0.05$ | **`EQUIVALENCE_NOT_ESTABLISHED`** |
+| **PRIVATE_INFORMATION** | 100 | 57.0% | 61.0% | 73.0% | **87.0%** | **+14.0%** | McNemar Exact: $p = 0.0192$ | $\alpha = 0.01$ | **`PROMISING_BUT_NOT_SIGNIFICANT`** |
+| **ASYMMETRIC_TOOLS** | 100 | 56.0% | 69.0% | 75.0% | **89.0%** | **+14.0%** | McNemar Exact: $p = 0.0125$ | $\alpha = 0.01$ | **`PROMISING_BUT_NOT_SIGNIFICANT`** |
+| **DISTRIBUTED_STATE** | 100 | 68.0% | 77.0% | 66.0% | **84.0%** | **+18.0%** | McNemar Exact: $p = 0.0051$ | $\alpha = 0.01$ | **`SUPPORTED`** |
 
 ---
 
@@ -366,7 +366,7 @@ I conducted an independent audit of the raw telemetry, code implementation, and 
 - **Token Budget Balance**:
   - `B1-SC-TOKENS` Average Token Spend: 8,300 tokens per problem.
   - `B3-DEBATE` Average Token Spend: 8,500 tokens per problem.
-  - Total Token Disparity: **+2.41%** (Well within the mandatory +/- 10% tolerance window).
+  - Total Token Disparity: **+2.41%** (Well within the mandatory $\pm 10\%$ tolerance window).
 - **False Consensus Rate in Debate**:
   - On Closed Reasoning, in 8.2% of problems an initially correct agent was persuaded to adopt an incorrect peer consensus.
   - On Private Information, cross-examination corrected peer blind spots in 24.5% of problems.
@@ -450,23 +450,34 @@ I conducted an independent audit of the raw telemetry, code implementation, and 
 # PX-03: RP-02 Independent Substantive Review
 **Experiment ID**: `EXP-RP02-COMPUTE-MATCHED-V1`  
 **Reviewer**: Sol (Independent Senior Reviewer)  
-**Verdict**: **ACCEPT EVIDENCE — DUAL-REGIME TAXONOMY VALIDATED**  
+**Verdict**: **RECONCILED AUDIT — EQUIVALENCE NOT ESTABLISHED & PRIVATE-INFO SUB-THRESHOLD**  
 
 ---
 
 ## 1. Adversarial Audit of Experimental Evidence
 
-I conducted an independent audit of the 800 problem evaluations in `EXP-RP02-COMPUTE-MATCHED-V1`.
+I conducted an independent audit of the 800 problem evaluations in `EXP-RP02-COMPUTE-MATCHED-V1` against the pre-registered testing contract (`RD-06`, `RD-09`).
 
-### Verification Findings
+### Verification Findings:
 1. **Compute-Matching Integrity**:
-   - Audited token volumes: `B1-SC-TOKENS` (8,300 tokens) vs `B3-DEBATE` (8,500 tokens). Token difference is +2.4%, confirming that the multi-agent advantage on private-information tasks is not a hidden compute confound.
-2. **Equivalence Confirmation**:
-   - On GSM8K, the hypothesis of equivalence was strictly confirmed (p = 0.68). Multi-agent debate does not beat parallel single-model sampling on closed domains.
-3. **Primitive Adjudication**:
+   - Audited token volumes: `B1-SC-TOKENS` (8,300 tokens) vs `B3-DEBATE` (8,500 tokens). Token difference is +2.41%, confirming that the comparison is compute-normalized within the mandatory $\pm 10\%$ tolerance window.
+2. **Private-Information Advantage ($N=100$)**:
+   - Multi-agent debate achieved 87/100 (87.0%) vs B1-SC 73/100 (73.0%), giving an absolute difference of +14.0% ($95\%\text{ CI}: [+4.2\%, +23.8\%]$).
+   - Exact McNemar binomial test yielded $p = 0.0192$.
+   - **Pre-registered Alpha**: $\alpha = 0.01$.
+   - **Audit Adjudication**: Because $p = 0.0192 > 0.01$, Curo statistical governance strictly prohibits declaring this finding statistically significant.
+   - **Canonical Status**: **`PROMISING_BUT_NOT_SIGNIFICANT`**.
+3. **Closed Symbolic Reasoning Equivalence (GSM8K, $N=500$)**:
+   - Debate achieved 446/500 (89.2%) vs B1-SC 424/500 (84.8%), difference of +4.40% ($90\%\text{ CI}: [+0.84\%, +7.96\%]$).
+   - Pre-registered equivalence margin: $\delta = \pm 0.03$ ($[-3.0\%, +3.0\%]$).
+   - Two One-Sided Tests (TOST): $t_1 = 3.417 (p_1 = 0.00034)$, $t_2 = 0.646 (p_2 = 0.7408) \implies p_{TOST} = 0.7408$.
+   - **Audit Adjudication**: Because $p_{TOST} = 0.7408 \ge 0.05$, the equivalence null is NOT rejected. Strict equivalence within $\pm 3.0\%$ was **NOT ESTABLISHED**.
+   - **Canonical Status**: **`EQUIVALENCE_NOT_ESTABLISHED`**.
+   - **Anti-TOST-Inversion Rule**: A failed TOST must never be cited as proof of equivalence, nor does it establish definitive superiority given the observed 8.2% sycophancy rate.
+4. **Primitive Adjudication**:
    - Primitive `PR-ORG-01` status updated to:
-     `CONTEXT_DEPENDENT`
-   - *Forward Constraint*: Never deploy multi-agent debate architectures for closed symbolic reasoning; reserve strictly for partitioned-information and asymmetric-tool tasks.
+     **`INSUFFICIENT_EVIDENCE` / `PROMISING_BUT_NOT_SIGNIFICANT`**
+   - *Forward Constraint (`NC-32`, `NC-47`, `NC-48`)*: Never incorporate multi-agent debate into SimLab architecture without high-powered confirmatory replication in Phase 4.
 
 
 ================================================================================
