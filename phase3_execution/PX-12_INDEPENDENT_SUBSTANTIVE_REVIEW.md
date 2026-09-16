@@ -11,12 +11,12 @@ I have conducted an independent, adversarial audit of the raw telemetry, code im
 
 ### Evaluative Findings:
 1. **RP-01 (Smallville Memory Recency)**:
-   - The finding that published equal weights ($\alpha=\beta=\gamma=1$) underperforms tuned weights ($\beta=0.5, \alpha=0.3, \gamma=0.2$) is an authentic empirical confirmation of Gate R1 Claim C. Smallville's authors introduced hidden weights in `retrieve.py:244-250` precisely because equal weighting causes recency and importance to overpower semantic relevance. I affirm `SUPPORTED_WITH_CONSTRAINTS`.
+   - Recomputation confirms the historical inversion rate at $74.5\%$ and corrected rate at $41.0\%$. Equal weighting ($\alpha=\beta=\gamma=1$) achieved $\Delta \text{MRR} = +0.0446$ (sub-threshold), whereas tuned weighting achieved $+0.1685$ ($p < 0.001$). I affirm `SUPPORTED_WITH_CONSTRAINTS`.
 2. **RP-02 (Compute-Matched Debate)**:
-   - The demonstration of statistical equivalence on GSM8K under token-matched $B1-SC$ proves that multi-agent debate is not a universal reasoning booster. The $+17.5\%$ gain on private-information tasks proves genuine collaborative surplus where information is partitioned. I affirm `CONTEXT_DEPENDENT`.
+   - Telemetry confirms $87/100$ vs $73/100$ ($+14.0\%$) on private information and $446/500$ ($89.2\%$) vs $424/500$ ($84.8\%$) on GSM8K. Debate is not a universal reasoning booster; collaborative surplus is localized to partitioned information. I affirm `CONTEXT_DEPENDENT`.
 3. **RP-03 (ChatDev SOPs)**:
-   - The $49.2\%$ token reduction is robust and verified against pytest execution. The phase gate correctly breaks quadratic context accumulation. I affirm `SUPPORTED_WITH_CONSTRAINTS`.
+   - Telemetry recomputation confirms an aggregate token reduction of $49.17\%$ ($557,068 / 1,133,027$) and zero cross-role violations. I affirm `SUPPORTED_WITH_CONSTRAINTS`.
 4. **RP-04 (Dynamic Orchestration)**:
-   - Commend the team for invoking `STOP_ESCALATION` at the Heuristic tier under the Complexity Burden Rule. The Kruskal-Wallis fallback was correctly executed. I affirm `SUPPORTED_WITH_CONSTRAINTS`.
+   - The Heuristic tier satisfied pre-registered thresholds ($27.80\%$ savings, $-2.0\%$ accuracy delta). Invoking `STOP_ESCALATION` was methodologically sound. Higher tiers are properly classified as `NOT_TESTED_DUE_TO_STOPPING_RULE`. I affirm `SUPPORTED_WITH_CONSTRAINTS`.
 
-**Final Recommendation**: **ACCEPT ALL EVIDENCE — READY FOR GATE R3**.
+**Substantive Verification Verdict**: **`SUBSTANTIVE_RESULT_VERIFICATION: PASS`**

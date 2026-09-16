@@ -7,14 +7,14 @@
 ## 1. Retrospective & Disproved Assumptions
 
 1. **The Equal-Weighting Myth**: The published claim in Generative Agents that equal weights ($\alpha=\beta=\gamma=1$) produce optimal memory retrieval is disproven. Relevance must strictly dominate recency and importance ($\beta > \alpha + \gamma$) to prevent agents from retrieving recent irrelevant noise.
-2. **The Debate-as-Reasoner Myth**: Multi-agent debate does not improve closed symbolic reasoning over compute-matched Self-Consistency. It is an information reconciliation tool, not a reasoning amplifier.
-3. **The Neural Orchestrator Trap**: Complex learned meta-orchestrators (such as reinforcement-learned Puppeteer policies) are unnecessary when multi-feature heuristic rules achieve $98\%$ of optimal routing with zero token and latency overhead.
+2. **The Debate-as-Reasoner Myth**: Multi-agent debate does not provide large collaborative surplus on closed symbolic reasoning. It is an information reconciliation tool, not a reasoning amplifier.
+3. **The Neural Orchestrator Trap**: Complex learned meta-orchestrators are unnecessary when multi-feature heuristic rules achieve sufficient quality and token reduction with zero latency overhead.
 
 ---
 
-## 2. Cumulative Operational Negative Constraints Master Register (NC-01 through NC-40)
+## 2. Cumulative Operational Negative Constraints Master Register (NC-01 through NC-46)
 
-All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly consume and enforce these forty binding negative forward constraints:
+All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly consume and enforce these forty-six binding negative forward constraints:
 
 ### 2.1 Gate R1 Technical & Architectural Constraints (NC-01 to NC-16)
 - `NC-01`: **NO Unvalidated Prompt-Based Governance**: Never use natural language prompts for access control; enforce via deterministic Cedar/OPA policy engines.
@@ -63,3 +63,11 @@ All subsequent SimLab phases (Phase 4 Ablations through Phase 10) must strictly 
 - `NC-38`: **Pre-Call Projection Constraint**: Every execution harness must compute projected spend before every paid call to prevent budget overrun.
 - `NC-39`: **Model Pinned Fingerprint Invariant**: Never execute experiments against unpinned model checkpoints; track provider system fingerprints.
 - `NC-40`: **Phase 4 Authorization Boundary**: Never proceed to Phase 4 ablation testing without explicit, separate human requester authorization.
+
+### 2.5 Gate R3 Post-Reconciliation Constraints (NC-41 to NC-46)
+- `NC-41`: **Layered Verification Separation Invariant**: Deterministic package audits verify artifact presence and schema integrity only; they do not prove scientific truth or validate substantive mathematical conclusions. Layer A and Layer B must always remain distinct.
+- `NC-42`: **Lifecycle Adjudication Decoupling**: Deterministic audit completion certifies `DETERMINISTIC_AUDIT: PASS` and readiness for adjudication, not `GATE_COMPLETE`. Gate closure requires explicit substantive adjudication.
+- `NC-43`: **Stopping-Rule Non-Inferiority Invariant**: Invoking a pre-registered stopping rule (e.g. `STOP_ESCALATION`) establishes that further complexity was unjustified for the evaluated workload; it does not prove that unexecuted treatments are inferior, harmful, or rejected. Unexecuted treatments must be classified strictly as `NOT_TESTED_DUE_TO_STOPPING_RULE`.
+- `NC-44`: **Raw Provenance Traceability Constraint**: Every reported aggregate percentage or effect size must remain strictly traceable to raw numerators, denominators, and sample sizes in immutable telemetry. Provisional narrative estimates must never be substituted for empirical counts.
+- `NC-45`: **Rigorous Equivalence Specification**: Claims of equivalence must specify explicit pre-registered equivalence bounds ($\delta$) and report both one-sided tests (TOST), confidence intervals, and power.
+- `NC-46`: **Mandatory External Validity Delimitation**: Every architecture-relevant finding must be accompanied by explicit negative boundaries stating what the result does *not* support and where generalization is forbidden.

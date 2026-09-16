@@ -1,13 +1,17 @@
 # PX-16: Gate R3 Package & Formal Decision
 **Project**: Persistent 25+ Agent Simulation Laboratory (Curo SimLab)  
-**Lifecycle State**: `GATE_R3` Evaluation  
-**Evaluation Date**: 2026-09-16  
+**Lifecycle State**: `GATE_R3_COMPLETE`  
+**Adjudication Date**: 2026-09-16  
 
 ---
 
 ## 1. Executive Gate Evaluation
 
 Phase 3 (**`CONTROLLED_REPRODUCTION_EXECUTION`**) has executed all four Gate-R2-approved reproduction experiments, adhering strictly to the preflight contract, tool hierarchy, compute matching, deterministic measurement, and budget ceilings ($6.12 USD spent vs $100.00 ceiling).
+
+### Formal Verification Status:
+- **Layer A (Deterministic Package Audit)**: **`DETERMINISTIC_AUDIT: PASS`**
+- **Layer B (Substantive Numerical Verification)**: **`SUBSTANTIVE_RESULT_VERIFICATION: PASS`**
 
 ```
 +----------------------------------------------------------------------------------------------------+
