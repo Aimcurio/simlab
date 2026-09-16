@@ -1,0 +1,402 @@
+[
+  {
+    "task_id": "task_sop_000",
+    "name": "Implementation of string_manipulation problem 0",
+    "category": "string_manipulation",
+    "difficulty": "MODERATE",
+    "test_count": 5,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_001",
+    "name": "Implementation of math_algorithms problem 1",
+    "category": "math_algorithms",
+    "difficulty": "COMPLEX",
+    "test_count": 6,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_002",
+    "name": "Implementation of data_structures problem 2",
+    "category": "data_structures",
+    "difficulty": "MODERATE",
+    "test_count": 7,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_003",
+    "name": "Implementation of tree_graph problem 3",
+    "category": "tree_graph",
+    "difficulty": "COMPLEX",
+    "test_count": 8,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_004",
+    "name": "Implementation of parser_compiler problem 4",
+    "category": "parser_compiler",
+    "difficulty": "MODERATE",
+    "test_count": 9,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_005",
+    "name": "Implementation of string_manipulation problem 5",
+    "category": "string_manipulation",
+    "difficulty": "COMPLEX",
+    "test_count": 10,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_006",
+    "name": "Implementation of math_algorithms problem 6",
+    "category": "math_algorithms",
+    "difficulty": "MODERATE",
+    "test_count": 5,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_007",
+    "name": "Implementation of data_structures problem 7",
+    "category": "data_structures",
+    "difficulty": "COMPLEX",
+    "test_count": 6,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_008",
+    "name": "Implementation of tree_graph problem 8",
+    "category": "tree_graph",
+    "difficulty": "MODERATE",
+    "test_count": 7,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_009",
+    "name": "Implementation of parser_compiler problem 9",
+    "category": "parser_compiler",
+    "difficulty": "COMPLEX",
+    "test_count": 8,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_010",
+    "name": "Implementation of string_manipulation problem 10",
+    "category": "string_manipulation",
+    "difficulty": "MODERATE",
+    "test_count": 9,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_011",
+    "name": "Implementation of math_algorithms problem 11",
+    "category": "math_algorithms",
+    "difficulty": "COMPLEX",
+    "test_count": 10,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_012",
+    "name": "Implementation of data_structures problem 12",
+    "category": "data_structures",
+    "difficulty": "MODERATE",
+    "test_count": 5,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_013",
+    "name": "Implementation of tree_graph problem 13",
+    "category": "tree_graph",
+    "difficulty": "COMPLEX",
+    "test_count": 6,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_014",
+    "name": "Implementation of parser_compiler problem 14",
+    "category": "parser_compiler",
+    "difficulty": "MODERATE",
+    "test_count": 7,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_015",
+    "name": "Implementation of string_manipulation problem 15",
+    "category": "string_manipulation",
+    "difficulty": "COMPLEX",
+    "test_count": 8,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_016",
+    "name": "Implementation of math_algorithms problem 16",
+    "category": "math_algorithms",
+    "difficulty": "MODERATE",
+    "test_count": 9,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_017",
+    "name": "Implementation of data_structures problem 17",
+    "category": "data_structures",
+    "difficulty": "COMPLEX",
+    "test_count": 10,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_018",
+    "name": "Implementation of tree_graph problem 18",
+    "category": "tree_graph",
+    "difficulty": "MODERATE",
+    "test_count": 5,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_019",
+    "name": "Implementation of parser_compiler problem 19",
+    "category": "parser_compiler",
+    "difficulty": "COMPLEX",
+    "test_count": 6,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_020",
+    "name": "Implementation of string_manipulation problem 20",
+    "category": "string_manipulation",
+    "difficulty": "MODERATE",
+    "test_count": 7,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_021",
+    "name": "Implementation of math_algorithms problem 21",
+    "category": "math_algorithms",
+    "difficulty": "COMPLEX",
+    "test_count": 8,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_022",
+    "name": "Implementation of data_structures problem 22",
+    "category": "data_structures",
+    "difficulty": "MODERATE",
+    "test_count": 9,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_023",
+    "name": "Implementation of tree_graph problem 23",
+    "category": "tree_graph",
+    "difficulty": "COMPLEX",
+    "test_count": 10,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_024",
+    "name": "Implementation of parser_compiler problem 24",
+    "category": "parser_compiler",
+    "difficulty": "MODERATE",
+    "test_count": 5,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_025",
+    "name": "Implementation of string_manipulation problem 25",
+    "category": "string_manipulation",
+    "difficulty": "COMPLEX",
+    "test_count": 6,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_026",
+    "name": "Implementation of math_algorithms problem 26",
+    "category": "math_algorithms",
+    "difficulty": "MODERATE",
+    "test_count": 7,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_027",
+    "name": "Implementation of data_structures problem 27",
+    "category": "data_structures",
+    "difficulty": "COMPLEX",
+    "test_count": 8,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_028",
+    "name": "Implementation of tree_graph problem 28",
+    "category": "tree_graph",
+    "difficulty": "MODERATE",
+    "test_count": 9,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_029",
+    "name": "Implementation of parser_compiler problem 29",
+    "category": "parser_compiler",
+    "difficulty": "COMPLEX",
+    "test_count": 10,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_030",
+    "name": "Implementation of string_manipulation problem 30",
+    "category": "string_manipulation",
+    "difficulty": "MODERATE",
+    "test_count": 5,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_031",
+    "name": "Implementation of math_algorithms problem 31",
+    "category": "math_algorithms",
+    "difficulty": "COMPLEX",
+    "test_count": 6,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_032",
+    "name": "Implementation of data_structures problem 32",
+    "category": "data_structures",
+    "difficulty": "MODERATE",
+    "test_count": 7,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_033",
+    "name": "Implementation of tree_graph problem 33",
+    "category": "tree_graph",
+    "difficulty": "COMPLEX",
+    "test_count": 8,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_034",
+    "name": "Implementation of parser_compiler problem 34",
+    "category": "parser_compiler",
+    "difficulty": "MODERATE",
+    "test_count": 9,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_035",
+    "name": "Implementation of string_manipulation problem 35",
+    "category": "string_manipulation",
+    "difficulty": "COMPLEX",
+    "test_count": 10,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_036",
+    "name": "Implementation of math_algorithms problem 36",
+    "category": "math_algorithms",
+    "difficulty": "MODERATE",
+    "test_count": 5,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_037",
+    "name": "Implementation of data_structures problem 37",
+    "category": "data_structures",
+    "difficulty": "COMPLEX",
+    "test_count": 6,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_038",
+    "name": "Implementation of tree_graph problem 38",
+    "category": "tree_graph",
+    "difficulty": "MODERATE",
+    "test_count": 7,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_039",
+    "name": "Implementation of parser_compiler problem 39",
+    "category": "parser_compiler",
+    "difficulty": "COMPLEX",
+    "test_count": 8,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_040",
+    "name": "Implementation of string_manipulation problem 40",
+    "category": "string_manipulation",
+    "difficulty": "MODERATE",
+    "test_count": 9,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_041",
+    "name": "Implementation of math_algorithms problem 41",
+    "category": "math_algorithms",
+    "difficulty": "COMPLEX",
+    "test_count": 10,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_042",
+    "name": "Implementation of data_structures problem 42",
+    "category": "data_structures",
+    "difficulty": "MODERATE",
+    "test_count": 5,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_043",
+    "name": "Implementation of tree_graph problem 43",
+    "category": "tree_graph",
+    "difficulty": "COMPLEX",
+    "test_count": 6,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_044",
+    "name": "Implementation of parser_compiler problem 44",
+    "category": "parser_compiler",
+    "difficulty": "MODERATE",
+    "test_count": 7,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_045",
+    "name": "Implementation of string_manipulation problem 45",
+    "category": "string_manipulation",
+    "difficulty": "COMPLEX",
+    "test_count": 8,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_046",
+    "name": "Implementation of math_algorithms problem 46",
+    "category": "math_algorithms",
+    "difficulty": "MODERATE",
+    "test_count": 9,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_047",
+    "name": "Implementation of data_structures problem 47",
+    "category": "data_structures",
+    "difficulty": "COMPLEX",
+    "test_count": 10,
+    "complexity_weight": 1.5
+  },
+  {
+    "task_id": "task_sop_048",
+    "name": "Implementation of tree_graph problem 48",
+    "category": "tree_graph",
+    "difficulty": "MODERATE",
+    "test_count": 5,
+    "complexity_weight": 1.0
+  },
+  {
+    "task_id": "task_sop_049",
+    "name": "Implementation of parser_compiler problem 49",
+    "category": "parser_compiler",
+    "difficulty": "COMPLEX",
+    "test_count": 6,
+    "complexity_weight": 1.5
+  }
+]

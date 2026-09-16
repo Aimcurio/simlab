@@ -1,0 +1,602 @@
+[
+  {
+    "task_id": "task_hetero_000",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_001",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_002",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_003",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_004",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_005",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_006",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_007",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_008",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_009",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_010",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_011",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_012",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_013",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_014",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_015",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_016",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_017",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_018",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_019",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_020",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_021",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_022",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_023",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_024",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_025",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_026",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_027",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_028",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_029",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_030",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_031",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_032",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_033",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_034",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_035",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_036",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_037",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_038",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_039",
+    "complexity": "SIMPLE",
+    "ideal_agents": 1,
+    "base_tokens": 950
+  },
+  {
+    "task_id": "task_hetero_040",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_041",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_042",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_043",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_044",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_045",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_046",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_047",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_048",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_049",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_050",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_051",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_052",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_053",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_054",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_055",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_056",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_057",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_058",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_059",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_060",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_061",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_062",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_063",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_064",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_065",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_066",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_067",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_068",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_069",
+    "complexity": "MODERATE",
+    "ideal_agents": 2,
+    "base_tokens": 2200
+  },
+  {
+    "task_id": "task_hetero_070",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_071",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_072",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_073",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_074",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_075",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_076",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_077",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_078",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_079",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_080",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_081",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_082",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_083",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_084",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_085",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_086",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_087",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_088",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_089",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_090",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_091",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_092",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_093",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_094",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_095",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_096",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_097",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_098",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  },
+  {
+    "task_id": "task_hetero_099",
+    "complexity": "COMPLEX",
+    "ideal_agents": 4,
+    "base_tokens": 4800
+  }
+]
