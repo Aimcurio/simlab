@@ -1,0 +1,60 @@
+{
+  "scenario_id": "resource_crisis",
+  "name": "Resource-Constrained Crisis Management",
+  "description": "High-complexity tasks under tight energy budget testing resource governance.",
+  "max_ticks": 40,
+  "initial_energy": 45.0,
+  "initial_bandwidth": 60.0,
+  "initial_budget": 25.0,
+  "tasks": [
+    {
+      "task_id": "crisis_01",
+      "name": "Contain Network Fault Injection",
+      "difficulty": "MODERATE",
+      "complexity_weight": 1.2,
+      "energy_cost": 12.0,
+      "status": "PENDING"
+    },
+    {
+      "task_id": "crisis_02",
+      "name": "Recover Partitioned State",
+      "difficulty": "HIGH",
+      "complexity_weight": 1.8,
+      "energy_cost": 15.0,
+      "status": "PENDING"
+    },
+    {
+      "task_id": "crisis_03",
+      "name": "Reconcile Data Integrity Log",
+      "difficulty": "CRITICAL",
+      "complexity_weight": 2.5,
+      "energy_cost": 15.0,
+      "status": "PENDING"
+    }
+  ],
+  "agents": [
+    {
+      "agent_id": "coordinator",
+      "role": "Coordinator",
+      "capabilities": ["task_assignment", "resource_governance"],
+      "managed_workers": ["worker_1", "worker_2"]
+    },
+    {
+      "agent_id": "worker_1",
+      "role": "Worker",
+      "specialization": "infrastructure_recovery",
+      "capabilities": ["task_execution", "infrastructure_recovery"]
+    },
+    {
+      "agent_id": "worker_2",
+      "role": "Worker",
+      "specialization": "data_reconciliation",
+      "capabilities": ["task_execution", "data_reconciliation"]
+    },
+    {
+      "agent_id": "critic",
+      "role": "Critic",
+      "capabilities": ["independent_review", "contract_validation"]
+    }
+  ]
+}

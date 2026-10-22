@@ -2,6 +2,11 @@
 **Experiment ID**: `EXP-AB-03-FACT`  
 **Target Primitive**: `PR-ORG-02` (Phased Assembly-Line SOP State Machine)  
 **Lifecycle State**: `PHASE_4_DESIGN`  
+**Design Gate**: `PHASE_4_DESIGN_GATE` (Alias: `GATE_R4D`)  
+**Adjudication Gate Status**: `GATE_R4` strictly reserved for post-ablation/stress execution adjudication  
+**Architecture Status**: `UNFROZEN`  
+**Final SimLab Implementation Authority**: `NOT_GRANTED`  
+**Phase 4 Execution Authority**: `NOT_GRANTED`  
 
 ---
 
@@ -38,3 +43,13 @@ Phases = ON     | C2: Phases Only           | C3: Roles + Phases (Standard SOP)
 - **Cross-Role Violations**: Count of turns where an agent assumes or executes another role's responsibilities.
 - **Statistical Method**: Two-Way ANOVA on token consumption with main effects for $\text{Roles}$ and $\text{Phases}$, plus $\text{Roles} \times \text{Phases}$ interaction term (with Kruskal-Wallis non-parametric fallback if normality fails).
 - **Pre-Registered Hypothesis ($H_1$)**: The main effect of $\text{Phases}$ accounts for $\ge 70\%$ of total token variance, proving that context boundary management, rather than role prompting, drives efficiency.
+
+---
+
+## 4. Causal Claim Discipline
+- `causal_claim_supported`: "Sequential phase gating with context boundary resets causally accounts for the primary reduction ($\ge 70\%$) in token consumption and cross-role violations relative to unrestricted multi-turn dialogue on the evaluated code tasks."
+- `causal_claim_not_supported`: "Assembly-line SOP structures and persona prompting are universally optimal across all software development or multi-agent tasks."
+- `tested_context`: Modular Python programming tasks ($\le 250$ LOC), 4 distinct roles (CEO, CTO, Coder, Tester), sequential waterfall phase transitions.
+- `untested_context`: Highly interdependent circular refactoring, real-time UI/UX design, emergent multi-agent social interactions.
+- `interaction_risks`: Overly rigid phase boundaries prevent downstream feedback from correcting upstream architectural design bugs without costly rollback loops.
+

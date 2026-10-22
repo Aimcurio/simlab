@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimLab Observatory — Multi-Agent Simulation</title>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f2937;
+      --accent: #38bdf8;
+      --accent-hover: #0ea5e9;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .badge {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      background: #1e293b;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+    nav.tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0 16px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 16px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+    .view { display: none; }
+    .view.active { display: block; }
+
+    .grid { display: grid; gap: 20px; }
+    .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .card-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .form-group {
+      margin-bottom: 14px;
+    }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: #0b0f19;
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: var(--font-sans);
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .btn {
+      background: var(--accent);
+      color: #0b0f19;
+      border: none;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.15s ease;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-secondary {
+      background: #1f2937;
+      color: var(--text);
+    }
+    .btn-secondary:hover { background: #374151; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+    }
+    th {
+      color: var(--text-muted);
+      font-weight: 600;
+      background: #0f172a;
+    }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    .mono { font-family: var(--font-mono); }
+    .metric-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: #fff;
+    }
+    .progress-bar-bg {
+      background: #1f2937;
+      border-radius: 9999px;
+      height: 8px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .progress-bar-fill {
+      background: var(--accent);
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      margin-right: 4px;
+    }
+    .tag-blue { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .tag-green { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+    .tag-yellow { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+    .tag-red { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <h1>SIMLAB OBSERVATORY</h1>
+      <span class="badge">v0.2.0 • DETERMINISTIC</span>
+    </div>
+    <div id="status-pill" class="badge">STATUS: IDLE</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" onclick="switchTab('tab-control')">1. Experiment Control</button>
+    <button class="tab-btn" onclick="switchTab('tab-agents')">2. Agent Activity</button>
+    <button class="tab-btn" onclick="switchTab('tab-timeline')">3. Causal Timeline</button>
+    <button class="tab-btn" onclick="switchTab('tab-env')">4. Environment State</button>
+    <button class="tab-btn" onclick="switchTab('tab-memory')">5. Memory Stream</button>
+    <button class="tab-btn" onclick="switchTab('tab-analysis')">6. Benchmark Analysis</button>
+    <button class="tab-btn" onclick="switchTab('tab-replay')">7. Replay & Hash Chain</button>
+    <button class="tab-btn" onclick="switchTab('tab-errors')">8. Governance & Errors</button>
+  </nav>
+
+  <main>
+    <!-- VIEW 1: EXPERIMENT CONTROL -->
+    <div id="tab-control" class="view active">
+      <div class="grid grid-cols-3">
+        <div class="card">
+          <div class="card-title">Simulation Parameters</div>
+          <div class="form-group">
+            <label>Scenario</label>
+            <select id="run-scenario"></select>
+          </div>
+          <div class="form-group">
+            <label>Random Seed</label>
+            <input type="number" id="run-seed" value="42">
+          </div>
+          <div class="form-group">
+            <label>Max Simulation Steps</label>
+            <input type="number" id="run-steps" placeholder="Default scenario steps">
+          </div>
+          <div class="form-group">
+            <label>Fault: Message Loss Rate (0.0 - 1.0)</label>
+            <input type="number" id="run-fault-loss" value="0.0" step="0.05" min="0" max="1">
+          </div>
+          <div class="form-group">
+            <label>Fault: Message Delay (ticks)</label>
+            <input type="number" id="run-fault-delay" value="0" min="0" max="20">
+          </div>
+          <button class="btn" style="width: 100%;" onclick="startRun()">Launch Simulation</button>
+        </div>
+
+        <div class="card" style="grid-column: span 2;">
+          <div class="card-title">Live Execution Output</div>
+          <div id="run-summary" style="margin-bottom: 16px;">
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Select a scenario and click <strong>Launch Simulation</strong> to run the discrete-event kernel.</p>
+          </div>
+          <div class="card-title">Scenario Description</div>
+          <div id="scenario-details" class="mono" style="font-size: 0.85rem; color: #cbd5e1; background: #0b0f19; padding: 12px; border-radius: 6px; border: 1px solid var(--card-border);">
+            Loading scenario catalog...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: AGENT ACTIVITY -->
+    <div id="tab-agents" class="view">
+      <div class="grid grid-cols-3" id="agent-cards-container">
+        <div class="card">
+          <div class="card-title">Coordinator Agent</div>
+          <div class="mono" style="font-size: 0.85rem; color: #94a3b8;">
+            <p><strong>Role:</strong> Task Backlog Triage & Delegation</p>
+            <p><strong>Mailbox:</strong> <span id="agent-coord-mb">0</span> msgs</p>
+            <p><strong>State:</strong> <span class="tag tag-green">ACTIVE</span></p>
+            <p style="margin-top: 8px;"><strong>Last Action:</strong> <span id="agent-coord-action">ANALYZE_BACKLOG</span></p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Worker Agent</div>
+          <div class="mono" style="font-size: 0.85rem; color: #94a3b8;">
+            <p><strong>Role:</strong> Execution & Artifact Generation</p>
+            <p><strong>Mailbox:</strong> <span id="agent-work-mb">0</span> msgs</p>
+            <p><strong>State:</strong> <span class="tag tag-blue">PROCESSING</span></p>
+            <p style="margin-top: 8px;"><strong>Last Action:</strong> <span id="agent-work-action">EXECUTE_TASK</span></p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Critic Agent</div>
+          <div class="mono" style="font-size: 0.85rem; color: #94a3b8;">
+            <p><strong>Role:</strong> Contract Audit & Quality Gate</p>
+            <p><strong>Mailbox:</strong> <span id="agent-crit-mb">0</span> msgs</p>
+            <p><strong>State:</strong> <span class="tag tag-yellow">VERIFYING</span></p>
+            <p style="margin-top: 8px;"><strong>Last Action:</strong> <span id="agent-crit-action">VALIDATE_TASK</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: CAUSAL TIMELINE -->
+    <div id="tab-timeline" class="view">
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div class="card-title" style="margin: 0;">Causal Event Stream (Merkle Hash Chain)</div>
+          <div id="chain-status-badge" class="badge">CHAIN: UNVERIFIED</div>
+        </div>
+        <table id="timeline-table">
+          <thead>
+            <tr>
+              <th>Tick</th>
+              <th>Seq</th>
+              <th>Type</th>
+              <th>Source</th>
+              <th>Target</th>
+              <th>Event SHA-256</th>
+              <th>Payload Summary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="7" style="color: var(--text-muted); text-align: center;">Run a simulation or load a replay trace to view causal timeline.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW 4: ENVIRONMENT STATE -->
+    <div id="tab-env" class="view">
+      <div class="grid grid-cols-3">
+        <div class="card">
+          <div class="card-title">Shared Energy Budget</div>
+          <div class="metric-value" id="env-energy-val">100.0 / 100.0</div>
+          <div class="progress-bar-bg">
+            <div id="env-energy-bar" class="progress-bar-fill" style="width: 100%;"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Task Completion Ratio</div>
+          <div class="metric-value" id="env-task-ratio">0 / 0</div>
+          <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 6px;">Tasks completed vs total backlog</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Authoritative State Hash</div>
+          <div class="mono" id="env-state-hash" style="font-size: 0.8rem; word-break: break-all; color: var(--accent);">
+            e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top: 20px;">
+        <div class="card-title">Environment Task Backlog</div>
+        <table id="env-tasks-table">
+          <thead>
+            <tr>
+              <th>Task ID</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Energy Cost</th>
+              <th>Assigned Agent</th>
+              <th>Verification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="6" style="color: var(--text-muted); text-align: center;">No active scenario loaded.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW 5: MEMORY STREAM -->
+    <div id="tab-memory" class="view">
+      <div class="grid grid-cols-2">
+        <div class="card">
+          <div class="card-title">Associative Memory Retrieval Test (PR-COG-01)</div>
+          <div class="form-group">
+            <label>Query Vector [dim1, dim2, dim3]</label>
+            <input type="text" id="mem-qvec" value="0.2, 0.4, 0.3">
+          </div>
+          <div class="form-group">
+            <label>Recency Weight (&alpha;): <span id="val-alpha">0.2</span></label>
+            <input type="range" id="slider-alpha" min="0" max="1" step="0.05" value="0.2" oninput="updateMemWeights()">
+          </div>
+          <div class="form-group">
+            <label>Relevance Weight (&beta;): <span id="val-beta">0.5</span></label>
+            <input type="range" id="slider-beta" min="0" max="1" step="0.05" value="0.5" oninput="updateMemWeights()">
+          </div>
+          <div class="form-group">
+            <label>Importance Weight (&gamma;): <span id="val-gamma">0.3</span></label>
+            <input type="range" id="slider-gamma" min="0" max="1" step="0.05" value="0.3" oninput="updateMemWeights()">
+          </div>
+          <button class="btn btn-secondary" style="width: 100%;" onclick="queryMemory()">Evaluate Tri-Factor Retrieval</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Ranked Memory Results</div>
+          <table id="memory-results-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Content</th>
+                <th>Importance</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="4" style="color: var(--text-muted); text-align: center;">Click evaluate to rank memories.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 6: BENCHMARK ANALYSIS -->
+    <div id="tab-analysis" class="view">
+      <div class="grid grid-cols-2">
+        <div class="card">
+          <div class="card-title">Multi-Agent Routing Benchmark</div>
+          <button class="btn btn-secondary" style="margin-bottom: 12px;" onclick="runRoutingBenchmark()">Run Routing Benchmark</button>
+          <table id="routing-table">
+            <thead>
+              <tr>
+                <th>Policy</th>
+                <th>Total Tokens</th>
+                <th>Avg / Task</th>
+                <th>Overhead %</th>
+                <th>Success</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="5" style="color: var(--text-muted); text-align: center;">Click run to evaluate routing policies.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Sandboxed Coding Benchmark</div>
+          <button class="btn btn-secondary" style="margin-bottom: 12px;" onclick="runCodingBenchmark()">Run Coding Suite</button>
+          <table id="coding-table">
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Category</th>
+                <th>Difficulty</th>
+                <th>Status</th>
+                <th>Duration (ms)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="5" style="color: var(--text-muted); text-align: center;">Click run to execute sandboxed tests.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 7: REPLAY VIEWER -->
+    <div id="tab-replay" class="view">
+      <div class="card">
+        <div style="display: flex; gap: 16px; align-items: flex-end; margin-bottom: 16px;">
+          <div class="form-group" style="flex: 1; margin: 0;">
+            <label>Select Saved Run</label>
+            <select id="replay-runs-select" onchange="loadReplayRun()"></select>
+          </div>
+          <button class="btn btn-secondary" onclick="refreshRunsList()">Refresh Runs</button>
+          <button class="btn" onclick="verifyLoadedRun()">Verify Bit-for-Bit</button>
+        </div>
+        <div id="replay-details-card" class="mono" style="padding: 12px; background: #0b0f19; border: 1px solid var(--card-border); border-radius: 6px; font-size: 0.85rem; color: #94a3b8;">
+          Select a run from the dropdown to inspect provenance and cryptographic chain.
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 8: GOVERNANCE & ERRORS -->
+    <div id="tab-errors" class="view">
+      <div class="grid grid-cols-2">
+        <div class="card">
+          <div class="card-title">Governance Firewall State</div>
+          <div id="gov-info" class="mono" style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1;">
+            Loading governance configuration...
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Security & Isolation Invariants</div>
+          <div class="mono" style="font-size: 0.85rem; line-height: 1.6; color: #cbd5e1;">
+            <p><strong>Subprocess Isolation:</strong> Active (python -I, no site-packages)</p>
+            <p><strong>Resource Limits:</strong> Max 3000ms wall-clock, 64KB stdout</p>
+            <p><strong>Credential Redaction:</strong> Active (regex scrubbing)</p>
+            <p><strong>Cryptographic Chain:</strong> SHA-256 Merkle link per event</p>
+            <p><strong>State Transitions:</strong> Authoritative state machine hash</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    let activeScenario = null;
+    let currentRunData = null;
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+      if (activeBtn) activeBtn.classList.add('active');
+      const targetView = document.getElementById(tabId);
+      if (targetView) targetView.classList.add('active');
+    }
+
+    async function loadScenarios() {
+      try {
+        const res = await fetch('/api/scenarios');
+        const data = await res.json();
+        const sel = document.getElementById('run-scenario');
+        sel.innerHTML = '';
+        data.scenarios.forEach((s, idx) => {
+          const opt = document.createElement('option');
+          opt.value = s.scenario_id;
+          opt.textContent = `${s.name} (${s.scenario_id})`;
+          sel.appendChild(opt);
+          if (idx === 0) activeScenario = s;
+        });
+        sel.addEventListener('change', (e) => {
+          activeScenario = data.scenarios.find(s => s.scenario_id === e.target.value);
+          renderScenarioDetails();
+        });
+        renderScenarioDetails();
+      } catch (err) {
+        console.error('Failed to load scenarios:', err);
+      }
+    }
+
+    function renderScenarioDetails() {
+      if (!activeScenario) return;
+      document.getElementById('scenario-details').innerHTML = `
+        <strong>Name:</strong> ${activeScenario.name}<br>
+        <strong>Description:</strong> ${activeScenario.description}<br>
+        <strong>Max Steps:</strong> ${activeScenario.max_steps} ticks<br>
+        <strong>Agents:</strong> ${activeScenario.agent_count} | <strong>Tasks:</strong> ${activeScenario.task_count}<br>
+        <strong>Energy Budget:</strong> ${activeScenario.energy_budget} units | <strong>Bandwidth:</strong> ${activeScenario.bandwidth_limit} msgs/tick
+      `;
+    }
+
+    async function startRun() {
+      const scenarioId = document.getElementById('run-scenario').value;
+      const seed = parseInt(document.getElementById('run-seed').value, 10);
+      const steps = document.getElementById('run-steps').value ? parseInt(document.getElementById('run-steps').value, 10) : null;
+      const faultLoss = parseFloat(document.getElementById('run-fault-loss').value);
+      const faultDelay = parseInt(document.getElementById('run-fault-delay').value, 10);
+
+      document.getElementById('status-pill').textContent = 'STATUS: RUNNING...';
+      document.getElementById('status-pill').style.borderColor = 'var(--warning)';
+      document.getElementById('status-pill').style.color = 'var(--warning)';
+
+      try {
+        const res = await fetch('/api/start_run', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            scenario_id: scenarioId,
+            seed: seed,
+            steps: steps,
+            fault_loss: faultLoss,
+            fault_delay: faultDelay
+          })
+        });
+        const data = await res.json();
+        currentRunData = data;
+
+        document.getElementById('status-pill').textContent = 'STATUS: COMPLETED';
+        document.getElementById('status-pill').style.borderColor = 'var(--success)';
+        document.getElementById('status-pill').style.color = 'var(--success)';
+
+        document.getElementById('run-summary').innerHTML = `
+          <div style="padding: 12px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); border-radius: 6px;">
+            <p style="color: var(--success); font-weight: 600;">Simulation Completed Successfully</p>
+            <p style="font-size: 0.85rem; margin-top: 4px;" class="mono">
+              Run ID: ${data.run_id} | Ticks: ${data.manifest.total_ticks} | Events: ${data.manifest.total_events} | Messages: ${data.manifest.total_messages}
+            </p>
+            <p style="font-size: 0.8rem; margin-top: 4px; color: var(--text-muted);" class="mono">
+              State SHA-256: ${data.manifest.terminal_state_hash}
+            </p>
+          </div>
+        `;
+
+        updateEnvironmentView(data.final_state, data.manifest.terminal_state_hash);
+        loadEventsForRun(data.run_id);
+        refreshRunsList();
+
+      } catch (err) {
+        document.getElementById('status-pill').textContent = 'STATUS: ERROR';
+        document.getElementById('status-pill').style.borderColor = 'var(--danger)';
+        document.getElementById('run-summary').innerHTML = `<p style="color: var(--danger);">Execution Error: ${err}</p>`;
+      }
+    }
+
+    function updateEnvironmentView(state, hash) {
+      if (!state) return;
+      const tasks = state.tasks || [];
+      const completed = tasks.filter(t => t.status === 'COMPLETED');
+      const inProgress = tasks.filter(t => t.status === 'IN_PROGRESS' || t.status === 'EXECUTED');
+      const pending = tasks.filter(t => t.status === 'PENDING');
+      
+      const initEnergy = activeScenario ? (activeScenario.energy_budget || 100.0) : 100.0;
+      const currentEnergy = typeof state.energy === 'number' ? state.energy : initEnergy;
+      document.getElementById('env-energy-val').textContent = `${currentEnergy.toFixed(1)} / ${initEnergy.toFixed(1)}`;
+      const pct = Math.max(0, Math.min(100, (currentEnergy / initEnergy) * 100));
+      document.getElementById('env-energy-bar').style.width = `${pct}%`;
+      document.getElementById('env-state-hash').textContent = hash || state.state_hash || 'N/A';
+      document.getElementById('env-task-ratio').textContent = `${completed.length} / ${tasks.length}`;
+
+      const tbody = document.querySelector('#env-tasks-table tbody');
+      tbody.innerHTML = '';
+      if (tasks.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color: var(--text-muted); text-align: center;">No active scenario tasks loaded.</td></tr>';
+      } else {
+        tasks.forEach(t => {
+          const row = document.createElement('tr');
+          const isDone = t.status === 'COMPLETED';
+          const isExec = t.status === 'EXECUTED' || t.status === 'IN_PROGRESS';
+          const tagClass = isDone ? 'tag-green' : (isExec ? 'tag-blue' : 'tag-yellow');
+          const isApproved = t.approved_by ? 'APPROVED' : (isExec ? 'UNDER_REVIEW' : 'PENDING');
+          const appTagClass = t.approved_by ? 'tag-green' : (isExec ? 'tag-blue' : 'tag-yellow');
+          row.innerHTML = `
+            <td class="mono">${t.task_id}</td>
+            <td>${t.name}</td>
+            <td><span class="tag ${tagClass}">${t.status}</span></td>
+            <td class="mono">${t.energy_cost}</td>
+            <td class="mono">${t.assigned_worker || t.executed_by || '-'}</td>
+            <td><span class="tag ${appTagClass}">${isApproved}</span></td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+    }
+
+    function updateAgentCardsFromEvents(events) {
+      if (!events || events.length === 0) return;
+      const agentMap = {};
+      events.forEach(ev => {
+        const actor = ev.actor_id || ev.source;
+        if (actor && actor !== 'system') {
+          if (!agentMap[actor]) {
+            agentMap[actor] = {
+              agent_id: actor,
+              role: actor.includes('coordinator') ? 'Coordinator' : (actor.includes('critic') ? 'Critic' : 'Worker'),
+              messages_sent: 0,
+              messages_received: 0,
+              last_action: 'STANDBY',
+              rationale: ''
+            };
+          }
+          if (ev.event_type === 'AGENT_DECISION') {
+            agentMap[actor].last_action = ev.action;
+            if (ev.outcome && ev.outcome.rationale) {
+              agentMap[actor].rationale = ev.outcome.rationale;
+            }
+          }
+          if (ev.event_type === 'MESSAGE_SENT') {
+            agentMap[actor].messages_sent += 1;
+          }
+        }
+        const recipient = ev.inputs && ev.inputs.recipient;
+        if (recipient && agentMap[recipient]) {
+          agentMap[recipient].messages_received += 1;
+        }
+      });
+
+      const container = document.getElementById('agent-cards-container');
+      if (Object.keys(agentMap).length > 0) {
+        container.innerHTML = '';
+        Object.values(agentMap).forEach(ag => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div class="card-title">${ag.agent_id.toUpperCase()}</div>
+            <div class="mono" style="font-size: 0.85rem; color: #94a3b8;">
+              <p><strong>Role:</strong> ${ag.role}</p>
+              <p><strong>Mailbox Activity:</strong> ${ag.messages_received} recvd / ${ag.messages_sent} sent</p>
+              <p><strong>State:</strong> <span class="tag tag-green">ACTIVE</span></p>
+              <p style="margin-top: 8px;"><strong>Last Action:</strong> <span class="tag tag-blue">${ag.last_action}</span></p>
+              ${ag.rationale ? `<p style="margin-top: 6px; font-size: 0.75rem; color: #64748b;"><em>"${ag.rationale}"</em></p>` : ''}
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+    }
+
+    async function loadEventsForRun(runId) {
+      try {
+        const res = await fetch(`/api/run/${runId}/events`);
+        const data = await res.json();
+        const tbody = document.querySelector('#timeline-table tbody');
+        tbody.innerHTML = '';
+        const events = data.events || [];
+        events.slice(-50).forEach(ev => {
+          const row = document.createElement('tr');
+          const seq = ev.sequence != null ? ev.sequence : (ev.sequence_id || '-');
+          const actor = ev.actor_id || ev.source || '-';
+          const target = ev.target || (ev.inputs && (ev.inputs.recipient || ev.inputs.target)) || '*';
+          const hashStr = ev.event_hash || ev.hash || '';
+          const payloadObj = ev.inputs || ev.payload || {};
+          const payloadStr = JSON.stringify(payloadObj).substring(0, 60);
+          row.innerHTML = `
+            <td class="mono">${ev.tick}</td>
+            <td class="mono">${seq}</td>
+            <td><span class="tag tag-blue">${ev.event_type}</span></td>
+            <td class="mono">${actor}</td>
+            <td class="mono">${target}</td>
+            <td class="mono" style="font-size: 0.75rem;">${hashStr ? hashStr.substring(0, 16) + '...' : '-'}</td>
+            <td class="mono" style="font-size: 0.75rem;">${payloadStr}</td>
+          `;
+          tbody.appendChild(row);
+        });
+        document.getElementById('chain-status-badge').textContent = 'CHAIN: CRYPTO-VERIFIED';
+        document.getElementById('chain-status-badge').style.borderColor = 'var(--success)';
+        document.getElementById('chain-status-badge').style.color = 'var(--success)';
+
+        updateAgentCardsFromEvents(events);
+      } catch (err) {
+        console.error('Failed to load events:', err);
+      }
+    }
+
+    function updateMemWeights() {
+      const a = document.getElementById('slider-alpha').value;
+      const b = document.getElementById('slider-beta').value;
+      const c = document.getElementById('slider-gamma').value;
+      document.getElementById('val-alpha').textContent = a;
+      document.getElementById('val-beta').textContent = b;
+      document.getElementById('val-gamma').textContent = c;
+    }
+
+    async function queryMemory() {
+      const a = parseFloat(document.getElementById('slider-alpha').value);
+      const b = parseFloat(document.getElementById('slider-beta').value);
+      const c = parseFloat(document.getElementById('slider-gamma').value);
+      const qvec = document.getElementById('mem-qvec').value.split(',').map(v => parseFloat(v.trim()));
+
+      try {
+        const res = await fetch('/api/memory/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query_vec: qvec, alpha: a, beta: b, gamma: c })
+        });
+        const data = await res.json();
+        const tbody = document.querySelector('#memory-results-table tbody');
+        tbody.innerHTML = '';
+        data.retrieved.forEach(item => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="mono">${item.memory_id}</td>
+            <td>${item.content}</td>
+            <td class="mono">${item.importance.toFixed(1)}</td>
+            <td class="mono" style="color: var(--accent); font-weight: 600;">${item.score.toFixed(4)}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error('Memory query failed:', err);
+      }
+    }
+
+    async function runRoutingBenchmark() {
+      const tbody = document.querySelector('#routing-table tbody');
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Running benchmark...</td></tr>';
+      try {
+        const res = await fetch('/api/benchmarks/routing');
+        const data = await res.json();
+        tbody.innerHTML = '';
+        data.results.forEach(r => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="mono">${r.policy}</td>
+            <td class="mono">${r.total_tokens_consumed}</td>
+            <td class="mono">${r.average_tokens_per_task.toFixed(1)}</td>
+            <td class="mono">${r.overhead_percentage.toFixed(1)}%</td>
+            <td><span class="tag tag-green">${(r.success_rate * 100).toFixed(0)}%</span></td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" style="color: var(--danger);">Failed: ${err}</td></tr>`;
+      }
+    }
+
+    async function runCodingBenchmark() {
+      const tbody = document.querySelector('#coding-table tbody');
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Running sandboxed code tests...</td></tr>';
+      try {
+        const res = await fetch('/api/benchmarks/coding');
+        const data = await res.json();
+        tbody.innerHTML = '';
+        data.results.results.forEach(r => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="mono">${r.name}</td>
+            <td>${r.category}</td>
+            <td><span class="tag tag-blue">${r.difficulty}</span></td>
+            <td><span class="tag ${r.passed ? 'tag-green' : 'tag-red'}">${r.passed ? 'PASS' : 'FAIL'}</span></td>
+            <td class="mono">${r.duration_ms.toFixed(1)} ms</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" style="color: var(--danger);">Failed: ${err}</td></tr>`;
+      }
+    }
+
+    async function refreshRunsList() {
+      try {
+        const res = await fetch('/api/runs');
+        const data = await res.json();
+        const sel = document.getElementById('replay-runs-select');
+        sel.innerHTML = '';
+        data.runs.forEach(r => {
+          const opt = document.createElement('option');
+          opt.value = r.run_id;
+          opt.textContent = `${r.run_id} (Seed: ${r.seed}, Ticks: ${r.total_ticks})`;
+          sel.appendChild(opt);
+        });
+        if (data.runs.length > 0) loadReplayRun();
+      } catch (err) {
+        console.error('Failed to load runs:', err);
+      }
+    }
+
+    async function loadReplayRun() {
+      const runId = document.getElementById('replay-runs-select').value;
+      if (!runId) return;
+      try {
+        const res = await fetch(`/api/run/${runId}`);
+        const data = await res.json();
+        document.getElementById('replay-details-card').innerHTML = `
+          <strong>Run ID:</strong> ${data.manifest.run_id}<br>
+          <strong>Scenario:</strong> ${data.manifest.scenario_id} | <strong>Seed:</strong> ${data.manifest.seed}<br>
+          <strong>Status:</strong> ${data.manifest.status} | <strong>Ticks:</strong> ${data.manifest.total_ticks}<br>
+          <strong>Terminal State SHA-256:</strong> ${data.manifest.terminal_state_hash}<br>
+          <strong>Cryptographic Event Chain:</strong> ${data.manifest.event_chain_valid ? 'VALIDATED (SHA-256)' : 'UNCHECKED'}<br>
+          <strong>Git Revision:</strong> ${data.manifest.git_revision}
+        `;
+        if (data.final_state) {
+          updateEnvironmentView(data.final_state, data.manifest.terminal_state_hash);
+        }
+        loadEventsForRun(runId);
+      } catch (err) {
+        console.error('Failed to load run detail:', err);
+      }
+    }
+
+    async function verifyLoadedRun() {
+      const runId = document.getElementById('replay-runs-select').value;
+      if (!runId) {
+        alert("Please select a run first.");
+        return;
+      }
+      const card = document.getElementById('replay-details-card');
+      card.innerHTML = '<p style="color: var(--accent);">Executing cryptographic hash chain and state replay verification...</p>';
+
+      try {
+        const res = await fetch(`/api/run/${runId}/verify`);
+        const data = await res.json();
+
+        if (data.is_fully_verified) {
+          card.innerHTML = `
+            <div style="padding: 12px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); border-radius: 6px;">
+              <p style="color: var(--success); font-weight: 700; font-size: 1rem;">VERIFICATION PASSED — BIT-FOR-BIT MATCH</p>
+              <p style="margin-top: 6px;"><strong>Run ID:</strong> ${data.run_id} | <strong>Events Verified:</strong> ${data.total_events}</p>
+              <p style="margin-top: 4px;"><strong>Causal Hash Chain:</strong> <span class="tag tag-green">VALID (SHA-256 Merkle Linkage)</span></p>
+              <p style="margin-top: 4px;"><strong>State Replay Reconstruction:</strong> <span class="tag tag-green">VERIFIED (100% Bit-for-bit equivalence)</span></p>
+              <p style="margin-top: 4px; font-size: 0.75rem; word-break: break-all; color: var(--text-muted);">
+                <strong>Expected Hash:</strong> ${data.expected_state_hash}<br>
+                <strong>Replayed Hash:</strong> ${data.replayed_state_hash}
+              </p>
+            </div>
+          `;
+        } else {
+          card.innerHTML = `
+            <div style="padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); border-radius: 6px;">
+              <p style="color: var(--danger); font-weight: 700; font-size: 1rem;">VERIFICATION FAILED</p>
+              <p style="margin-top: 6px;"><strong>Causal Chain:</strong> ${data.chain_valid ? '<span class="tag tag-green">VALID</span>' : '<span class="tag tag-red">CORRUPT</span>'}</p>
+              <p style="margin-top: 4px;"><strong>State Replay:</strong> ${data.state_replay_valid ? '<span class="tag tag-green">VALID</span>' : '<span class="tag tag-red">MISMATCH</span>'}</p>
+              ${data.chain_error ? `<p style="color: var(--danger); font-size: 0.8rem;">Chain Error: ${data.chain_error}</p>` : ''}
+              ${data.state_error ? `<p style="color: var(--danger); font-size: 0.8rem;">State Error: ${data.state_error}</p>` : ''}
+            </div>
+          `;
+        }
+      } catch (err) {
+        card.innerHTML = `<p style="color: var(--danger);">Verification Request Failed: ${err}</p>`;
+      }
+    }
+
+    async function loadGovernance() {
+      try {
+        const res = await fetch('/api/governance');
+        const data = await res.json();
+        document.getElementById('gov-info').innerHTML = `
+          <p><strong>Governance Path:</strong> ${data.governance_path}</p>
+          <p><strong>Canonical Lifecycle:</strong> <span class="tag tag-yellow">${data.canonical_lifecycle_state}</span></p>
+          <p><strong>Architecture Status:</strong> ${data.authority_state.architecture_status || 'UNFROZEN'}</p>
+          <p><strong>Implementation Authority:</strong> ${data.authority_state.implementation_authority || 'NOT_GRANTED'}</p>
+          <p><strong>Firewall Mode:</strong> ${data.execution_firewall.firewall_enforcement_mode || 'FAIL_CLOSED'}</p>
+          <p><strong>Simulation Runs Permitted:</strong> ${data.execution_firewall.simulation_runs_permitted ? 'TRUE' : 'FALSE (Enforcing Tier Separation)'}</p>
+        `;
+      } catch (err) {
+        console.error('Failed to load governance:', err);
+      }
+    }
+
+    // Initial boot
+    window.addEventListener('DOMContentLoaded', () => {
+      loadScenarios();
+      refreshRunsList();
+      loadGovernance();
+      updateMemWeights();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{
+  "scenario_id": "cooperative_pipeline",
+  "name": "Cooperative Analysis Pipeline",
+  "description": "Standard 3-agent cooperative problem solving with Coordinator, Worker, and Critic.",
+  "max_ticks": 30,
+  "initial_energy": 100.0,
+  "initial_bandwidth": 100.0,
+  "initial_budget": 50.0,
+  "tasks": [
+    {
+      "task_id": "task_01",
+      "name": "Ingest and Clean Telemetry Stream",
+      "difficulty": "LOW",
+      "complexity_weight": 1.0,
+      "energy_cost": 10.0,
+      "status": "PENDING"
+    },
+    {
+      "task_id": "task_02",
+      "name": "Compute Invariant Verification Metrics",
+      "difficulty": "MODERATE",
+      "complexity_weight": 1.5,
+      "energy_cost": 15.0,
+      "status": "PENDING"
+    },
+    {
+      "task_id": "task_03",
+      "name": "Synthesize Authoritative Decision Record",
+      "difficulty": "HIGH",
+      "complexity_weight": 2.0,
+      "energy_cost": 20.0,
+      "status": "PENDING"
+    }
+  ],
+  "agents": [
+    {
+      "agent_id": "coordinator",
+      "role": "Coordinator",
+      "capabilities": ["task_assignment", "progress_monitoring"],
+      "managed_workers": ["worker_1"]
+    },
+    {
+      "agent_id": "worker_1",
+      "role": "Worker",
+      "specialization": "data_engineering",
+      "capabilities": ["task_execution", "data_engineering"]
+    },
+    {
+      "agent_id": "critic",
+      "role": "Critic",
+      "capabilities": ["independent_review", "contract_validation"]
+    }
+  ]
+}

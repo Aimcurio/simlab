@@ -2,6 +2,11 @@
 **Experiment ID**: `EXP-AB-01-COMP`  
 **Target Primitive**: `PR-COG-01` (Tri-Factor Memory Retrieval Scoring)  
 **Lifecycle State**: `PHASE_4_DESIGN`  
+**Design Gate**: `PHASE_4_DESIGN_GATE` (Alias: `GATE_R4D`)  
+**Adjudication Gate Status**: `GATE_R4` strictly reserved for post-ablation/stress execution adjudication  
+**Architecture Status**: `UNFROZEN`  
+**Final SimLab Implementation Authority**: `NOT_GRANTED`  
+**Phase 4 Execution Authority**: `NOT_GRANTED`  
 
 ---
 
@@ -37,3 +42,13 @@ In addition to discrete conditions A1–A8, a continuous 2D simplex grid search 
 - **Hypothesis ($H_1$)**: Condition A4 (`RECENCY_RELEVANCE`) achieves non-inferior MRR compared to A7 (`FULL_TRI_FACTOR`) within $\Delta \le 0.02$, proving that static importance scores add negligible marginal value over semantics and recency.
 - **Null Hypothesis ($H_0$)**: Importance weighting is strictly necessary ($\text{MRR}_{A7} - \text{MRR}_{A4} \ge +0.05, p < 0.0025$).
 - **Statistical Test**: Paired Wilcoxon signed-rank test with Bonferroni correction ($\alpha = 0.01 / 7 = 0.0014$).
+
+---
+
+## 5. Causal Claim Discipline
+- `causal_claim_supported`: "Removing prompt-based importance scores from tri-factor memory retrieval produces no statistically significant degradation in MRR ($\Delta \text{MRR} \le 0.02$) under offline semantic retrieval across the tested queries."
+- `causal_claim_not_supported`: "Prompt-based importance scoring is universally useless across all cognitive agent simulation architectures."
+- `tested_context`: Standardized 500-node episodic memory store, cosine similarity dense embeddings, exponential tick decay ($\lambda = 0.995$).
+- `untested_context`: Dynamic multi-agent social games with real-time goal revisions, stores $> 10,000$ memories, graph-structured knowledge stores.
+- `interaction_risks`: When importance weighting is eliminated, synthesized reflection nodes may lose tie-breaking salience against dense episodic distractors.
+

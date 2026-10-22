@@ -1,0 +1,1513 @@
+{
+  "challenge_1": {
+    "deterministic_sweep": {
+      "4.0": {
+        "mrr_mean": 0.09417074335686544,
+        "mrr_std": 0.0737590853191914,
+        "mean_target_rank": 19.32,
+        "min_target_rank": 3,
+        "max_target_rank": 54,
+        "rank1_crowding_count": 0,
+        "rank1_crowding_pct": 0.0,
+        "top5_refl_slots": 0,
+        "top5_refl_slots_pct": 0.0
+      },
+      "4.5": {
+        "mrr_mean": 0.09388774189691641,
+        "mrr_std": 0.07406658551985884,
+        "mean_target_rank": 20.07,
+        "min_target_rank": 3,
+        "max_target_rank": 58,
+        "rank1_crowding_count": 0,
+        "rank1_crowding_pct": 0.0,
+        "top5_refl_slots": 0,
+        "top5_refl_slots_pct": 0.0
+      },
+      "5.0": {
+        "mrr_mean": 0.09287624110676897,
+        "mrr_std": 0.07485789794349357,
+        "mean_target_rank": 21.71,
+        "min_target_rank": 3,
+        "max_target_rank": 65,
+        "rank1_crowding_count": 0,
+        "rank1_crowding_pct": 0.0,
+        "top5_refl_slots": 0,
+        "top5_refl_slots_pct": 0.0
+      },
+      "5.5": {
+        "mrr_mean": 0.06578750841646207,
+        "mrr_std": 0.05246701155676573,
+        "mean_target_rank": 27.11,
+        "min_target_rank": 4,
+        "max_target_rank": 74,
+        "rank1_crowding_count": 15,
+        "rank1_crowding_pct": 15.0,
+        "top5_refl_slots": 130,
+        "top5_refl_slots_pct": 26.0
+      },
+      "6.0": {
+        "mrr_mean": 0.04052971378726238,
+        "mrr_std": 0.020982744146867145,
+        "mean_target_rank": 33.26,
+        "min_target_rank": 10,
+        "max_target_rank": 74,
+        "rank1_crowding_count": 100,
+        "rank1_crowding_pct": 100.0,
+        "top5_refl_slots": 455,
+        "top5_refl_slots_pct": 91.0
+      },
+      "6.5": {
+        "mrr_mean": 0.03527804481492011,
+        "mrr_std": 0.014461609614265108,
+        "mean_target_rank": 33.82,
+        "min_target_rank": 14,
+        "max_target_rank": 66,
+        "rank1_crowding_count": 100,
+        "rank1_crowding_pct": 100.0,
+        "top5_refl_slots": 500,
+        "top5_refl_slots_pct": 100.0
+      },
+      "7.0": {
+        "mrr_mean": 0.033190654244752114,
+        "mrr_std": 0.012225013986907878,
+        "mean_target_rank": 34.46,
+        "min_target_rank": 16,
+        "max_target_rank": 61,
+        "rank1_crowding_count": 100,
+        "rank1_crowding_pct": 100.0,
+        "top5_refl_slots": 500,
+        "top5_refl_slots_pct": 100.0
+      },
+      "7.5": {
+        "mrr_mean": 0.0325055897540826,
+        "mrr_std": 0.01086810099176113,
+        "mean_target_rank": 34.48,
+        "min_target_rank": 17,
+        "max_target_rank": 62,
+        "rank1_crowding_count": 100,
+        "rank1_crowding_pct": 100.0,
+        "top5_refl_slots": 500,
+        "top5_refl_slots_pct": 100.0
+      },
+      "8.0": {
+        "mrr_mean": 0.03236459707547518,
+        "mrr_std": 0.010086341290370773,
+        "mean_target_rank": 34.2,
+        "min_target_rank": 19,
+        "max_target_rank": 60,
+        "rank1_crowding_count": 100,
+        "rank1_crowding_pct": 100.0,
+        "top5_refl_slots": 500,
+        "top5_refl_slots_pct": 100.0
+      },
+      "8.5": {
+        "mrr_mean": 0.03251895193677584,
+        "mrr_std": 0.010070003862283407,
+        "mean_target_rank": 34.04,
+        "min_target_rank": 21,
+        "max_target_rank": 61,
+        "rank1_crowding_count": 100,
+        "rank1_crowding_pct": 100.0,
+        "top5_refl_slots": 500,
+        "top5_refl_slots_pct": 100.0
+      },
+      "9.0": {
+        "mrr_mean": 0.03257962277890681,
+        "mrr_std": 0.010105267623988364,
+        "mean_target_rank": 33.97,
+        "min_target_rank": 21,
+        "max_target_rank": 60,
+        "rank1_crowding_count": 100,
+        "rank1_crowding_pct": 100.0,
+        "top5_refl_slots": 500,
+        "top5_refl_slots_pct": 100.0
+      }
+    },
+    "multi_seed_results": {
+      "5.0": {
+        "crowd_mean": 0.0,
+        "crowd_min": 0,
+        "crowd_max": 0,
+        "top5_mean": 0.0,
+        "mrr_mean": 0.0914289392186157,
+        "mrr_std": 9.455644683348763e-05
+      },
+      "6.0": {
+        "crowd_mean": 100.0,
+        "crowd_min": 100,
+        "crowd_max": 100,
+        "top5_mean": 500.0,
+        "mrr_mean": 0.029518202818071743,
+        "mrr_std": 0.0002634381048895651
+      },
+      "7.0": {
+        "crowd_mean": 100.0,
+        "crowd_min": 100,
+        "crowd_max": 100,
+        "top5_mean": 500.0,
+        "mrr_mean": 0.031201767130161668,
+        "mrr_std": 2.597402597402272e-05
+      },
+      "8.0": {
+        "crowd_mean": 100.0,
+        "crowd_min": 100,
+        "crowd_max": 100,
+        "top5_mean": 500.0,
+        "mrr_mean": 0.03216409582234235,
+        "mrr_std": 6.938893903907228e-18
+      },
+      "8.5": {
+        "crowd_mean": 100.0,
+        "crowd_min": 100,
+        "crowd_max": 100,
+        "top5_mean": 500.0,
+        "mrr_mean": 0.032518951936775856,
+        "mrr_std": 1.3877787807814457e-17
+      }
+    },
+    "rand_part_5_0": {
+      "crowding_min": 0,
+      "crowding_max": 0,
+      "crowding_mean": 0.0,
+      "top5_min": 0,
+      "top5_max": 0,
+      "top5_mean": 0.0,
+      "mrr_mean": 0.09145890904660404
+    },
+    "km_5_0": {
+      "crowding_min": 0,
+      "crowding_max": 0,
+      "crowding_mean": 0.0,
+      "top5_min": 0,
+      "top5_max": 0,
+      "top5_mean": 0.0,
+      "mrr_mean": 0.09185287691168256
+    }
+  },
+  "challenge_2": {
+    "a7_minmax": {
+      "norm_name": "Min-Max",
+      "weights": [
+        0.2,
+        0.5,
+        0.3
+      ],
+      "mrr_mean": 0.09414266978022777,
+      "mrr_std": 0.07380635238590656,
+      "ndcg5_mean": 0.04496411846762656,
+      "median_rank": 13.0,
+      "mean_rank": 19.38,
+      "min_rank": 3,
+      "max_rank": 54
+    },
+    "a4_minmax": {
+      "norm_name": "Min-Max",
+      "weights": [
+        0.3,
+        0.7,
+        0.0
+      ],
+      "mrr_mean": 0.5002279535982908,
+      "mrr_std": 0.44807259894667584,
+      "ndcg5_mean": 0.5170082081893862,
+      "median_rank": 2.5,
+      "mean_rank": 15.54,
+      "min_rank": 1,
+      "max_rank": 42
+    },
+    "a7_zscore": {
+      "norm_name": "Z-Score",
+      "weights": [
+        0.2,
+        0.5,
+        0.3
+      ],
+      "mrr_mean": 0.09113413635140455,
+      "mrr_std": 0.07095485770062343,
+      "ndcg5_mean": 0.04707969650641791,
+      "median_rank": 13.0,
+      "mean_rank": 19.89,
+      "min_rank": 3,
+      "max_rank": 55
+    },
+    "a4_zscore": {
+      "norm_name": "Z-Score",
+      "weights": [
+        0.3,
+        0.7,
+        0.0
+      ],
+      "mrr_mean": 0.5066576687671579,
+      "mrr_std": 0.4465505975634325,
+      "ndcg5_mean": 0.5223225696350622,
+      "median_rank": 2.0,
+      "mean_rank": 15.82,
+      "min_rank": 1,
+      "max_rank": 43
+    },
+    "a7_quantile": {
+      "norm_name": "Quantile (Rank)",
+      "weights": [
+        0.2,
+        0.5,
+        0.3
+      ],
+      "mrr_mean": 0.13241235926407266,
+      "mrr_std": 0.20351027764599933,
+      "ndcg5_mean": 0.08246425246579403,
+      "median_rank": 13.0,
+      "mean_rank": 22.01,
+      "min_rank": 1,
+      "max_rank": 70
+    },
+    "a4_quantile": {
+      "norm_name": "Quantile (Rank)",
+      "weights": [
+        0.3,
+        0.7,
+        0.0
+      ],
+      "mrr_mean": 0.3560428369266546,
+      "mrr_std": 0.43359743484367314,
+      "ndcg5_mean": 0.32954395572359224,
+      "median_rank": 18.0,
+      "mean_rank": 15.47,
+      "min_rank": 1,
+      "max_rank": 32
+    },
+    "a7_raw": {
+      "norm_name": "Raw Unnormalized",
+      "weights": [
+        0.2,
+        0.5,
+        0.3
+      ],
+      "mrr_mean": 0.08728989154935045,
+      "mrr_std": 0.1535021276075937,
+      "ndcg5_mean": 0.05416508275000202,
+      "median_rank": 26.0,
+      "mean_rank": 33.74,
+      "min_rank": 1,
+      "max_rank": 95
+    },
+    "a4_raw": {
+      "norm_name": "Raw Unnormalized",
+      "weights": [
+        0.3,
+        0.7,
+        0.0
+      ],
+      "mrr_mean": 0.5360960705960706,
+      "mrr_std": 0.3791536349690083,
+      "ndcg5_mean": 0.5462040187272654,
+      "median_rank": 2.0,
+      "mean_rank": 4.2,
+      "min_rank": 1,
+      "max_rank": 18
+    },
+    "softmax_results": {
+      "0.001": {
+        "a7": {
+          "norm_name": "Softmax(tau=0.001)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.5333095238095238,
+          "mrr_std": 0.38411751729476706,
+          "ndcg5_mean": 0.601904135282955,
+          "median_rank": 4.0,
+          "mean_rank": 3.2,
+          "min_rank": 1,
+          "max_rank": 7
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=0.001)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.6526666666666665,
+          "mrr_std": 0.29720659828660495,
+          "ndcg5_mean": 0.7408130152200613,
+          "median_rank": 2.0,
+          "mean_rank": 1.96,
+          "min_rank": 1,
+          "max_rank": 5
+        }
+      },
+      "0.005": {
+        "a7": {
+          "norm_name": "Softmax(tau=0.005)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.5525833333333334,
+          "mrr_std": 0.39186857470083414,
+          "ndcg5_mean": 0.5420983005120616,
+          "median_rank": 2.0,
+          "mean_rank": 4.01,
+          "min_rank": 1,
+          "max_rank": 12
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=0.005)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.5879047619047619,
+          "mrr_std": 0.3661853784255781,
+          "ndcg5_mean": 0.6069798326874198,
+          "median_rank": 2.0,
+          "mean_rank": 2.99,
+          "min_rank": 1,
+          "max_rank": 8
+        }
+      },
+      "0.01": {
+        "a7": {
+          "norm_name": "Softmax(tau=0.01)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.5320483544233544,
+          "mrr_std": 0.4076910373623252,
+          "ndcg5_mean": 0.5297814071114052,
+          "median_rank": 2.0,
+          "mean_rank": 5.22,
+          "min_rank": 1,
+          "max_rank": 18
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=0.01)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.614376984126984,
+          "mrr_std": 0.36649452740643607,
+          "ndcg5_mean": 0.6341243154694672,
+          "median_rank": 2.0,
+          "mean_rank": 3.01,
+          "min_rank": 1,
+          "max_rank": 10
+        }
+      },
+      "0.02": {
+        "a7": {
+          "norm_name": "Softmax(tau=0.02)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.44979442981339274,
+          "mrr_std": 0.39809027543499276,
+          "ndcg5_mean": 0.4618662573623194,
+          "median_rank": 3.0,
+          "mean_rank": 6.67,
+          "min_rank": 1,
+          "max_rank": 22
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=0.02)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.7669045121545122,
+          "mrr_std": 0.37190798900496164,
+          "ndcg5_mean": 0.7671444760306672,
+          "median_rank": 1.0,
+          "mean_rank": 2.7,
+          "min_rank": 1,
+          "max_rank": 14
+        }
+      },
+      "0.05": {
+        "a7": {
+          "norm_name": "Softmax(tau=0.05)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.284806945741967,
+          "mrr_std": 0.3779648154706326,
+          "ndcg5_mean": 0.23148712314377456,
+          "median_rank": 9.0,
+          "mean_rank": 14.26,
+          "min_rank": 1,
+          "max_rank": 56
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=0.05)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.7696748766221383,
+          "mrr_std": 0.38487522695578386,
+          "ndcg5_mean": 0.7630981223502619,
+          "median_rank": 1.0,
+          "mean_rank": 3.61,
+          "min_rank": 1,
+          "max_rank": 29
+        }
+      },
+      "0.1": {
+        "a7": {
+          "norm_name": "Softmax(tau=0.1)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.11335359684162853,
+          "mrr_std": 0.11741743207762947,
+          "ndcg5_mean": 0.10728100511690278,
+          "median_rank": 14.0,
+          "mean_rank": 21.17,
+          "min_rank": 2,
+          "max_rank": 75
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=0.1)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.736684381986758,
+          "mrr_std": 0.40993176753542776,
+          "ndcg5_mean": 0.726232126232897,
+          "median_rank": 1.0,
+          "mean_rank": 5.41,
+          "min_rank": 1,
+          "max_rank": 44
+        }
+      },
+      "0.2": {
+        "a7": {
+          "norm_name": "Softmax(tau=0.2)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.12579432743649435,
+          "mrr_std": 0.12975552140592794,
+          "ndcg5_mean": 0.11632038200819085,
+          "median_rank": 12.0,
+          "mean_rank": 19.28,
+          "min_rank": 2,
+          "max_rank": 74
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=0.2)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.719550338681829,
+          "mrr_std": 0.42370806784788767,
+          "ndcg5_mean": 0.7131752936530793,
+          "median_rank": 1.0,
+          "mean_rank": 6.87,
+          "min_rank": 1,
+          "max_rank": 53
+        }
+      },
+      "0.5": {
+        "a7": {
+          "norm_name": "Softmax(tau=0.5)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.09990074685396966,
+          "mrr_std": 0.17189054504922893,
+          "ndcg5_mean": 0.05785578521428745,
+          "median_rank": 25.0,
+          "mean_rank": 25.11,
+          "min_rank": 1,
+          "max_rank": 61
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=0.5)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.7274733315985924,
+          "mrr_std": 0.4136681906098823,
+          "ndcg5_mean": 0.7199228286971825,
+          "median_rank": 1.0,
+          "mean_rank": 5.48,
+          "min_rank": 1,
+          "max_rank": 40
+        }
+      },
+      "1.0": {
+        "a7": {
+          "norm_name": "Softmax(tau=1.0)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.10904858415655294,
+          "mrr_std": 0.22306776661397404,
+          "ndcg5_mean": 0.06892789260714373,
+          "median_rank": 28.0,
+          "mean_rank": 30.38,
+          "min_rank": 1,
+          "max_rank": 76
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=1.0)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.7537536720417526,
+          "mrr_std": 0.3935443981631172,
+          "ndcg5_mean": 0.7409717143325685,
+          "median_rank": 1.0,
+          "mean_rank": 3.79,
+          "min_rank": 1,
+          "max_rank": 25
+        }
+      },
+      "2.0": {
+        "a7": {
+          "norm_name": "Softmax(tau=2.0)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.12262183949740262,
+          "mrr_std": 0.26299539506115416,
+          "ndcg5_mean": 0.08,
+          "median_rank": 28.0,
+          "mean_rank": 32.24,
+          "min_rank": 1,
+          "max_rank": 80
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=2.0)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.7065872322122323,
+          "mrr_std": 0.3895378639846768,
+          "ndcg5_mean": 0.7141237862281775,
+          "median_rank": 1.0,
+          "mean_rank": 3.38,
+          "min_rank": 1,
+          "max_rank": 22
+        }
+      },
+      "5.0": {
+        "a7": {
+          "norm_name": "Softmax(tau=5.0)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.1025511403428019,
+          "mrr_std": 0.20840792362449476,
+          "ndcg5_mean": 0.0652371901428583,
+          "median_rank": 27.5,
+          "mean_rank": 32.89,
+          "min_rank": 1,
+          "max_rank": 86
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=5.0)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.5945371105502685,
+          "mrr_std": 0.4009348241722517,
+          "ndcg5_mean": 0.5854152769958729,
+          "median_rank": 2.0,
+          "mean_rank": 3.83,
+          "min_rank": 1,
+          "max_rank": 19
+        }
+      },
+      "10.0": {
+        "a7": {
+          "norm_name": "Softmax(tau=10.0)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.09752773305941259,
+          "mrr_std": 0.19202576102018126,
+          "ndcg5_mean": 0.06154648767857287,
+          "median_rank": 27.0,
+          "mean_rank": 33.21,
+          "min_rank": 1,
+          "max_rank": 89
+        },
+        "a4": {
+          "norm_name": "Softmax(tau=10.0)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.5630156232656232,
+          "mrr_std": 0.38970985127110275,
+          "ndcg5_mean": 0.5562272404847356,
+          "median_rank": 2.0,
+          "mean_rank": 3.95,
+          "min_rank": 1,
+          "max_rank": 18
+        }
+      }
+    },
+    "softmax_minmax_results": {
+      "0.01": {
+        "a7": {
+          "norm_name": "SoftmaxMinMax(tau=0.01)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.6705,
+          "mrr_std": 0.3792666368377027,
+          "ndcg5_mean": 0.716659520259623,
+          "median_rank": 1.0,
+          "mean_rank": 2.52,
+          "min_rank": 1,
+          "max_rank": 6
+        },
+        "a4": {
+          "norm_name": "SoftmaxMinMax(tau=0.01)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.965,
+          "mrr_std": 0.1282161999881214,
+          "ndcg5_mean": 0.9741650827500021,
+          "median_rank": 1.0,
+          "mean_rank": 1.07,
+          "min_rank": 1,
+          "max_rank": 2
+        }
+      },
+      "0.05": {
+        "a7": {
+          "norm_name": "SoftmaxMinMax(tau=0.05)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.5925,
+          "mrr_std": 0.32170260262271927,
+          "ndcg5_mean": 0.6901786093429237,
+          "median_rank": 2.0,
+          "mean_rank": 2.35,
+          "min_rank": 1,
+          "max_rank": 6
+        },
+        "a4": {
+          "norm_name": "SoftmaxMinMax(tau=0.05)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.89,
+          "mrr_std": 0.22375732405295715,
+          "ndcg5_mean": 0.9183301655000041,
+          "median_rank": 1.0,
+          "mean_rank": 1.26,
+          "min_rank": 1,
+          "max_rank": 3
+        }
+      },
+      "0.1": {
+        "a7": {
+          "norm_name": "SoftmaxMinMax(tau=0.1)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.4546194083694084,
+          "mrr_std": 0.34337499728290827,
+          "ndcg5_mean": 0.48433050982811343,
+          "median_rank": 3.0,
+          "mean_rank": 3.88,
+          "min_rank": 1,
+          "max_rank": 12
+        },
+        "a4": {
+          "norm_name": "SoftmaxMinMax(tau=0.1)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.7788809523809525,
+          "mrr_std": 0.3236423073251883,
+          "ndcg5_mean": 0.8049538177300142,
+          "median_rank": 1.0,
+          "mean_rank": 1.93,
+          "min_rank": 1,
+          "max_rank": 7
+        }
+      },
+      "0.2": {
+        "a7": {
+          "norm_name": "SoftmaxMinMax(tau=0.2)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.2927393578643579,
+          "mrr_std": 0.29061393238143945,
+          "ndcg5_mean": 0.278595978887023,
+          "median_rank": 6.0,
+          "mean_rank": 6.28,
+          "min_rank": 1,
+          "max_rank": 16
+        },
+        "a4": {
+          "norm_name": "SoftmaxMinMax(tau=0.2)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.6060975135975135,
+          "mrr_std": 0.36758263551298187,
+          "ndcg5_mean": 0.6536318671707767,
+          "median_rank": 2.0,
+          "mean_rank": 3.24,
+          "min_rank": 1,
+          "max_rank": 13
+        }
+      },
+      "0.5": {
+        "a7": {
+          "norm_name": "SoftmaxMinMax(tau=0.5)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.19936610587739823,
+          "mrr_std": 0.22524148947378728,
+          "ndcg5_mean": 0.15255434478846946,
+          "median_rank": 7.0,
+          "mean_rank": 11.34,
+          "min_rank": 1,
+          "max_rank": 32
+        },
+        "a4": {
+          "norm_name": "SoftmaxMinMax(tau=0.5)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.497313364982634,
+          "mrr_std": 0.42890349105485265,
+          "ndcg5_mean": 0.5020494979598304,
+          "median_rank": 3.0,
+          "mean_rank": 7.8,
+          "min_rank": 1,
+          "max_rank": 24
+        }
+      },
+      "1.0": {
+        "a7": {
+          "norm_name": "SoftmaxMinMax(tau=1.0)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.1264801758478978,
+          "mrr_std": 0.10972802670213315,
+          "ndcg5_mean": 0.09155189591664355,
+          "median_rank": 10.0,
+          "mean_rank": 14.77,
+          "min_rank": 2,
+          "max_rank": 40
+        },
+        "a4": {
+          "norm_name": "SoftmaxMinMax(tau=1.0)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.49232000229730555,
+          "mrr_std": 0.44307754169233393,
+          "ndcg5_mean": 0.5036192073958735,
+          "median_rank": 3.0,
+          "mean_rank": 11.4,
+          "min_rank": 1,
+          "max_rank": 31
+        }
+      },
+      "2.0": {
+        "a7": {
+          "norm_name": "SoftmaxMinMax(tau=2.0)",
+          "weights": [
+            0.2,
+            0.5,
+            0.3
+          ],
+          "mrr_mean": 0.10977915841333559,
+          "mrr_std": 0.09878636977451588,
+          "ndcg5_mean": 0.06224513033590962,
+          "median_rank": 11.0,
+          "mean_rank": 16.66,
+          "min_rank": 2,
+          "max_rank": 46
+        },
+        "a4": {
+          "norm_name": "SoftmaxMinMax(tau=2.0)",
+          "weights": [
+            0.3,
+            0.7,
+            0.0
+          ],
+          "mrr_mean": 0.4948372430627386,
+          "mrr_std": 0.4490379996311224,
+          "ndcg5_mean": 0.508003144279425,
+          "median_rank": 3.0,
+          "mean_rank": 14.14,
+          "min_rank": 1,
+          "max_rank": 38
+        }
+      }
+    },
+    "max_a7_mrr": 0.6705,
+    "beat_a4": true
+  },
+  "challenge_3": {
+    "best_overall": {
+      "alpha": 0.06,
+      "beta": 0.94,
+      "gamma": 0.0,
+      "mrr": 0.7535351950531484
+    },
+    "best_boundary": {
+      "alpha": 0.06,
+      "beta": 0.94,
+      "gamma": 0.0,
+      "mrr": 0.7535351950531484
+    },
+    "best_interior": {
+      "alpha": 0.07,
+      "beta": 0.92,
+      "gamma": 0.01,
+      "mrr": 0.744883991008991
+    },
+    "interior_points_gt_a4_count": 390,
+    "interior_points_gt_a4_sample": [
+      {
+        "alpha": 0.0,
+        "beta": 0.93,
+        "gamma": 0.07,
+        "mrr": 0.5055051006868894
+      },
+      {
+        "alpha": 0.0,
+        "beta": 0.94,
+        "gamma": 0.06,
+        "mrr": 0.5063001001878722
+      },
+      {
+        "alpha": 0.0,
+        "beta": 0.95,
+        "gamma": 0.05,
+        "mrr": 0.5084600462951493
+      },
+      {
+        "alpha": 0.0,
+        "beta": 0.96,
+        "gamma": 0.04,
+        "mrr": 0.515231775344996
+      },
+      {
+        "alpha": 0.0,
+        "beta": 0.97,
+        "gamma": 0.03,
+        "mrr": 0.5320346971984333
+      },
+      {
+        "alpha": 0.0,
+        "beta": 0.98,
+        "gamma": 0.02,
+        "mrr": 0.548941826949263
+      },
+      {
+        "alpha": 0.0,
+        "beta": 0.99,
+        "gamma": 0.01,
+        "mrr": 0.5501173708876698
+      },
+      {
+        "alpha": 0.01,
+        "beta": 0.92,
+        "gamma": 0.07,
+        "mrr": 0.5085613119657906
+      },
+      {
+        "alpha": 0.01,
+        "beta": 0.93,
+        "gamma": 0.06,
+        "mrr": 0.5168719284278581
+      },
+      {
+        "alpha": 0.01,
+        "beta": 0.94,
+        "gamma": 0.05,
+        "mrr": 0.5257653700369515
+      }
+    ],
+    "gamma_curve": [
+      {
+        "gamma": 0.0,
+        "max_mrr": 0.7535351950531484,
+        "mean_mrr": 0.5656308640315866
+      },
+      {
+        "gamma": 0.01,
+        "max_mrr": 0.744883991008991,
+        "mean_mrr": 0.5742967318998442
+      },
+      {
+        "gamma": 0.02,
+        "max_mrr": 0.6753628397746044,
+        "mean_mrr": 0.5734255551365984
+      },
+      {
+        "gamma": 0.03,
+        "max_mrr": 0.6387575700443348,
+        "mean_mrr": 0.5546372704959437
+      },
+      {
+        "gamma": 0.04,
+        "max_mrr": 0.6304970331955626,
+        "mean_mrr": 0.5214766659998354
+      },
+      {
+        "gamma": 0.05,
+        "max_mrr": 0.6035693601061248,
+        "mean_mrr": 0.48668106382477916
+      },
+      {
+        "gamma": 0.06,
+        "max_mrr": 0.5830357122332155,
+        "mean_mrr": 0.44606362330536253
+      },
+      {
+        "gamma": 0.07,
+        "max_mrr": 0.5610582282553611,
+        "mean_mrr": 0.43502948540681213
+      },
+      {
+        "gamma": 0.08,
+        "max_mrr": 0.5506908989426497,
+        "mean_mrr": 0.42085868012208216
+      },
+      {
+        "gamma": 0.09,
+        "max_mrr": 0.5186358818314956,
+        "mean_mrr": 0.4056890994040185
+      },
+      {
+        "gamma": 0.1,
+        "max_mrr": 0.4686607925727186,
+        "mean_mrr": 0.38763597623854384
+      },
+      {
+        "gamma": 0.11,
+        "max_mrr": 0.44813390656474844,
+        "mean_mrr": 0.37437533772382114
+      },
+      {
+        "gamma": 0.12,
+        "max_mrr": 0.43715880668734436,
+        "mean_mrr": 0.362363560480378
+      },
+      {
+        "gamma": 0.13,
+        "max_mrr": 0.4355984434672029,
+        "mean_mrr": 0.3515668738476142
+      },
+      {
+        "gamma": 0.14,
+        "max_mrr": 0.4314042173211833,
+        "mean_mrr": 0.3407232407387918
+      },
+      {
+        "gamma": 0.15,
+        "max_mrr": 0.41607048837369626,
+        "mean_mrr": 0.32763308371451716
+      },
+      {
+        "gamma": 0.16,
+        "max_mrr": 0.4150176843752611,
+        "mean_mrr": 0.3165657393221724
+      },
+      {
+        "gamma": 0.17,
+        "max_mrr": 0.4145980346439007,
+        "mean_mrr": 0.3057141238428891
+      },
+      {
+        "gamma": 0.18,
+        "max_mrr": 0.4139058126695273,
+        "mean_mrr": 0.294111329870211
+      },
+      {
+        "gamma": 0.19,
+        "max_mrr": 0.4112334947473459,
+        "mean_mrr": 0.28249336515905665
+      },
+      {
+        "gamma": 0.2,
+        "max_mrr": 0.40779450614581714,
+        "mean_mrr": 0.2677145383396166
+      },
+      {
+        "gamma": 0.21,
+        "max_mrr": 0.4059691971606699,
+        "mean_mrr": 0.2525938567901259
+      },
+      {
+        "gamma": 0.22,
+        "max_mrr": 0.3656474177884035,
+        "mean_mrr": 0.23779423048500703
+      },
+      {
+        "gamma": 0.23,
+        "max_mrr": 0.3323461658127196,
+        "mean_mrr": 0.22413035599068257
+      },
+      {
+        "gamma": 0.24,
+        "max_mrr": 0.3149498069092473,
+        "mean_mrr": 0.21360776185058564
+      },
+      {
+        "gamma": 0.25,
+        "max_mrr": 0.30962062224312037,
+        "mean_mrr": 0.20464404170298553
+      },
+      {
+        "gamma": 0.26,
+        "max_mrr": 0.30770272604381205,
+        "mean_mrr": 0.1957901547609744
+      },
+      {
+        "gamma": 0.27,
+        "max_mrr": 0.3031145381397088,
+        "mean_mrr": 0.1861915629827566
+      },
+      {
+        "gamma": 0.28,
+        "max_mrr": 0.2943534383721543,
+        "mean_mrr": 0.1775332439093132
+      },
+      {
+        "gamma": 0.29,
+        "max_mrr": 0.25363354695052487,
+        "mean_mrr": 0.1685827234135561
+      },
+      {
+        "gamma": 0.3,
+        "max_mrr": 0.23410813014906356,
+        "mean_mrr": 0.15762637738074717
+      },
+      {
+        "gamma": 0.31,
+        "max_mrr": 0.22519119753147154,
+        "mean_mrr": 0.14897372759140728
+      },
+      {
+        "gamma": 0.32,
+        "max_mrr": 0.2094201859281975,
+        "mean_mrr": 0.14065213798834914
+      },
+      {
+        "gamma": 0.33,
+        "max_mrr": 0.2012001324340658,
+        "mean_mrr": 0.13224489910283743
+      },
+      {
+        "gamma": 0.34,
+        "max_mrr": 0.20006120425451684,
+        "mean_mrr": 0.12559128747030973
+      },
+      {
+        "gamma": 0.35,
+        "max_mrr": 0.19466653015763552,
+        "mean_mrr": 0.1192713995123493
+      },
+      {
+        "gamma": 0.36,
+        "max_mrr": 0.1889887221127019,
+        "mean_mrr": 0.11335502284664087
+      },
+      {
+        "gamma": 0.37,
+        "max_mrr": 0.18602850771053736,
+        "mean_mrr": 0.10746915943276962
+      },
+      {
+        "gamma": 0.38,
+        "max_mrr": 0.1826221925065165,
+        "mean_mrr": 0.10072590237887759
+      },
+      {
+        "gamma": 0.39,
+        "max_mrr": 0.16984254644975225,
+        "mean_mrr": 0.0942475167107186
+      },
+      {
+        "gamma": 0.4,
+        "max_mrr": 0.15142869230584488,
+        "mean_mrr": 0.08874735112048089
+      },
+      {
+        "gamma": 0.41,
+        "max_mrr": 0.1490637728017135,
+        "mean_mrr": 0.0845669248977379
+      },
+      {
+        "gamma": 0.42,
+        "max_mrr": 0.1443753265033277,
+        "mean_mrr": 0.0819462027753008
+      },
+      {
+        "gamma": 0.43,
+        "max_mrr": 0.13709443303425153,
+        "mean_mrr": 0.07880731563647077
+      },
+      {
+        "gamma": 0.44,
+        "max_mrr": 0.13110464873669414,
+        "mean_mrr": 0.07583921761671199
+      },
+      {
+        "gamma": 0.45,
+        "max_mrr": 0.12826425572811415,
+        "mean_mrr": 0.07292327777814996
+      },
+      {
+        "gamma": 0.46,
+        "max_mrr": 0.1272434965347743,
+        "mean_mrr": 0.06969532637682829
+      },
+      {
+        "gamma": 0.47,
+        "max_mrr": 0.122485872304817,
+        "mean_mrr": 0.06638672268633591
+      },
+      {
+        "gamma": 0.48,
+        "max_mrr": 0.1222280024176702,
+        "mean_mrr": 0.06381416038197112
+      },
+      {
+        "gamma": 0.49,
+        "max_mrr": 0.12132061424457558,
+        "mean_mrr": 0.06031250118871479
+      },
+      {
+        "gamma": 0.5,
+        "max_mrr": 0.11611994580310055,
+        "mean_mrr": 0.057556436091697555
+      },
+      {
+        "gamma": 0.51,
+        "max_mrr": 0.09390873742810163,
+        "mean_mrr": 0.05514180659162362
+      },
+      {
+        "gamma": 0.52,
+        "max_mrr": 0.07919211457583394,
+        "mean_mrr": 0.05261787097912414
+      },
+      {
+        "gamma": 0.53,
+        "max_mrr": 0.07703701152079924,
+        "mean_mrr": 0.05092323075507579
+      },
+      {
+        "gamma": 0.54,
+        "max_mrr": 0.0755028470735967,
+        "mean_mrr": 0.049146449072041944
+      },
+      {
+        "gamma": 0.55,
+        "max_mrr": 0.06868697625985642,
+        "mean_mrr": 0.047451679300436776
+      },
+      {
+        "gamma": 0.56,
+        "max_mrr": 0.06348330282080372,
+        "mean_mrr": 0.046204094531253403
+      },
+      {
+        "gamma": 0.57,
+        "max_mrr": 0.06166006434469701,
+        "mean_mrr": 0.04483647101782033
+      },
+      {
+        "gamma": 0.58,
+        "max_mrr": 0.05961644814503628,
+        "mean_mrr": 0.043702047651031826
+      },
+      {
+        "gamma": 0.59,
+        "max_mrr": 0.05771675659652054,
+        "mean_mrr": 0.04253304104646304
+      },
+      {
+        "gamma": 0.6,
+        "max_mrr": 0.057334360787518836,
+        "mean_mrr": 0.041224689074107895
+      },
+      {
+        "gamma": 0.61,
+        "max_mrr": 0.05703722987696775,
+        "mean_mrr": 0.04004148921339514
+      },
+      {
+        "gamma": 0.62,
+        "max_mrr": 0.0565256428257294,
+        "mean_mrr": 0.038845098522614085
+      },
+      {
+        "gamma": 0.63,
+        "max_mrr": 0.05610290013816812,
+        "mean_mrr": 0.03760205991324737
+      },
+      {
+        "gamma": 0.64,
+        "max_mrr": 0.054132633328522604,
+        "mean_mrr": 0.036350981892414
+      },
+      {
+        "gamma": 0.65,
+        "max_mrr": 0.053126874273553594,
+        "mean_mrr": 0.035146608843132796
+      },
+      {
+        "gamma": 0.66,
+        "max_mrr": 0.05101367845168277,
+        "mean_mrr": 0.033954470383492336
+      },
+      {
+        "gamma": 0.67,
+        "max_mrr": 0.04853704004937118,
+        "mean_mrr": 0.032713479588085445
+      },
+      {
+        "gamma": 0.68,
+        "max_mrr": 0.04689125260487818,
+        "mean_mrr": 0.031582870989396945
+      },
+      {
+        "gamma": 0.69,
+        "max_mrr": 0.0446731168267555,
+        "mean_mrr": 0.03043631424614239
+      },
+      {
+        "gamma": 0.7,
+        "max_mrr": 0.04321565918725152,
+        "mean_mrr": 0.029332016029594076
+      },
+      {
+        "gamma": 0.71,
+        "max_mrr": 0.040683122258157775,
+        "mean_mrr": 0.02825047757570983
+      },
+      {
+        "gamma": 0.72,
+        "max_mrr": 0.03916771270922763,
+        "mean_mrr": 0.027211338374862046
+      },
+      {
+        "gamma": 0.73,
+        "max_mrr": 0.03845909680298067,
+        "mean_mrr": 0.026331948790440547
+      },
+      {
+        "gamma": 0.74,
+        "max_mrr": 0.03802908557432828,
+        "mean_mrr": 0.025445740164524902
+      },
+      {
+        "gamma": 0.75,
+        "max_mrr": 0.03772151493392403,
+        "mean_mrr": 0.024681871386285824
+      },
+      {
+        "gamma": 0.76,
+        "max_mrr": 0.03739136140802553,
+        "mean_mrr": 0.023881409337862803
+      },
+      {
+        "gamma": 0.77,
+        "max_mrr": 0.03666647395833791,
+        "mean_mrr": 0.022910159731984753
+      },
+      {
+        "gamma": 0.78,
+        "max_mrr": 0.03606077836603212,
+        "mean_mrr": 0.02201984698805716
+      },
+      {
+        "gamma": 0.79,
+        "max_mrr": 0.0344066201948106,
+        "mean_mrr": 0.021229316730514713
+      },
+      {
+        "gamma": 0.8,
+        "max_mrr": 0.03328028952220299,
+        "mean_mrr": 0.02053001874072968
+      },
+      {
+        "gamma": 0.81,
+        "max_mrr": 0.03237234770040757,
+        "mean_mrr": 0.01987134437597441
+      },
+      {
+        "gamma": 0.82,
+        "max_mrr": 0.031350761403315504,
+        "mean_mrr": 0.019189956883040375
+      },
+      {
+        "gamma": 0.83,
+        "max_mrr": 0.030501950507606516,
+        "mean_mrr": 0.0186981139503168
+      },
+      {
+        "gamma": 0.84,
+        "max_mrr": 0.029442575335239873,
+        "mean_mrr": 0.01813349871000151
+      },
+      {
+        "gamma": 0.85,
+        "max_mrr": 0.02848451264463328,
+        "mean_mrr": 0.017670954467820358
+      },
+      {
+        "gamma": 0.86,
+        "max_mrr": 0.027355564094694182,
+        "mean_mrr": 0.01696725309496992
+      },
+      {
+        "gamma": 0.87,
+        "max_mrr": 0.026515394783985062,
+        "mean_mrr": 0.01630000872723845
+      },
+      {
+        "gamma": 0.88,
+        "max_mrr": 0.02608865461112804,
+        "mean_mrr": 0.015501190814047076
+      },
+      {
+        "gamma": 0.89,
+        "max_mrr": 0.025667516163371172,
+        "mean_mrr": 0.01472368291796791
+      },
+      {
+        "gamma": 0.9,
+        "max_mrr": 0.02535143689617309,
+        "mean_mrr": 0.01367341569019736
+      },
+      {
+        "gamma": 0.91,
+        "max_mrr": 0.021192076702929975,
+        "mean_mrr": 0.012433120600942751
+      },
+      {
+        "gamma": 0.92,
+        "max_mrr": 0.017627958622615594,
+        "mean_mrr": 0.011438200824326054
+      },
+      {
+        "gamma": 0.93,
+        "max_mrr": 0.014628681947592499,
+        "mean_mrr": 0.010690316083724147
+      },
+      {
+        "gamma": 0.94,
+        "max_mrr": 0.012023974944588867,
+        "mean_mrr": 0.010089067824726902
+      },
+      {
+        "gamma": 0.95,
+        "max_mrr": 0.011298179029494964,
+        "mean_mrr": 0.009699949041943745
+      },
+      {
+        "gamma": 0.96,
+        "max_mrr": 0.010280458099118159,
+        "mean_mrr": 0.009297166731401324
+      },
+      {
+        "gamma": 0.97,
+        "max_mrr": 0.009705097563846127,
+        "mean_mrr": 0.009066159220852452
+      },
+      {
+        "gamma": 0.98,
+        "max_mrr": 0.009330262946758617,
+        "mean_mrr": 0.008901847379331116
+      },
+      {
+        "gamma": 0.99,
+        "max_mrr": 0.00900821750175319,
+        "mean_mrr": 0.008765166929734232
+      },
+      {
+        "gamma": 1.0,
+        "max_mrr": 0.008751272848649818,
+        "mean_mrr": 0.008751272848649818
+      }
+    ]
+  }
+}

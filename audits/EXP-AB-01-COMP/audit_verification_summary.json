@@ -1,0 +1,46 @@
+{
+  "experiment_id": "EXP-AB-01-COMP",
+  "target_primitive": "PR-COG-01",
+  "audit_verdict": "STAGE_4A_MECHANISTIC_INVESTIGATION_REQUIRED",
+  "non_inferiority_verdict": "NON_INFERIORITY_FORMALLY_CONFIRMED_SUPERIORITY_OBSERVED",
+  "configuration_integrity": "NO_EXPERIMENT_CONFIGURATION_DRIFT",
+  "phase_compatibility": "DIFFERENT_WEIGHT_REGIME",
+  "primitive_evidence_status": "COMPONENT_NOT_NECESSARY_UNDER_TESTED_CONDITIONS",
+  "paired_difference_a4_a7": {
+    "mean": 0.40608528381806286,
+    "std": 0.4346886269764736,
+    "se": 0.04346886269764736,
+    "cohen_d": 0.9341980871287925,
+    "lcb_95": 0.33390996863366784,
+    "lcb_99": 0.3032985562779941,
+    "lcb_bonferroni": 0.2731144248319364,
+    "t_stat_02": 9.802080325444622,
+    "p_val_t_02": 1.1102230246251565e-16,
+    "w_stat_02": 4394.0,
+    "p_val_w_02": 6.493395045628374e-11
+  },
+  "condition_mrrs": {
+    "A1": 0.27561295567743216,
+    "A2": 0.5129553828150827,
+    "A3": 0.008574980003437675,
+    "A4": 0.5002279535982908,
+    "A5": 0.020533624347065595,
+    "A6": 0.16946757903882198,
+    "A7": 0.09414266978022777,
+    "A8": 0.03251895193677584
+  },
+  "reflection_counterfactuals": {
+    "observed_a8_crowding_pct": 100.0,
+    "cf1_imp_5_0_crowding_pct": 0.0,
+    "cf1_imp_5_0_mrr": 0.09287624110676897,
+    "cf2_gamma_0_0_mrr": 0.353621081040296
+  },
+  "forward_constraints": [
+    "NC-71",
+    "NC-72",
+    "NC-73",
+    "NC-74",
+    "NC-75"
+  ],
+  "next_action": "MI-01"
+}

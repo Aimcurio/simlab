@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "project_name": "Agent Simulation Lab (SimLab)",
+  "governance_standard": "Curo Multi-Agent Simulation Governance Charter",
+  "authoritative_request": ".agents/ORIGINAL_REQUEST.md",
+  "audit_report": "deliverables/CONTRACT_TIGHTENING_AUDIT_REPORT.md",
+  "evaluation_date": "2026-09-17",
+  "integrity_mode": "benchmark",
+  "canonical_lifecycle_state": "PAUSED / CONTRACT_TIGHTENING_REQUIRED",
+  "gate_result": "CONTRACT_TIGHTENING_COMPLETE_READY_FOR_REQUESTER_REVIEW",
+  "authority_state": {
+    "architecture_status": "UNFROZEN",
+    "implementation_authority": "NOT_GRANTED",
+    "experiment_execution_authority": "NOT_GRANTED",
+    "simulation_execution_authority": "NOT_GRANTED",
+    "primitive_adjudication_authority": "NOT_AUTHORIZED",
+    "human_in_the_loop_boundary": "STRICT_REQUESTER_SOLE_AUTHORITY"
+  },
+  "requester_hitl_prerogatives": [
+    "advance_lifecycle_gates",
+    "grant_execution_authorization",
+    "grant_implementation_authority",
+    "freeze_architecture_status",
+    "adjudicate_primitives_to_validated_status",
+    "approve_budget_or_sample_size_alterations"
+  ],
+  "execution_firewall": {
+    "runtime_execution_permitted": false,
+    "live_api_calls_permitted": false,
+    "simulation_runs_permitted": false,
+    "code_implementation_permitted": false,
+    "firewall_enforcement_mode": "FAIL_CLOSED"
+  },
+  "closed_gates": [
+    {
+      "gate_id": "GATE_R1",
+      "certification_date": "2026-09-15",
+      "outcome": "READY_FOR_REPRODUCTION_DESIGN",
+      "deliverables_range": "DR-01..DR-16",
+      "master_package": "curo_research_package.md",
+      "status": "CLOSED"
+    },
+    {
+      "gate_id": "GATE_R2",
+      "certification_date": "2026-09-16",
+      "outcome": "READY_FOR_REPRODUCTION_EXECUTION",
+      "deliverables_range": "RD-01..RD-16",
+      "master_package": "curo_reproduction_design_package.md",
+      "status": "CLOSED"
+    },
+    {
+      "gate_id": "GATE_R3",
+      "certification_date": "2026-09-16",
+      "outcome": "READY_FOR_ABLATION_AND_STRESS_TESTING",
+      "deliverables_range": "PX-00..PX-16",
+      "master_package": "curo_phase3_execution_package.md",
+      "status": "CLOSED"
+    },
+    {
+      "gate_id": "GATE_R4D",
+      "alias": "PHASE_4_DESIGN_GATE",
+      "certification_date": "2026-09-16",
+      "outcome": "READY_FOR_ABLATION_EXECUTION",
+      "deliverables_range": "AS-01..AS-18",
+      "master_package": "curo_phase4_ablation_package.md",
+      "status": "CLOSED"
+    }
+  ],
+  "pending_gates": [
+    {
+      "gate_id": "GATE_R4",
+      "name": "POST_EXECUTION_ABLATION_AND_STRESS_ADJUDICATION",
+      "status": "PENDING_EXECUTION_AND_INVESTIGATION",
+      "blocking_stage": "STAGE_4A_MECHANISTIC_INVESTIGATION_REQUIRED",
+      "prerequisites": [
+        "MI-01_mechanistic_investigation_report_approval",
+        "human_requester_adjudication_of_stage_4a",
+        "human_requester_authorization_for_phase4_continuation",
+        "confirmatory_replication_EXP-AB-02-REP_execution",
+        "sop_and_routing_ablations_EXP-AB-03_and_04_execution"
+      ]
+    }
+  ],
+  "active_investigation": {
+    "stage": "STAGE_4A",
+    "target_primitive": "PR-COG-01",
+    "adjudication_state": "COMPONENT_NOT_NECESSARY_UNDER_TESTED_CONDITIONS",
+    "required_deliverable": "MI-01",
+    "description": "Mechanistic Investigation of Tri-Factor Retrieval Collapse and Reflection Admission Controls"
+  },
+  "negative_constraints_register": {
+    "canonical_active_count": 70,
+    "canonical_range": "NC-01..NC-70",
+    "proposed_extension_count": 5,
+    "proposed_extension_range": "NC-71..NC-75",
+    "master_register_file": "ablation_design/AS-16_lessons_learned_forward_constraints.md"
+  },
+  "reconciliation_sequence": [
+    "Step 1: Requester Review & Ratification (HITL)",
+    "Step 2: Commit Canonical GOVERNANCE.json & Register NC-71..NC-75",
+    "Step 3: Relocate Root Scripts to tools/ & Generate CAS Manifest",
+    "Step 4: Execute Mechanistic Investigation MI-01 (Offline / Bounded)",
+    "Step 5: Requester Review of MI-01 & Gate R4A Adjudication",
+    "Step 6: Requester Authorization for EXP-AB-02-REP (Phase 4 Continuation)"
+  ]
+}
