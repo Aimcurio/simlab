@@ -1,5 +1,6 @@
 """Cooperative Problem-Solving Environment with Shared Resource Constraints."""
 
+import copy
 from typing import Any, Dict, List, Optional
 from simlab.agents.base import AgentAction
 from simlab.core.state import EnvironmentState
@@ -29,11 +30,11 @@ class CooperativeTaskEnvironment:
         self.bandwidth_cost_per_message = bandwidth_cost_per_message
         self.kernel: Optional[Any] = None
 
-        raw_tasks = list(tasks or [
+        raw_tasks = copy.deepcopy(list(tasks or [
             {"task_id": "task_01", "name": "Telemetry Ingestion", "difficulty": "LOW", "status": "PENDING", "complexity_weight": 1.0},
             {"task_id": "task_02", "name": "Anomaly Detection", "difficulty": "MEDIUM", "status": "PENDING", "complexity_weight": 1.5},
             {"task_id": "task_03", "name": "Decision Synthesis", "difficulty": "HIGH", "status": "PENDING", "complexity_weight": 2.0},
-        ])
+        ]))
 
         self.state = EnvironmentState({
             "tasks": raw_tasks,
@@ -84,13 +85,21 @@ class CooperativeTaskEnvironment:
 
         for t in tasks:
             if t["task_id"] == task_id:
-                if t.get("status") in ("EXECUTED", "COMPLETED"):
-                    return {"task_id": task_id, "status": "ALREADY_EXECUTED_OR_COMPLETED"}
+                if t.get("status") == "COMPLETED":
+                    return {"task_id": task_id, "status": "ALREADY_COMPLETED"}
+                if t.get("status") == "EXECUTED" and not action.parameters.get("correction_applied", False):
+                    return {"task_id": task_id, "status": "ALREADY_EXECUTED"}
                 self.state.set("energy", max(0.0, current_energy - self.energy_cost_per_task))
                 t["status"] = "EXECUTED"
-                t["result_value"] = action.parameters.get("value", 42)
+                val = action.parameters.get("value")
+                if val is not None:
+                    t["result_value"] = val
+                elif "result_value" not in t:
+                    t["result_value"] = 42
                 t["executed_by"] = worker_id
                 t["executed_tick"] = tick
+                if "metadata" in action.parameters:
+                    t["metadata"] = action.parameters["metadata"]
                 self.state.set("tasks", tasks)
                 return {"task_id": task_id, "status": "EXECUTED"}
 
@@ -120,9 +129,13 @@ class CooperativeTaskEnvironment:
             if t["task_id"] == task_id:
                 if t.get("status") == "COMPLETED":
                     return {"task_id": task_id, "status": "ALREADY_COMPLETED"}
+                if t.get("status") != "EXECUTED":
+                    return {"task_id": task_id, "status": f"REJECTED_UNEXECUTED_TASK:{t.get('status')}"}
                 t["status"] = "COMPLETED"
                 t["approved_by"] = action.parameters.get("critic_id", "critic")
                 t["approved_tick"] = tick
+                if "value" in action.parameters:
+                    t["result_value"] = action.parameters["value"]
                 completed = self.state.get("completed_count", 0) + 1
                 self.state.set("completed_count", completed)
                 self.state.set("tasks", tasks)

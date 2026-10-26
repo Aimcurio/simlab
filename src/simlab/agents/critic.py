@@ -114,3 +114,24 @@ class CriticAgent(BaseAgent):
                 },
                 rationale=f"Rejecting submission for {task_id} due to invalid output {result_val}."
             )
+
+    def snapshot(self) -> Dict[str, Any]:
+        """Create serializable critic snapshot."""
+        snap = super().snapshot()
+        snap.update({
+            "reviews_performed": self._reviews_performed,
+            "approvals_count": self._approvals_count,
+            "rejections_count": self._rejections_count,
+            "strict_mode": self.strict_mode,
+            "coordinator_id": self.coordinator_id,
+        })
+        return snap
+
+    def restore(self, data: Dict[str, Any]) -> None:
+        """Restore critic state from snapshot."""
+        super().restore(data)
+        self._reviews_performed = data.get("reviews_performed", 0)
+        self._approvals_count = data.get("approvals_count", 0)
+        self._rejections_count = data.get("rejections_count", 0)
+        self.strict_mode = data.get("strict_mode", self.strict_mode)
+        self.coordinator_id = data.get("coordinator_id", self.coordinator_id)

@@ -109,6 +109,15 @@ class EnvironmentState:
         }
 
     def restore(self, data: Dict[str, Any]) -> None:
-        """Restore state from snapshot."""
-        self._data = dict(data["data"])
+        """Restore state from snapshot with cryptographic integrity verification."""
+        candidate_data = dict(data["data"])
+        recorded_hash = data.get("state_hash")
+        if recorded_hash:
+            canonical_json = json.dumps(candidate_data, sort_keys=True, default=str)
+            computed_hash = hashlib.sha256(canonical_json.encode("utf-8")).hexdigest()
+            if computed_hash != recorded_hash:
+                raise ValueError(
+                    f"State snapshot hash mismatch / tampering detected: recorded {recorded_hash}, computed {computed_hash}"
+                )
+        self._data = candidate_data
         self._history.clear()

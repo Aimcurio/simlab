@@ -30,11 +30,25 @@ class ReplayEngine:
         """Instantiate replay from a logger."""
         return cls(logger.to_list())
 
-    def verify_integrity(self) -> Tuple[bool, Optional[str]]:
+    def verify_integrity(self, require_terminal: Optional[bool] = None) -> Tuple[bool, Optional[str]]:
         """Verify the cryptographic hash-chain across all recorded events."""
         logger = CausalEventLogger()
         logger._events = self._events
-        return logger.verify_chain()
+        valid, err = logger.verify_chain()
+        if not valid:
+            return False, err
+
+        # Detect truncated simulation traces (e.g. tail truncation)
+        has_sim_events = any(
+            e.get("event_type") in ("AGENT_DECISION", "SYSTEM") and e.get("action") in ("AGENT_REGISTERED", "STANDBY", "EXECUTE_TASK", "ACCEPT_TASK")
+            for e in self._events
+        )
+        if require_terminal or has_sim_events:
+            has_terminal_event = any(e.get("action") == "SIMULATION_TERMINATED" for e in self._events)
+            if not has_terminal_event:
+                return False, "Incomplete or truncated event trace: missing SIMULATION_TERMINATED event"
+
+        return True, None
 
     @property
     def total_events(self) -> int:

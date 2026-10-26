@@ -1,6 +1,7 @@
 """Subprocess Execution Sandbox with Resource Limits and Output Bounds."""
 
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -56,15 +57,23 @@ class SubprocessSandbox:
         "SIMLAB_SECRET",
     }
 
+    SCRUB_ENV_PATTERNS = [
+        re.compile(r".*(key|secret|token|password|auth|cred|pwd).*", re.IGNORECASE)
+    ]
+
     def __init__(self, timeout_seconds: float = 5.0, max_output_bytes: int = 65536):
         self.timeout_seconds = max(0.1, timeout_seconds)
         self.max_output_bytes = max(1024, max_output_bytes)
 
     def _prepare_environment(self) -> Dict[str, str]:
         """Construct sanitized child process environment."""
-        env = dict(os.environ)
-        for var in self.SCRUB_ENV_VARS:
-            env.pop(var, None)
+        env = {}
+        for k, v in os.environ.items():
+            if k in self.SCRUB_ENV_VARS:
+                continue
+            if any(p.match(k) for p in self.SCRUB_ENV_PATTERNS):
+                continue
+            env[k] = v
         env["PYTHONDONTWRITEBYTECODE"] = "1"
         env["PYTHONUNBUFFERED"] = "1"
         return env

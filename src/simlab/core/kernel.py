@@ -136,6 +136,8 @@ class SimulationKernel:
     def attach_fault_injector(self, fault_injector: Any) -> None:
         """Attach a deterministic fault injector to intercept execution."""
         self.fault_injector = fault_injector
+        if hasattr(fault_injector, "attach_to_kernel"):
+            fault_injector.attach_to_kernel(self)
 
     def add_termination_predicate(self, predicate: Callable[["SimulationKernel"], Optional[str]]) -> None:
         """Add a custom termination condition check (returns reason string or None)."""
@@ -307,6 +309,14 @@ class SimulationKernel:
         self.resource_ledger["total_messages"] = bus_stats["total_sent"]
         self.resource_ledger["dropped_messages"] = bus_stats["total_dropped"]
 
+        self.logger.log_event(
+            tick=self.current_tick,
+            actor_id="system",
+            action="SIMULATION_TERMINATED",
+            inputs={"termination_reason": termination_reason},
+            event_type="SYSTEM"
+        )
+
         return RunResult(
             run_id=self.logger.run_id,
             seed=self.seed,
@@ -330,7 +340,12 @@ class SimulationKernel:
             "state": self.state.snapshot(),
             "agents": {k: a.snapshot() for k, a in self.agents.items()},
             "resource_ledger": dict(self.resource_ledger),
-            "latest_event_hash": self.logger.latest_hash
+            "latest_event_hash": self.logger.latest_hash,
+            "logger": {
+                "run_id": self.logger.run_id,
+                "latest_event_hash": self.logger.latest_hash,
+                "events": self.logger.to_list()
+            }
         }
 
     def restore(self, data: Dict[str, Any]) -> None:
@@ -344,3 +359,9 @@ class SimulationKernel:
             if k in self.agents:
                 self.agents[k].restore(agent_data)
         self.resource_ledger = dict(data["resource_ledger"])
+        if "logger" in data:
+            self.logger._events = list(data["logger"]["events"])
+            self.logger._last_event_hash = data["logger"]["latest_event_hash"]
+            self.logger.run_id = data["logger"].get("run_id", self.logger.run_id)
+        elif "latest_event_hash" in data:
+            self.logger._last_event_hash = data["latest_event_hash"]

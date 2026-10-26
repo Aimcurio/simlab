@@ -121,3 +121,18 @@ class CoordinatorAgent(BaseAgent):
             parameters={"status": "WAITING_FOR_WORKERS"},
             rationale="Awaiting progress reports from active workers."
         )
+
+    def snapshot(self) -> Dict[str, Any]:
+        """Create serializable coordinator snapshot."""
+        snap = super().snapshot()
+        snap.update({
+            "assigned_tasks": dict(self._assigned_tasks),
+            "managed_workers": list(self.managed_workers),
+        })
+        return snap
+
+    def restore(self, data: Dict[str, Any]) -> None:
+        """Restore coordinator state from snapshot."""
+        super().restore(data)
+        self._assigned_tasks = dict(data.get("assigned_tasks", {}))
+        self.managed_workers = list(data.get("managed_workers", self.managed_workers))

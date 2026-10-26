@@ -72,6 +72,8 @@ class FaultInjector:
             return True
         return False
 
+    is_agent_crashed = should_crash_agent
+
     def should_fail_action(self, action_type: str, actor_id: str, tick: int) -> bool:
         """Check if action execution fails probabilistically."""
         if self.action_failure_rate <= 0.0:
