@@ -88,7 +88,7 @@ class SubprocessSandbox:
         timeout_sec = timeout if timeout is not None else self.timeout_seconds
         t0 = time.perf_counter()
 
-        with tempfile.TemporaryDirectory(prefix="simlab_sandbox_") as tmp_dir:
+        with tempfile.TemporaryDirectory(prefix="simlab_sandbox_", ignore_cleanup_errors=True) as tmp_dir:
             script_file = Path(tmp_dir) / "entrypoint.py"
             script_file.write_text(code_string, encoding="utf-8")
 

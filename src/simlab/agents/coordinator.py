@@ -1,5 +1,6 @@
 """Coordinator / Orchestrator Agent Implementation."""
 
+import copy
 from typing import Any, Dict, List, Optional
 from simlab.agents.base import AgentAction, BaseAgent
 from simlab.agents.models import DeterministicRuleBackend, ModelBackend
@@ -88,7 +89,7 @@ class CoordinatorAgent(BaseAgent):
         unassigned_pending = [t for t in pending if t["task_id"] not in self._assigned_tasks]
 
         if unassigned_pending and workers:
-            task_to_assign = unassigned_pending[0]
+            task_to_assign = copy.deepcopy(unassigned_pending[0])
             # Round-robin worker selection
             worker_idx = len(self._assigned_tasks) % len(workers)
             target_worker = workers[worker_idx]

@@ -1,6 +1,7 @@
 """Base Agent Interface and Lifecycle Abstractions."""
 
 from abc import ABC, abstractmethod
+import copy
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 import uuid
@@ -97,7 +98,7 @@ class BaseAgent(ABC):
             "action_type": action.action_type,
             "target": action.target,
             "rationale": action.rationale,
-            "parameters": action.parameters,
+            "parameters": copy.deepcopy(action.parameters),
         }
         self._decision_traces.append(trace)
 
@@ -137,16 +138,44 @@ class BaseAgent(ABC):
     def snapshot(self) -> Dict[str, Any]:
         """Create serializable agent snapshot."""
         return {
+            "version": 1,
             "agent_id": self.agent_id,
             "role": self.role,
-            "capabilities": self.capabilities,
-            "objectives": self.objectives,
+            "capabilities": list(self.capabilities),
+            "objectives": list(self.objectives),
             "is_active": self._is_active,
-            "working_memory": list(self._working_memory),
-            "decision_traces_count": len(self._decision_traces)
+            "working_memory": [dict(m) for m in self._working_memory],
+            "decision_traces": [dict(t) for t in self._decision_traces],
+            "decision_traces_count": len(self._decision_traces),
         }
 
     def restore(self, data: Dict[str, Any]) -> None:
         """Restore agent state."""
-        self._is_active = data["is_active"]
-        self._working_memory = list(data["working_memory"])
+        if not isinstance(data, dict):
+            raise ValueError(f"Agent snapshot must be a dict, got {type(data).__name__}")
+        if "is_active" not in data or "working_memory" not in data:
+            raise ValueError("Malformed agent snapshot: missing required fields 'is_active' or 'working_memory'")
+        if not isinstance(data["working_memory"], list):
+            raise ValueError("Malformed agent snapshot: 'working_memory' must be a list")
+
+        self._is_active = bool(data["is_active"])
+        self._working_memory = [dict(m) for m in data["working_memory"]]
+
+        if "decision_traces" in data:
+            raw_traces = data["decision_traces"]
+            if not isinstance(raw_traces, list):
+                raise ValueError("Malformed agent snapshot: 'decision_traces' must be a list")
+            validated = []
+            for item in raw_traces:
+                if not isinstance(item, dict):
+                    raise ValueError("Malformed agent snapshot: decision trace entry must be a dict")
+                validated.append(dict(item))
+            if "decision_traces_count" in data:
+                count = data["decision_traces_count"]
+                if not isinstance(count, int) or count != len(validated):
+                    raise ValueError(
+                        f"Malformed agent snapshot: decision_traces_count ({count}) does not match len(decision_traces) ({len(validated)})"
+                    )
+            self._decision_traces = validated
+        else:
+            self._decision_traces = []

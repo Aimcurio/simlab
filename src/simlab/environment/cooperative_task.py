@@ -65,10 +65,14 @@ class CooperativeTaskEnvironment:
         tasks = self.state.get("tasks", [])
 
         for t in tasks:
-            if t["task_id"] == task_id and t["status"] == "PENDING":
+            if t["task_id"] == task_id and t["status"] in ("PENDING", "FAILED"):
+                was_failed = (t["status"] == "FAILED")
                 t["status"] = "IN_PROGRESS"
                 t["assigned_worker"] = worker_id
                 t["started_tick"] = tick
+                if was_failed:
+                    failed = max(0, self.state.get("failed_count", 0) - 1)
+                    self.state.set("failed_count", failed)
                 self.state.set("tasks", tasks)
                 return {"task_id": task_id, "status": "IN_PROGRESS"}
 
@@ -81,6 +85,14 @@ class CooperativeTaskEnvironment:
 
         current_energy = self.state.get("energy", 0.0)
         if current_energy < self.energy_cost_per_task:
+            for t in tasks:
+                if t["task_id"] == task_id:
+                    t["status"] = "FAILED"
+                    t["failure_reason"] = "ENERGY_DEPLETED"
+                    self.state.set("tasks", tasks)
+                    failed = self.state.get("failed_count", 0) + 1
+                    self.state.set("failed_count", failed)
+                    break
             return {"error": "ENERGY_DEPLETED", "status": "FAILED"}
 
         for t in tasks:
@@ -89,6 +101,8 @@ class CooperativeTaskEnvironment:
                     return {"task_id": task_id, "status": "ALREADY_COMPLETED"}
                 if t.get("status") == "EXECUTED" and not action.parameters.get("correction_applied", False):
                     return {"task_id": task_id, "status": "ALREADY_EXECUTED"}
+                if t.get("assigned_worker") and t.get("assigned_worker") != worker_id:
+                    return {"task_id": task_id, "status": "REJECTED_UNAUTHORIZED_WORKER"}
                 self.state.set("energy", max(0.0, current_energy - self.energy_cost_per_task))
                 t["status"] = "EXECUTED"
                 val = action.parameters.get("value")

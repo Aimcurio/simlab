@@ -35,22 +35,24 @@ class CriticAgent(BaseAgent):
         self._reviews_performed: int = 0
         self._approvals_count: int = 0
         self._rejections_count: int = 0
+        self._submission_queue: List[Dict[str, Any]] = []
 
     def observe(self, state: Dict[str, Any], incoming_messages: List[Any], current_tick: int) -> Dict[str, Any]:
         """Collect all submissions awaiting verification."""
-        submissions = []
         for msg in incoming_messages:
             content = msg.content or {}
             if content.get("type") == "SUBMIT_FOR_REVIEW":
-                submissions.append({
+                sub_item = {
                     "sender": msg.sender_id,
                     "task_id": content.get("task_id"),
                     "submission": content.get("submission", {}),
                     "sent_tick": msg.sent_tick
-                })
+                }
+                if not any(s.get("task_id") == sub_item["task_id"] and s.get("sender") == sub_item["sender"] for s in self._submission_queue):
+                    self._submission_queue.append(sub_item)
 
         return {
-            "pending_submissions": submissions,
+            "pending_submissions": list(self._submission_queue),
             "environment_state_hash": state.get("state_hash", ""),
             "review_criteria": {
                 "require_positive_value": True,
@@ -60,15 +62,14 @@ class CriticAgent(BaseAgent):
 
     def decide(self, observation: Dict[str, Any], current_tick: int) -> AgentAction:
         """Evaluate pending submission and emit APPROVE or REJECT."""
-        subs = observation.get("pending_submissions", [])
-        if not subs:
+        if not self._submission_queue:
             return AgentAction(
                 action_type="STANDBY",
                 rationale="No deliverables pending review. Monitoring state."
             )
 
-        # Inspect the first pending deliverable
-        sub = subs[0]
+        # Inspect the first pending deliverable in FIFO queue
+        sub = self._submission_queue.pop(0)
         self._reviews_performed += 1
         worker_id = sub["sender"]
         task_id = sub["task_id"]
@@ -124,6 +125,7 @@ class CriticAgent(BaseAgent):
             "rejections_count": self._rejections_count,
             "strict_mode": self.strict_mode,
             "coordinator_id": self.coordinator_id,
+            "submission_queue": [dict(s) for s in self._submission_queue],
         })
         return snap
 
@@ -135,3 +137,4 @@ class CriticAgent(BaseAgent):
         self._rejections_count = data.get("rejections_count", 0)
         self.strict_mode = data.get("strict_mode", self.strict_mode)
         self.coordinator_id = data.get("coordinator_id", self.coordinator_id)
+        self._submission_queue = [dict(s) for s in data.get("submission_queue", [])]
