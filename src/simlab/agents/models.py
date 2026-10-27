@@ -15,6 +15,42 @@ from simlab.governance import OperationTier, require_tier, SimLabAuthorizationEr
 from simlab.memory.scoring import cosine_similarity
 
 
+class MathematicalEvaluationError(ValueError):
+    """Raised when a mathematical operation cannot be evaluated due to invalid inputs or contract violations."""
+    pass
+
+
+def validate_and_convert_number(val: Any) -> float:
+    """Validate that val is a valid finite real number, explicitly rejecting booleans, NaN, and Inf."""
+    if isinstance(val, bool):
+        raise TypeError(f"Invalid numeric input: boolean value {val!r} is not accepted as a number.")
+    if isinstance(val, (int, float)):
+        f_val = float(val)
+    elif isinstance(val, (str, np.number)):
+        try:
+            f_val = float(val)
+        except (ValueError, TypeError) as exc:
+            raise TypeError(f"Cannot parse numeric value from {val!r}: {exc}") from exc
+    else:
+        raise TypeError(f"Expected numeric scalar, got {type(val).__name__}: {val!r}")
+
+    if math.isnan(f_val):
+        raise ValueError("Invalid numeric input: NaN is not allowed.")
+    if math.isinf(f_val):
+        raise ValueError(f"Invalid numeric input: Infinite value {f_val} is not allowed.")
+    return f_val
+
+
+def validate_and_convert_vector(vec: Any, expected_dim: Optional[int] = None) -> List[float]:
+    """Validate sequence of numeric values, ensuring finite scalars and optional dimension match."""
+    if not isinstance(vec, (list, tuple, np.ndarray)):
+        raise TypeError(f"Expected sequence for vector, got {type(vec).__name__}")
+    converted = [validate_and_convert_number(x) for x in vec]
+    if expected_dim is not None and len(converted) != expected_dim:
+        raise ValueError(f"Vector dimension mismatch: expected {expected_dim}, got {len(converted)}")
+    return converted
+
+
 def compute_task_checksum(task_id: str, result_value: Any) -> str:
     """Compute canonical 16-hex-char SHA-256 checksum for a task result."""
     if isinstance(result_value, float):
@@ -54,147 +90,203 @@ def evaluate_functional_task(
     meta: Dict[str, Any] = {"operation": op}
 
     if op == "sum":
-        arr = [float(x) for x in inputs]
-        res = round(sum(arr), 6)
-        if res.is_integer():
+        arr = [validate_and_convert_number(x) for x in inputs]
+        res = round(sum(arr), 6) if arr else 0
+        if isinstance(res, float) and res.is_integer():
             res = int(res)
         meta["sample_count"] = len(arr)
         return res, meta
 
     elif op == "weighted_sum":
-        arr = [float(x) for x in inputs]
-        weights = [float(w) for w in req.get("weights", [1.0] * len(arr))]
-        res = round(sum(x * w for x, w in zip(arr, weights)), 6)
+        arr = [validate_and_convert_number(x) for x in inputs]
+        weights_raw = req.get("weights", [1.0] * len(arr))
+        weights = [validate_and_convert_number(w) for w in weights_raw]
+        if len(weights) != len(arr):
+            raise ValueError(f"Weights length ({len(weights)}) does not match inputs length ({len(arr)})")
+        res = round(sum(x * w for x, w in zip(arr, weights)), 6) if arr else 0
+        if isinstance(res, float) and res.is_integer():
+            res = int(res)
         meta["sample_count"] = len(arr)
         return res, meta
 
     elif op == "mean":
-        arr = [float(x) for x in inputs]
+        arr = [validate_and_convert_number(x) for x in inputs]
         res = round(sum(arr) / len(arr), 6) if arr else 0.0
+        if isinstance(res, float) and res.is_integer():
+            res = int(res)
         meta["sample_count"] = len(arr)
         return res, meta
 
     elif op == "median":
-        arr = [float(x) for x in inputs]
+        arr = [validate_and_convert_number(x) for x in inputs]
         res = round(float(np.median(arr)), 6) if arr else 0.0
+        if isinstance(res, float) and res.is_integer():
+            res = int(res)
         meta["sample_count"] = len(arr)
         return res, meta
 
     elif op == "variance":
-        arr = [float(x) for x in inputs]
+        arr = [validate_and_convert_number(x) for x in inputs]
         ddof = int(req.get("ddof", 0))
         res = round(float(np.var(arr, ddof=ddof)), 6) if len(arr) > ddof else 0.0
+        if isinstance(res, float) and res.is_integer():
+            res = int(res)
         meta["sample_count"] = len(arr)
         return res, meta
 
     elif op == "std":
-        arr = [float(x) for x in inputs]
+        arr = [validate_and_convert_number(x) for x in inputs]
         ddof = int(req.get("ddof", 0))
         res = round(float(np.std(arr, ddof=ddof)), 6) if len(arr) > ddof else 0.0
+        if isinstance(res, float) and res.is_integer():
+            res = int(res)
         meta["sample_count"] = len(arr)
         return res, meta
 
     elif op == "min":
-        arr = [float(x) for x in inputs]
-        res = min(arr) if arr else 0.0
+        arr = [validate_and_convert_number(x) for x in inputs]
+        if not arr:
+            raise ValueError("Cannot compute min of empty inputs.")
+        res = min(arr)
         if isinstance(res, float) and res.is_integer():
             res = int(res)
         meta["sample_count"] = len(arr)
         return res, meta
 
     elif op == "max":
-        arr = [float(x) for x in inputs]
-        res = max(arr) if arr else 0.0
+        arr = [validate_and_convert_number(x) for x in inputs]
+        if not arr:
+            raise ValueError("Cannot compute max of empty inputs.")
+        res = max(arr)
         if isinstance(res, float) and res.is_integer():
             res = int(res)
         meta["sample_count"] = len(arr)
         return res, meta
 
     elif op == "range":
-        arr = [float(x) for x in inputs]
-        res = round(max(arr) - min(arr), 6) if arr else 0.0
+        arr = [validate_and_convert_number(x) for x in inputs]
+        if not arr:
+            raise ValueError("Cannot compute range of empty inputs.")
+        res = round(max(arr) - min(arr), 6)
         if isinstance(res, float) and res.is_integer():
             res = int(res)
         meta["sample_count"] = len(arr)
         return res, meta
 
     elif op == "polynomial":
-        coeffs = [float(c) for c in req.get("coefficients", inputs)]
-        x_val = float(req.get("x", 1.0))
+        coeffs_raw = req.get("coefficients", inputs)
+        coeffs = [validate_and_convert_number(c) for c in coeffs_raw]
+        x_val = validate_and_convert_number(req.get("x", 1.0))
         total = sum(c * (x_val ** idx) for idx, c in enumerate(coeffs))
         res = round(total, 6)
-        if res.is_integer():
+        if isinstance(res, float) and res.is_integer():
             res = int(res)
         meta["degree"] = max(0, len(coeffs) - 1)
         return res, meta
 
     elif op in ("linear_difference", "delta"):
-        start_val = float(req.get("start", inputs[0] if len(inputs) >= 1 else 0.0))
-        end_val = float(req.get("end", inputs[1] if len(inputs) >= 2 else 0.0))
+        start_raw = req.get("start", inputs[0] if len(inputs) >= 1 else 0.0)
+        end_raw = req.get("end", inputs[1] if len(inputs) >= 2 else 0.0)
+        start_val = validate_and_convert_number(start_raw)
+        end_val = validate_and_convert_number(end_raw)
         res = round(end_val - start_val, 6)
+        if isinstance(res, float) and res.is_integer():
+            res = int(res)
         return res, meta
 
     elif op in ("linear_scale", "affine"):
-        base_val = float(req.get("base", inputs[0] if inputs else 0.0))
-        scale = float(req.get("scale", 1.0))
-        offset = float(req.get("offset", 0.0))
+        base_raw = req.get("base", inputs[0] if inputs else 0.0)
+        base_val = validate_and_convert_number(base_raw)
+        scale = validate_and_convert_number(req.get("scale", 1.0))
+        offset = validate_and_convert_number(req.get("offset", 0.0))
         res = round(base_val * scale + offset, 6)
-        if res.is_integer():
+        if isinstance(res, float) and res.is_integer():
             res = int(res)
         return res, meta
 
     elif op == "dot_product":
-        vec_a = [float(x) for x in req.get("vec_a", inputs[0] if len(inputs) >= 1 else [])]
-        vec_b = [float(x) for x in req.get("vec_b", inputs[1] if len(inputs) >= 2 else [])]
+        vec_a_raw = req.get("vec_a", inputs[0] if len(inputs) >= 1 else [])
+        vec_b_raw = req.get("vec_b", inputs[1] if len(inputs) >= 2 else [])
+        vec_a = validate_and_convert_vector(vec_a_raw)
+        vec_b = validate_and_convert_vector(vec_b_raw)
+        if len(vec_a) != len(vec_b):
+            raise ValueError(f"Vector dimension mismatch for dot product: {len(vec_a)} != {len(vec_b)}")
+        if len(vec_a) == 0:
+            raise ValueError("Dot product requires non-empty vectors.")
         res = round(float(np.dot(vec_a, vec_b)), 6)
-        if res.is_integer():
+        if isinstance(res, float) and res.is_integer():
             res = int(res)
         meta["dimension"] = len(vec_a)
         return res, meta
 
     elif op == "cosine_similarity":
-        vec_a = [float(x) for x in req.get("vec_a", inputs[0] if len(inputs) >= 1 else [])]
-        vec_b = [float(x) for x in req.get("vec_b", inputs[1] if len(inputs) >= 2 else [])]
-        res = round(float(cosine_similarity(vec_a, vec_b)), 6)
+        vec_a_raw = req.get("vec_a", inputs[0] if len(inputs) >= 1 else [])
+        vec_b_raw = req.get("vec_b", inputs[1] if len(inputs) >= 2 else [])
+        vec_a = validate_and_convert_vector(vec_a_raw)
+        vec_b = validate_and_convert_vector(vec_b_raw)
+        if len(vec_a) != len(vec_b):
+            raise ValueError(f"Vector dimension mismatch for cosine similarity: {len(vec_a)} != {len(vec_b)}")
+        if len(vec_a) == 0:
+            raise ValueError("Cosine similarity is undefined for zero-length vectors.")
+        
+        a = np.array(vec_a, dtype=float)
+        b = np.array(vec_b, dtype=float)
+        norm_a = float(np.linalg.norm(a))
+        norm_b = float(np.linalg.norm(b))
+        if norm_a == 0.0 or norm_b == 0.0:
+            raise ValueError("Cosine similarity is undefined for zero-norm vectors.")
+        
+        sim = float(np.dot(a, b) / (norm_a * norm_b))
+        sim = max(-1.0, min(1.0, sim))
+        res = round(sim, 6)
         meta["dimension"] = len(vec_a)
         return res, meta
 
     elif op == "anomaly_count":
-        arr = np.array([float(x) for x in inputs], dtype=float)
-        threshold = float(req.get("threshold", 2.0))
-        if len(arr) == 0:
+        if not inputs:
             return 0, {"sample_count": 0}
-        mean_val = float(np.mean(arr))
-        std_val = float(np.std(arr, ddof=0))
+        arr = [validate_and_convert_number(x) for x in inputs]
+        threshold = validate_and_convert_number(req.get("threshold", 2.0))
+        if threshold < 0:
+            raise ValueError("Threshold for anomaly detection must be non-negative.")
+        np_arr = np.array(arr, dtype=float)
+        mean_val = float(np.mean(np_arr))
+        std_val = float(np.std(np_arr, ddof=0))
         if std_val == 0.0:
             count = 0
         else:
-            z_scores = np.abs((arr - mean_val) / std_val)
+            z_scores = np.abs((np_arr - mean_val) / std_val)
             count = int(np.sum(z_scores > threshold))
-        meta["sample_count"] = int(len(arr))
+        meta["sample_count"] = len(arr)
         return count, meta
 
     elif op == "filter_sum":
-        arr = [float(x) for x in inputs]
-        min_v = req.get("min_val")
-        max_v = req.get("max_val")
+        arr = [validate_and_convert_number(x) for x in inputs]
+        min_v_raw = req.get("min_val")
+        max_v_raw = req.get("max_val")
+        min_v = validate_and_convert_number(min_v_raw) if min_v_raw is not None else None
+        max_v = validate_and_convert_number(max_v_raw) if max_v_raw is not None else None
         filtered = [
             x for x in arr
-            if (min_v is None or x >= float(min_v)) and (max_v is None or x <= float(max_v))
+            if (min_v is None or x >= min_v) and (max_v is None or x <= max_v)
         ]
-        res = round(sum(filtered), 6)
-        if res.is_integer():
+        res = round(sum(filtered), 6) if filtered else 0
+        if isinstance(res, float) and res.is_integer():
             res = int(res)
         meta["sample_count"] = len(filtered)
         return res, meta
 
     elif op == "moving_average":
-        arr = [float(x) for x in inputs]
-        window = max(1, int(req.get("window", 3)))
+        arr = [validate_and_convert_number(x) for x in inputs]
+        window = int(req.get("window", 3))
+        if window < 1:
+            raise ValueError("Window size for moving average must be at least 1.")
         if len(arr) < window:
             res = round(sum(arr) / len(arr), 6) if arr else 0.0
         else:
             res = round(sum(arr[-window:]) / window, 6)
+        if isinstance(res, float) and res.is_integer():
+            res = int(res)
         meta["window"] = window
         return res, meta
 
@@ -206,15 +298,26 @@ def evaluate_functional_task(
         return diff_count, meta
 
     elif op == "linear_solve":
-        mat_a = np.array(req.get("matrix_a", [[1.0]]), dtype=float)
-        vec_b = np.array(req.get("vector_b", [1.0]), dtype=float)
+        mat_a_raw = req.get("matrix_a", [[1.0]])
+        vec_b_raw = req.get("vector_b", [1.0])
+        mat_a = np.array(mat_a_raw, dtype=float)
+        vec_b = np.array(vec_b_raw, dtype=float)
+        if mat_a.ndim != 2 or mat_a.shape[0] != mat_a.shape[1]:
+            raise ValueError(f"Matrix A must be square 2D, got shape {mat_a.shape}")
+        if len(vec_b) != mat_a.shape[0]:
+            raise ValueError(f"Vector B dimension {len(vec_b)} does not match matrix A size {mat_a.shape[0]}")
+        det = float(np.linalg.det(mat_a))
+        if math.isclose(det, 0.0, abs_tol=1e-12):
+            raise ValueError("Matrix A is singular and cannot be solved.")
         sol = np.linalg.solve(mat_a, vec_b)
         res = round(float(np.sum(sol)), 6)
+        if isinstance(res, float) and res.is_integer():
+            res = int(res)
         return res, meta
 
     elif op == "pipeline_reduce":
         reduce_op = str(req.get("reduce_op", "sum")).lower()
-        vals = [float(x) for x in inputs]
+        vals = [validate_and_convert_number(x) for x in inputs]
         if reduce_op == "product":
             prod = 1.0
             for v in vals:
@@ -222,15 +325,18 @@ def evaluate_functional_task(
             res = round(prod, 6)
         elif reduce_op == "mean":
             res = round(sum(vals) / len(vals), 6) if vals else 0.0
+        elif reduce_op == "sum":
+            res = round(sum(vals), 6) if vals else 0
         else:
-            res = round(sum(vals), 6)
+            raise ValueError(f"Unsupported pipeline reduce operation: {reduce_op}")
         if isinstance(res, float) and res.is_integer():
             res = int(res)
         meta["sample_count"] = len(vals)
         return res, meta
 
-    default_val = req.get("expected_value", 42)
-    return default_val, meta
+    if "expected_value" in req:
+        return req["expected_value"], meta
+    raise ValueError(f"Unsupported operation '{op}' specified in task requirements.")
 
 
 class ModelBackend(ABC):

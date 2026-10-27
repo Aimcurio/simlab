@@ -1,16 +1,20 @@
 """Critic / Independent Reviewer Agent Implementation."""
 
+import copy
+import math
 from typing import Any, Dict, List, Optional
+import numpy as np
+
 from simlab.agents.base import AgentAction, BaseAgent
-from simlab.agents.models import DeterministicRuleBackend, ModelBackend
+from simlab.agents.models import DeterministicRuleBackend, ModelBackend, evaluate_functional_task
 
 
 class CriticAgent(BaseAgent):
     """
     Independent reviewer agent that enforces double-blind quality and correctness:
     - Receives task submissions from workers
-    - Validates deliverables against objective specifications
-    - Rejects invalid deliverables with constructive feedback
+    - Validates deliverables against objective specifications and independent oracles
+    - Rejects invalid deliverables with constructive feedback (without fabricated values)
     - Directly commits verified deliverables to environment state upon approval
     """
 
@@ -36,9 +40,15 @@ class CriticAgent(BaseAgent):
         self._approvals_count: int = 0
         self._rejections_count: int = 0
         self._submission_queue: List[Dict[str, Any]] = []
+        self._task_contracts: Dict[str, Dict[str, Any]] = {}
 
     def observe(self, state: Dict[str, Any], incoming_messages: List[Any], current_tick: int) -> Dict[str, Any]:
-        """Collect all submissions awaiting verification."""
+        """Collect all submissions awaiting verification and track task requirements."""
+        for t in state.get("tasks", []):
+            tid = t.get("task_id")
+            if tid:
+                self._task_contracts[tid] = copy.deepcopy(t)
+
         for msg in incoming_messages:
             content = msg.content or {}
             if content.get("type") == "SUBMIT_FOR_REVIEW":
@@ -55,13 +65,16 @@ class CriticAgent(BaseAgent):
             "pending_submissions": list(self._submission_queue),
             "environment_state_hash": state.get("state_hash", ""),
             "review_criteria": {
-                "require_positive_value": True,
-                "max_allowed_value": 500
+                "mode": "contract_grounded_oracle_verification",
+                "allow_legitimate_zero": True,
+                "allow_negative_values": True,
+                "allow_large_magnitudes": True,
+                "disallow_fabricated_fallbacks": True
             }
         }
 
     def decide(self, observation: Dict[str, Any], current_tick: int) -> AgentAction:
-        """Evaluate pending submission and emit APPROVE or REJECT."""
+        """Evaluate pending submission against mathematical contract and emit APPROVE or REJECT."""
         if not self._submission_queue:
             return AgentAction(
                 action_type="STANDBY",
@@ -75,14 +88,84 @@ class CriticAgent(BaseAgent):
         task_id = sub["task_id"]
         data = sub.get("submission", {})
 
-        result_val = data.get("result_value", 0)
+        result_val = data.get("result_value")
+        is_corrupt = data.get("is_corrupt", False)
 
-        # Verification Invariant: Result value must be positive and within reasonable bounds
-        is_valid = (result_val > 0 and result_val <= 500)
+        is_valid = True
+        unrecoverable = False
+        rejection_reason = ""
 
-        # Intentional adversarial check: if strict_mode is True and task is marked corrupt
-        if data.get("is_corrupt", False):
+        # 1. Representation validity checks
+        if is_corrupt:
             is_valid = False
+            rejection_reason = "Deliverable marked corrupt by integrity check."
+        elif result_val is None:
+            is_valid = False
+            rejection_reason = "Missing result value in worker submission."
+        elif isinstance(result_val, bool):
+            is_valid = False
+            rejection_reason = f"Invalid numeric representation: boolean {result_val} is not accepted as a number."
+        elif not isinstance(result_val, (int, float, np.number)):
+            is_valid = False
+            rejection_reason = f"Invalid result type: expected numeric scalar, got {type(result_val).__name__}."
+        elif not math.isfinite(float(result_val)):
+            is_valid = False
+            rejection_reason = f"Non-finite numeric result: {result_val} (NaN or Inf)."
+
+        # 2. Check task contract
+        task_contract = self._task_contracts.get(task_id, {})
+        req = task_contract.get("requirements", {})
+        op = req.get("operation") or task_contract.get("operation")
+
+        if is_valid and op:
+            # Domain bounds check on valid numeric representation
+            f_res = float(result_val)
+            if op == "cosine_similarity":
+                if f_res < -1.0 - 1e-6 or f_res > 1.0 + 1e-6:
+                    is_valid = False
+                    rejection_reason = f"Result {result_val} violates cosine similarity domain bounds [-1.0, 1.0]."
+            elif op in ("anomaly_count", "record_reconcile"):
+                if f_res < 0:
+                    is_valid = False
+                    rejection_reason = f"Result {result_val} violates non-negativity constraint for {op}."
+                elif not f_res.is_integer():
+                    is_valid = False
+                    rejection_reason = f"Result {result_val} for {op} must be an integer count."
+            elif op in ("variance", "std", "range"):
+                if f_res < -1e-6:
+                    is_valid = False
+                    rejection_reason = f"Result {result_val} violates non-negativity constraint for {op}."
+
+        # 3. Independent oracle verification
+        if is_valid:
+            if op:
+                try:
+                    oracle_val, _ = evaluate_functional_task(task_contract)
+                    if isinstance(oracle_val, int) and isinstance(result_val, int):
+                        matches = (result_val == oracle_val)
+                    else:
+                        matches = math.isclose(float(result_val), float(oracle_val), rel_tol=1e-5, abs_tol=1e-6)
+
+                    if not matches:
+                        is_valid = False
+                        rejection_reason = (
+                            f"Computational verification failed: result {result_val} "
+                            f"does not match authoritative oracle {oracle_val}."
+                        )
+                except (ValueError, TypeError, ZeroDivisionError) as err:
+                    is_valid = False
+                    unrecoverable = True
+                    rejection_reason = f"Task contract mathematical failure: {err}"
+            else:
+                expected_val = req.get("expected_value", task_contract.get("default_value", 42))
+                if isinstance(expected_val, (int, float)):
+                    if isinstance(expected_val, int) and isinstance(result_val, int):
+                        matches = (result_val == expected_val)
+                    else:
+                        matches = math.isclose(float(result_val), float(expected_val), rel_tol=1e-5, abs_tol=1e-6)
+                    if not matches:
+                        is_valid = False
+                        rejection_reason = f"Result {result_val} does not match expected legacy value {expected_val}."
 
         if is_valid:
             self._approvals_count += 1
@@ -96,7 +179,7 @@ class CriticAgent(BaseAgent):
                     "verdict": "APPROVED",
                     "value": result_val
                 },
-                rationale=f"Deliverable for {task_id} passed independent verification (value={result_val})."
+                rationale=f"Deliverable for {task_id} passed independent oracle verification (value={result_val})."
             )
         else:
             self._rejections_count += 1
@@ -109,11 +192,11 @@ class CriticAgent(BaseAgent):
                         "type": "REVIEW_FEEDBACK",
                         "task_id": task_id,
                         "verdict": "REJECTED",
-                        "feedback": f"Value {result_val} violated domain constraints. Must be in range (0, 500].",
-                        "suggested_value": 42
+                        "feedback": rejection_reason,
+                        "unrecoverable": unrecoverable
                     }
                 },
-                rationale=f"Rejecting submission for {task_id} due to invalid output {result_val}."
+                rationale=f"Rejecting submission for {task_id}: {rejection_reason}."
             )
 
     def snapshot(self) -> Dict[str, Any]:
@@ -126,6 +209,7 @@ class CriticAgent(BaseAgent):
             "strict_mode": self.strict_mode,
             "coordinator_id": self.coordinator_id,
             "submission_queue": [dict(s) for s in self._submission_queue],
+            "task_contracts": copy.deepcopy(self._task_contracts),
         })
         return snap
 
@@ -138,3 +222,5 @@ class CriticAgent(BaseAgent):
         self.strict_mode = data.get("strict_mode", self.strict_mode)
         self.coordinator_id = data.get("coordinator_id", self.coordinator_id)
         self._submission_queue = [dict(s) for s in data.get("submission_queue", [])]
+        self._task_contracts = copy.deepcopy(data.get("task_contracts", {}))
+

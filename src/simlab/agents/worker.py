@@ -120,7 +120,22 @@ class WorkerAgent(BaseAgent):
             if not self.current_task:
                 crit = self._rework_queue.pop(0)
                 task_id = crit.get("task_id")
-                rework_val = crit.get("suggested_value", 42)
+                unrecoverable = crit.get("unrecoverable", False)
+                retry_count = crit.get("retry_count", 0) + 1
+                feedback = crit.get("feedback", "")
+
+                if unrecoverable or retry_count > 3:
+                    self._in_flight_tasks.pop(task_id, None)
+                    return AgentAction(
+                        action_type="FAIL_TASK",
+                        target=task_id,
+                        parameters={
+                            "task_id": task_id,
+                            "worker_id": self.agent_id,
+                            "reason": feedback or "MAX_RETRIES_EXCEEDED"
+                        },
+                        rationale=f"Task {task_id} failed: {feedback or 'Max retries exceeded'}."
+                    )
 
                 orig_task = None
                 if task_id in env_tasks:
@@ -130,15 +145,26 @@ class WorkerAgent(BaseAgent):
                 else:
                     orig_task = {"task_id": task_id}
 
-                if orig_task.get("requirements"):
-                    calc_val, _ = evaluate_functional_task(orig_task)
-                    if isinstance(calc_val, (int, float)) and 0 < calc_val <= 500:
-                        rework_val = calc_val
+                try:
+                    rework_val, rework_meta = evaluate_functional_task(orig_task)
+                except (ValueError, TypeError, ZeroDivisionError) as err:
+                    self._in_flight_tasks.pop(task_id, None)
+                    return AgentAction(
+                        action_type="FAIL_TASK",
+                        target=task_id,
+                        parameters={
+                            "task_id": task_id,
+                            "worker_id": self.agent_id,
+                            "reason": str(err)
+                        },
+                        rationale=f"Task {task_id} recalculation failed: {err}."
+                    )
 
                 orig_task["_rework"] = True
                 orig_task["_rework_val"] = rework_val
-                orig_task["_retry_count"] = crit.get("retry_count", 0) + 1
-                orig_task["_feedback"] = crit.get("feedback", "")
+                orig_task["_meta"] = rework_meta
+                orig_task["_retry_count"] = retry_count
+                orig_task["_feedback"] = feedback
                 orig_task["_executed"] = False
                 orig_task["_submitted"] = False
                 self.current_task = orig_task
@@ -155,12 +181,15 @@ class WorkerAgent(BaseAgent):
                         "worker_id": self.agent_id,
                         "correction_applied": True,
                         "retry_count": self.current_task.get("_retry_count", 1),
-                        "value": self.current_task["_rework_val"]
+                        "value": self.current_task["_rework_val"],
+                        "metadata": self.current_task.get("_meta", {})
                     },
                     rationale=f"Reworking task {task_id} after Critic rejection: {self.current_task.get('_feedback')}."
                 )
             else:
-                result_val = self.current_task.get("_result_value", 42)
+                result_val = self.current_task.get("_result_value")
+                if result_val is None:
+                    result_val = self.current_task.get("_rework_val")
                 computed_result = {
                     "task_id": task_id,
                     "worker_id": self.agent_id,
@@ -205,7 +234,20 @@ class WorkerAgent(BaseAgent):
                         k: v for k, v in env_tasks[task_id].items()
                         if k not in task or not task[k]
                     })
-                result_val, meta = evaluate_functional_task(task)
+                try:
+                    result_val, meta = evaluate_functional_task(task)
+                except (ValueError, TypeError, ZeroDivisionError) as err:
+                    self.current_task = None
+                    return AgentAction(
+                        action_type="FAIL_TASK",
+                        target=task_id,
+                        parameters={
+                            "task_id": task_id,
+                            "worker_id": self.agent_id,
+                            "reason": str(err)
+                        },
+                        rationale=f"Execution failed for task {task_id}: {err}."
+                    )
                 task["_result_value"] = result_val
                 task["_meta"] = meta
                 return AgentAction(
@@ -221,7 +263,7 @@ class WorkerAgent(BaseAgent):
                 )
             elif not task.get("_submitted"):
                 task["_submitted"] = True
-                result_val = task.get("_result_value", 42)
+                result_val = task.get("_result_value")
                 computed_result = {
                     "task_id": task_id,
                     "worker_id": self.agent_id,

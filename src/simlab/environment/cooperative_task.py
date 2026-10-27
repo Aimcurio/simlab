@@ -54,6 +54,7 @@ class CooperativeTaskEnvironment:
 
         kernel.register_action_handler("ACCEPT_TASK", self._handle_accept_task)
         kernel.register_action_handler("EXECUTE_TASK", self._handle_execute_task)
+        kernel.register_action_handler("FAIL_TASK", self._handle_fail_task)
         kernel.register_action_handler("SUBMIT_FOR_REVIEW", self._handle_submit_review)
         kernel.register_action_handler("APPROVE_TASK", self._handle_approve_task)
 
@@ -167,12 +168,51 @@ class CooperativeTaskEnvironment:
 
         return {"task_id": task_id, "status": "NOT_FOUND"}
 
+    def _handle_fail_task(self, action: AgentAction, tick: int) -> Dict[str, Any]:
+        task_id = action.parameters.get("task_id", action.target)
+        worker_id = action.parameters.get("worker_id", "unknown")
+        reason = action.parameters.get("reason", "TASK_FAILED")
+        tasks = self.state.get("tasks", [])
+
+        for t in tasks:
+            if t["task_id"] == task_id:
+                if t.get("status") == "COMPLETED":
+                    return {"task_id": task_id, "status": "ALREADY_COMPLETED"}
+                t["status"] = "FAILED"
+                t["failure_reason"] = reason
+                t["failed_by"] = worker_id
+                t["failed_tick"] = tick
+                failed = self.state.get("failed_count", 0) + 1
+                self.state.set("failed_count", failed)
+                self.state.set("tasks", tasks)
+
+                # Notify coordinator immediately
+                if self.kernel:
+                    self.kernel.message_bus.send(
+                        sender_id=worker_id,
+                        recipient_id="coordinator",
+                        content={
+                            "type": "TASK_FAILED",
+                            "status": "FAILED",
+                            "task_id": task_id,
+                            "error": reason
+                        },
+                        current_tick=tick
+                    )
+                return {"task_id": task_id, "status": "FAILED", "reason": reason}
+
+        return {"task_id": task_id, "status": "NOT_FOUND"}
+
     def _check_termination(self, kernel: Any) -> Optional[str]:
         completed = self.state.get("completed_count", 0)
+        failed = self.state.get("failed_count", 0)
         total = self.state.get("total_tasks", 0)
 
         if total > 0 and completed >= total:
             return f"ALL_TASKS_COMPLETED ({completed}/{total})"
+
+        if total > 0 and (completed + failed) >= total:
+            return f"TASKS_TERMINATED_WITH_FAILURES ({completed} completed, {failed} failed of {total})"
 
         energy = self.state.get("energy", 0.0)
         if energy <= 0.0:
