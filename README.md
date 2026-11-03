@@ -1,4 +1,17 @@
-# SimLab — Agent Simulation Laboratory
+# SimLab: Agent Simulation Laboratory
+
+[![Status](https://img.shields.io/badge/Status-Verified_v0.1.0-green?style=flat-square)](#)
+[![Tech](https://img.shields.io/badge/Tech-Python_3.11%2B-blue?style=flat-square)](#)
+[![Domain](https://img.shields.io/badge/Domain-Multi--Agent_Simulation__Benchmarking-orange?style=flat-square)](#)
+[![Standard](https://img.shields.io/badge/Standard-BUBBA_2.0_Governance-purple?style=flat-square)](#)
+[![Parity](https://img.shields.io/badge/Parity-100%25_Verified-brightgreen?style=flat-square)](#)
+
+> **Portfolio Classification:** Public Multi-Agent Research Platform  
+> **Authoritative Root:** `E:\projects\simlab` | **Canonical Spec:** `E:\overview\specs\simlab.json`  
+> **Development Status:** **QUALIFIED / VERIFIED (v0.1.0)** — Parity tests PASS; headless runner verified; structured JSON telemetry reporting.
+
+---
+
 
 A controlled, reproducible, observable multi-agent experimentation platform.
 
